@@ -55,7 +55,7 @@ func (a *App) Main() {
 
 	a.waitGroup.Add(1)
 	go func() {
-		tcpServe(tcpListener)
+		wsServe(tcpListener)
 		a.waitGroup.Done()
 	}()
 }

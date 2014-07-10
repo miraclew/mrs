@@ -19,7 +19,7 @@ func (this *UserController) Get() {
 
 func (this *UserController) Post() {
 	username := this.Request.PostFormValue("username")
-	password := this.Request.PostFormValue("password")
+	// password := this.Request.PostFormValue("password")
 
 	this.Response.Data = struct {
 		Id      int
