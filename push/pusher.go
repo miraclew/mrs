@@ -1,20 +1,27 @@
 package push
 
+import (
+// "fmt"
+)
+
 type Pusher struct {
 }
 
 // Push to one user
-func (p *Pusher) PushToUser(userId int64, message *Message) (err error) {
-
+func PushToUser(userId int64, message *Message) (err error) {
+	err = nil
+	return
 }
 
 // Push to channel
-func (p *Pusher) PushToChannel(chanelId int64, message *Message) (err error) {
+func PushToChannel(chanelId int64, message *Message) (err error) {
 	channel := GetChannel(chanelId)
-	if channel {
-		subs := channel.Subs.List()
-		for e := subs.Front(); e != nil; e = e.Next() {
-			PushToUser(e.Value, message)
+	if channel != nil {
+		for _, v := range channel.Subs {
+			PushToUser(v, message)
 		}
 	}
+
+	err = nil
+	return
 }
