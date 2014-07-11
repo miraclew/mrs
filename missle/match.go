@@ -13,7 +13,7 @@ const (
 type Match struct {
 	Id        int64
 	ChannelId int64
-	Players   []*Player
+	Players   map[int64]*Player
 	State     int
 	TurnIdx   int
 }
@@ -34,14 +34,14 @@ func NewMatch(playersId []int64) *Match {
 	return match
 }
 
-func makePlayers(playersId []int64) []*Player {
-	players := make([]*Player, len(playersId))
+func makePlayers(playersId []int64) map[int64]*Player {
+	players := make(map[int64]*Player)
 	isLeft := true
 	for i := 0; i < len(playersId); i++ {
 		playerId := playersId[i]
 		profile := GetMatch(playerId)
 		pos := MakePositionFor(isLeft, 0)
-		players[i] = &Player{playerId, profile.Nickname, profile.Avatar, isLeft, pos}
+		players[playerId] = &Player{playerId, profile.Nickname, profile.Avatar, isLeft, pos}
 
 		isLeft = !isLeft
 	}
@@ -101,7 +101,6 @@ func (m *Match) PlayerFire() {
 func (m *Match) PlayerHealth(playerId int64, healthChange int) {
 	newHealth := m.changeHealth(playerId, healthChange)
 	if newHealth == 0 {
-
 	}
 
 	msg := &Message{}
@@ -117,16 +116,12 @@ func (m *Match) shouldGameOver() {
 }
 
 func (m *Match) changeHealth(playerId int64, healthChange int) int {
-	for _, v := range m.Players {
-		if v.Id == playerId {
-			v.Health += healthChange
-			if v.Health < 0 {
-				v.Health = 0
-			}
-
-			return v.Health
-		}
+	player := m.Players[playerId]
+	if player == nil {
+		return -1
 	}
-
-	return -1
+	player.Health += healthChange
+	if player.Health < 0 {
+		player.Health = 0
+	}
 }
