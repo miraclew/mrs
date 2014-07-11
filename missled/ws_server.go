@@ -16,7 +16,7 @@ func init() {
 func wsServe(listener net.Listener) {
 	log.Printf("WS: listening on %s", listener.Addr().String())
 
-	maxId := 0
+	var maxId int64 = 0
 	s := push.NewServer()
 	onConnected := func(ws *websocket.Conn) {
 		defer func() {

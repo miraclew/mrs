@@ -25,10 +25,12 @@ func TestA(t *testing.T) {
 	}
 	fmt.Printf("Send: %#v \n", msg)
 
-	if err = websocket.JSON.Receive(ws, &msg); err != nil {
-		log.Fatal(err)
-	}
+	for {
+		if err = websocket.JSON.Receive(ws, &msg); err != nil {
+			log.Fatal(err)
+		}
 
-	bytes, _ := json.Marshal(msg)
-	fmt.Printf("Received: %s \n", string(bytes))
+		bytes, _ := json.Marshal(msg)
+		fmt.Printf("Received: %s \n", string(bytes))
+	}
 }
