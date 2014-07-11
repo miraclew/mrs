@@ -35,9 +35,12 @@ type MatchEnd struct {
 	Point Point
 }
 
-type MatchTurn struct{}
+type MatchTurn struct {
+	PlayerId int64
+}
 
 type PlayerMove struct {
+	PlayerId int64
 	Position Point
 }
 
@@ -46,5 +49,10 @@ type PlayerFire struct {
 }
 
 type PlayerHealth struct {
-	Health int
+	PlayerId int64
+	Health   int
+}
+
+func SendMessage(msg *Message) {
+	fmt.Printf("Send: ")
 }

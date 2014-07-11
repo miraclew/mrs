@@ -15,6 +15,15 @@ type Player struct {
 	Avatar   string
 	IsLeft   bool
 	Position Point
+	Health   int
+}
+
+func MakePositionFor(isLeft bool, order int) *Point {
+	if isLeft {
+		return &Point{X: 1.0 / 4, Y: 0}
+	} else {
+		return &Point{X: 3.0 / 4, Y: 0}
+	}
 }
 
 func MakeKeyPoints(count int) []*Point {
