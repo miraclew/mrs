@@ -9,5 +9,5 @@ type TokenController struct {
 }
 
 func (this *TokenController) Get() {
-	this.Response.Data = "TokenController"
+	this.Data = "TokenController"
 }

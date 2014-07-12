@@ -14,7 +14,7 @@ type UserController struct {
 }
 
 func (this *UserController) Get() {
-	this.Response.Data = &Hello{Message: "hello"}
+	this.Data = &Hello{Message: "hello"}
 }
 
 func (this *UserController) Post() {

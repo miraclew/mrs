@@ -6,4 +6,6 @@ type Pusher interface {
 	PushToUser(userId int64, message interface{}) (err error)
 	// Push to channel
 	PushToChannel(chanelId int64, message interface{}) (err error)
+
+	IsOnline(playerId int64)
 }

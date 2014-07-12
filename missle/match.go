@@ -95,6 +95,8 @@ func (m *Match) End() {
 			point = 100
 		}
 
+		UpdatePlayerPoints(v.Id, point)
+
 		msg := m.newMessage(MN_MatchEnd, &MatchEnd{point})
 		m.Pusher.PushToUser(v.Id, msg)
 	}

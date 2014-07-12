@@ -35,11 +35,7 @@ func init() {
 	var err error
 	db, err = sql.Open("mysql", DSN)
 	if err != nil {
-		fmt.Println("........")
-		// panic(err.Error())
-		// log.Fatal(err.Error())
-	} else {
-		fmt.Println("+++++++")
+		log.Fatal(err.Error())
 	}
 }
 
@@ -124,5 +120,15 @@ func (user *User) Save() (err error) {
 		mc.Delete(key)
 	}
 
+	return
+}
+
+func UpdatePlayerPoints(playerId int64, points int) (err error) {
+	_, err = db.Exec("update players set points=points+? where uid=?", &points, &playerId)
+	return
+}
+
+func GetPlayerPoints(playerId int64) (points int) {
+	db.QueryRow("select points from players where uid=?", playerId).Scan(&points)
 	return
 }
