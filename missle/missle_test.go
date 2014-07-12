@@ -6,6 +6,7 @@ import (
 )
 
 func TestA(t *testing.T) {
+	t.Skip("...")
 	// var x float32
 	// x = 1.0 * 2
 	// y := x * 2
@@ -14,5 +15,9 @@ func TestA(t *testing.T) {
 	for _, p := range points {
 		fmt.Printf("%f, %f\n", p.X, p.Y)
 	}
+}
 
+func TestB(t *testing.T) {
+	match := NewMatch([]int64{1, 2})
+	match.Begin()
 }

@@ -27,12 +27,12 @@ type Message struct {
 type MatchBegin struct {
 	Players []*Player
 
-	KeyPoints []Point
+	KeyPoints []*Point
 }
 
 // Send to each player
 type MatchEnd struct {
-	Point Point
+	Points int
 }
 
 type MatchTurn struct {
@@ -45,14 +45,11 @@ type PlayerMove struct {
 }
 
 type PlayerFire struct {
+	PlayerId int64
 	Velocity Point
 }
 
 type PlayerHealth struct {
 	PlayerId int64
 	Health   int
-}
-
-func SendMessage(msg *Message) {
-	fmt.Printf("Send: ")
 }

@@ -14,12 +14,13 @@ type Match struct {
 	Id        int64
 	ChannelId int64
 	Players   map[int64]*Player
+	PlayersId []int64
 	State     int
 	TurnIdx   int
 }
 
 var seq int64 = 0
-var matchs map[int64]*Match
+var matchs = make(map[int64]*Match)
 
 func NewMatch(playersId []int64) *Match {
 	seq++
@@ -27,6 +28,7 @@ func NewMatch(playersId []int64) *Match {
 		Id:        seq,
 		ChannelId: GetChannelId(),
 		Players:   makePlayers(playersId),
+		PlayersId: playersId,
 		State:     STATE_READY,
 	}
 
@@ -39,9 +41,9 @@ func makePlayers(playersId []int64) map[int64]*Player {
 	isLeft := true
 	for i := 0; i < len(playersId); i++ {
 		playerId := playersId[i]
-		profile := GetMatch(playerId)
+		profile := GetProfile(playerId)
 		pos := MakePositionFor(isLeft, 0)
-		players[playerId] = &Player{playerId, profile.Nickname, profile.Avatar, isLeft, pos}
+		players[playerId] = &Player{playerId, profile.Nickname, profile.Avatar, isLeft, *pos, 100}
 
 		isLeft = !isLeft
 	}
@@ -59,12 +61,16 @@ func (m *Match) Begin() (err error) {
 	}
 
 	keyPoints := MakeKeyPoints(16)
-	msg := &Message{}
-	msg.Header.Name = MN_MatchBegin
-	msg.Header.ChannelId = m.ChannelId
-	msg.Body = &MatchBegin{Players: m.Players, KeyPoints: keyPoints}
+	var players []*Player
+	for _, v := range m.Players {
+		players = append(players, v)
+	}
 
+	msg := m.newMessage(MN_MatchBegin, &MatchBegin{players, keyPoints})
 	PushToChannel(m.ChannelId, msg)
+
+	m.State = STATE_PLAYING
+	return nil
 }
 
 func (m *Match) NextTurn() {
@@ -73,46 +79,51 @@ func (m *Match) NextTurn() {
 		m.TurnIdx = 0
 	}
 
-	playerId = m.Players[m.TurnIdx].Id
+	playerId := m.PlayersId[m.TurnIdx]
 
-	msg := &Message{}
-	msg.Header.Name = MN_MatchTurn
-
+	msg := m.newMessage(MN_MatchTurn, nil)
 	PushToUser(playerId, msg)
 }
 
 func (m *Match) End() {
+	for _, v := range m.Players {
+		var point int
+		if v.Health == 0 {
+			point = -100
+		} else {
+			point = 100
+		}
 
+		msg := m.newMessage(MN_MatchEnd, &MatchEnd{point})
+		PushToUser(v.Id, msg)
+	}
+	m.State = STATE_END
 }
 
 func (m *Match) PlayerMove(playerId int64, pos Point) {
-	msg := &Message{}
-	msg.Header.Name = MN_PlayerMove
-	msg.Header.ChannelId = m.ChannelId
-	msg.Body = &PlayerMove{playerId, pos}
-
+	msg := m.newMessage(MN_PlayerMove, &PlayerMove{playerId, pos})
 	PushToChannel(m.ChannelId, msg)
 }
 
-func (m *Match) PlayerFire() {
-
+func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) {
+	msg := m.newMessage(MN_PlayerFire, &PlayerFire{playerId, velocity})
+	PushToChannel(m.ChannelId, msg)
 }
 
 func (m *Match) PlayerHealth(playerId int64, healthChange int) {
+	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{playerId, healthChange})
+	PushToChannel(m.ChannelId, msg)
+
 	newHealth := m.changeHealth(playerId, healthChange)
 	if newHealth == 0 {
+		if m.shouldGameOver() {
+			m.End()
+		}
 	}
-
-	msg := &Message{}
-	msg.Header.Name = MN_PlayerHealth
-	msg.Header.ChannelId = m.ChannelId
-	msg.Body = &PlayerHealth{playerId, healthChange}
-
-	PushToChannel(m.ChannelId, msg)
 }
 
-func (m *Match) shouldGameOver() {
-
+func (m *Match) shouldGameOver() bool {
+	return true
 }
 
 func (m *Match) changeHealth(playerId int64, healthChange int) int {
@@ -124,4 +135,15 @@ func (m *Match) changeHealth(playerId int64, healthChange int) int {
 	if player.Health < 0 {
 		player.Health = 0
 	}
+
+	return player.Health
+}
+
+func (m *Match) newMessage(name string, body interface{}) *Message {
+	msg := &Message{}
+	msg.Header.Name = MN_PlayerHealth
+	msg.Header.ChannelId = m.ChannelId
+	msg.Header.MatchId = m.Id
+	msg.Body = body
+	return msg
 }
