@@ -1,8 +1,6 @@
 package missle
 
-import (
-// "github.com/miraclew/mrs/push"
-)
+import ()
 
 const (
 	STATE_READY   = 1
@@ -17,19 +15,22 @@ type Match struct {
 	PlayersId []int64
 	State     int
 	TurnIdx   int
+	Pusher    Pusher
 }
 
 var seq int64 = 0
 var matchs = make(map[int64]*Match)
 
-func NewMatch(playersId []int64) *Match {
+func NewMatch(playersId []int64, pusher Pusher) *Match {
 	seq++
+	channelId, _ := pusher.NewChannel(playersId)
 	match := &Match{
 		Id:        seq,
-		ChannelId: GetChannelId(),
+		ChannelId: channelId,
 		Players:   makePlayers(playersId),
 		PlayersId: playersId,
 		State:     STATE_READY,
+		Pusher:    pusher,
 	}
 
 	matchs[match.Id] = match
@@ -67,7 +68,7 @@ func (m *Match) Begin() (err error) {
 	}
 
 	msg := m.newMessage(MN_MatchBegin, &MatchBegin{players, keyPoints})
-	PushToChannel(m.ChannelId, msg)
+	m.Pusher.PushToChannel(m.ChannelId, msg)
 
 	m.State = STATE_PLAYING
 	return nil
@@ -82,7 +83,7 @@ func (m *Match) NextTurn() {
 	playerId := m.PlayersId[m.TurnIdx]
 
 	msg := m.newMessage(MN_MatchTurn, nil)
-	PushToUser(playerId, msg)
+	m.Pusher.PushToUser(playerId, msg)
 }
 
 func (m *Match) End() {
@@ -95,26 +96,36 @@ func (m *Match) End() {
 		}
 
 		msg := m.newMessage(MN_MatchEnd, &MatchEnd{point})
-		PushToUser(v.Id, msg)
+		m.Pusher.PushToUser(v.Id, msg)
 	}
 	m.State = STATE_END
 }
 
-func (m *Match) PlayerMove(playerId int64, pos Point) {
+func (m *Match) PlayerMove(playerId int64, pos Point) error {
+	if !CheckPosition(pos) {
+		return NewMissleErr(ERR_INVALID_POSITION, pos.X, pos.Y)
+	}
+
+	player := m.Players[playerId]
+	player.Position = pos
+
 	msg := m.newMessage(MN_PlayerMove, &PlayerMove{playerId, pos})
-	PushToChannel(m.ChannelId, msg)
+	m.Pusher.PushToChannel(m.ChannelId, msg)
+
+	return nil
 }
 
 func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) {
 	msg := m.newMessage(MN_PlayerFire, &PlayerFire{playerId, velocity})
-	PushToChannel(m.ChannelId, msg)
+	m.Pusher.PushToChannel(m.ChannelId, msg)
 }
 
 func (m *Match) PlayerHealth(playerId int64, healthChange int) {
-	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{playerId, healthChange})
-	PushToChannel(m.ChannelId, msg)
-
 	newHealth := m.changeHealth(playerId, healthChange)
+
+	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{playerId, newHealth})
+	m.Pusher.PushToChannel(m.ChannelId, msg)
+
 	if newHealth == 0 {
 		if m.shouldGameOver() {
 			m.End()
@@ -141,7 +152,7 @@ func (m *Match) changeHealth(playerId int64, healthChange int) int {
 
 func (m *Match) newMessage(name string, body interface{}) *Message {
 	msg := &Message{}
-	msg.Header.Name = MN_PlayerHealth
+	msg.Header.Name = name
 	msg.Header.ChannelId = m.ChannelId
 	msg.Header.MatchId = m.Id
 	msg.Body = body

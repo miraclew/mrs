@@ -5,11 +5,13 @@ import (
 )
 
 const (
-	ERR_INVALID_STATE = 100
+	ERR_INVALID_STATE    = 100
+	ERR_INVALID_POSITION = 101
 )
 
 var ErrMessageMap = map[int]string{
-	ERR_INVALID_STATE: "invalid state: %s",
+	ERR_INVALID_STATE:    "invalid state: %s",
+	ERR_INVALID_POSITION: "invalid position: %f,%f",
 }
 
 type MissleErr struct {

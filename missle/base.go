@@ -69,3 +69,14 @@ func MakeKeyPoints(count int) []*Point {
 
 	return points
 }
+
+func CheckPosition(pos Point) bool {
+	if pos.X < 0.0 || pos.X > 1.0 {
+		return false
+	}
+	if pos.Y < 0.0 || pos.Y > 1.0 {
+		return false
+	}
+
+	return true
+}
