@@ -42,9 +42,9 @@ func makePlayers(playersId []int64) map[int64]*Player {
 	isLeft := true
 	for i := 0; i < len(playersId); i++ {
 		playerId := playersId[i]
-		profile := GetProfile(playerId)
+		profile := FindUserById(playerId)
 		pos := MakePositionFor(isLeft, 0)
-		players[playerId] = &Player{playerId, profile.Nickname, profile.Avatar, isLeft, *pos, 100}
+		players[playerId] = &Player{playerId, profile.UserName, profile.Avatar, isLeft, *pos, 100}
 
 		isLeft = !isLeft
 	}

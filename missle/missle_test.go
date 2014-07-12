@@ -36,6 +36,7 @@ func TestA(t *testing.T) {
 }
 
 func TestB(t *testing.T) {
+	// t.Skip("...")
 	var pusher Pusher
 	pusher = &PusherMock{}
 	match := NewMatch([]int64{1, 2}, pusher)
