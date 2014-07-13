@@ -17,7 +17,24 @@ func TestA(t *testing.T) {
 	playerAttack("bb", "1", "30")
 }
 
+func TestUser(t *testing.T) {
+	v := url.Values{}
+	v.Set("a", "register")
+	v.Set("username", "miraclew2")
+	v.Set("password", "123")
+
+	uri, _ := url.Parse("localhost:8080/match")
+	req := &http.Request{PostForm: v, URL: uri}
+
+	c := &UserController{}
+	c.Init(nil, req)
+	c.Post()
+
+	fmt.Printf("response: %#v", c.Data)
+}
+
 func TestToken(t *testing.T) {
+	t.Skip("...")
 	v := url.Values{}
 	v.Set("username", "miraclew")
 	v.Set("password", "123")

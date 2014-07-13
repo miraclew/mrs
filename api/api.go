@@ -6,8 +6,7 @@ type Response struct {
 }
 
 type RegisterResponse struct {
-	Uid   int64
-	Token string
+	Uid int64
 }
 
 type TokenResponse struct {

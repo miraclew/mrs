@@ -2,7 +2,7 @@ package missle
 
 import (
 	"database/sql"
-	"encoding/binary"
+	// "encoding/binary"
 	"encoding/json"
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
@@ -90,19 +90,21 @@ func FindUserByCredential(username string, password string) (u *User) {
 
 func GetUidByUserName(username string) (uid int64) {
 	uid = 0
-	key := fmt.Sprintf("username:%s", username)
-	it, err := mc.Get(key)
+	// key := fmt.Sprintf("username:%s", username)
+	// it, err := mc.Get(key)
 
-	if err == memcache.ErrCacheMiss {
-		db.QueryRow("select uid from users where username=?", username).Scan(&uid)
-		buf := make([]byte, 8)
-		binary.PutVarint(buf, uid)
-		mc.Set(&memcache.Item{Key: key, Value: buf})
-	}
+	// if err == memcache.ErrCacheMiss {
+	// 	db.QueryRow("select uid from users where username=?", username).Scan(&uid)
+	// 	buf := make([]byte, 8)
+	// 	binary.PutVarint(buf, uid)
+	// 	mc.Set(&memcache.Item{Key: key, Value: buf})
+	// }
 
-	if err == nil {
-		uid, _ = binary.Varint(it.Value)
-	}
+	db.QueryRow("select uid from users where username=?", username).Scan(&uid)
+
+	// if err == nil {
+	// 	uid, _ = binary.Varint(it.Value)
+	// }
 
 	return
 }

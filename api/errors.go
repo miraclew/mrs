@@ -5,8 +5,9 @@ import (
 )
 
 const (
-	ERR_INVALID_ARGS   = 100
-	ERR_DATA_NOT_FOUND = 101
+	ERR_UNKNOWN_ACTION = 100
+	ERR_INVALID_ARGS   = 101
+	ERR_DATA_NOT_FOUND = 102
 
 	ERR_INVALID_TOKEN      = 201
 	ERR_INVALID_CREDENTIAL = 202
@@ -15,7 +16,8 @@ const (
 )
 
 var ErrMessageMap = map[int]string{
-	ERR_INVALID_ARGS: "invalid args: %s",
+	ERR_UNKNOWN_ACTION: "unknown action: %s",
+	ERR_INVALID_ARGS:   "invalid args: %s",
 
 	ERR_DATA_NOT_FOUND:     "data not found: %s",
 	ERR_INVALID_TOKEN:      "invalid token: %s",

@@ -25,11 +25,31 @@ func (this *UserController) Post() {
 		username := values.Get("username")
 		password := values.Get("password")
 
+		if len(username) < 2 { //
+			this.Data = response(ERR_INVALID_ARGS, "username too short")
+			return
+		}
+
+		if len(password) < 3 { //
+			this.Data = response(ERR_INVALID_ARGS, "password too short")
+			return
+		}
+
+		// check exists
+		uid := missle.GetUidByUserName(username)
+		if uid != 0 {
+			this.Data = response(ERR_INVALID_ARGS, "username is taken")
+			return
+		}
+
 		user := &missle.User{UserName: username, Password: password}
 		user.Save()
-		this.Data = response(0, nil)
+		this.Data = response(0, RegisterResponse{user.Uid})
 		return
 	} else if action == "autoRegister" {
 
+	} else {
+		this.Data = response(ERR_UNKNOWN_ACTION, action)
+		return
 	}
 }

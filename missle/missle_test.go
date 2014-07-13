@@ -21,7 +21,7 @@ func TestB(t *testing.T) {
 	t.Skip("...")
 	var pusher Pusher
 	pusher = &PusherMock{}
-	match := NewMatch([]int64{1, 2}, pusher)
+	match, _ := NewMatch([]int64{1, 2}, pusher)
 	match.Begin()
 
 	if match.State != STATE_PLAYING {
@@ -30,13 +30,14 @@ func TestB(t *testing.T) {
 
 	match.PlayerMove(1, Point{0.44, 0.34})
 	match.PlayerFire(2, Point{0.5, 0.6}, Point{0.1, 0.2})
-	match.PlayerHealth(1, -10)
-	match.PlayerHealth(2, +10)
+	// match.PlayerAttack(1, -10)
+	// match.PlayerAttack(2, +10)
 
-	match.PlayerHealth(1, -90)
+	// match.PlayerAttack(1, -90)
 }
 
 func TestC(t *testing.T) {
+	t.Skip("...")
 	var pusher Pusher
 	pusher = &PusherMock{}
 
@@ -46,4 +47,9 @@ func TestC(t *testing.T) {
 	game.PlayerEnter(2)
 	game.PlayerEnter(3)
 	game.PlayerEnter(4)
+}
+
+func TestD(t *testing.T) {
+	uid := GetUidByUserName("miraclew")
+	fmt.Println(uid)
 }
