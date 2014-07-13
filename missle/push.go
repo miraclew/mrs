@@ -7,5 +7,11 @@ type Pusher interface {
 	// Push to channel
 	PushToChannel(chanelId int64, message interface{}) (err error)
 
-	IsOnline(playerId int64)
+	IsConnected(userId int64)
+	ConnectionHandle(handler ConnectionHandler)
+}
+
+type ConnectionHandler interface {
+	Connected(userId int64)
+	Disconnected(userId int64)
 }

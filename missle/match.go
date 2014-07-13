@@ -8,6 +8,10 @@ const (
 	STATE_END     = 3
 )
 
+type MatchPlayer struct {
+	Player
+}
+
 type Match struct {
 	Id        int64
 	ChannelId int64

@@ -9,10 +9,13 @@ type Point struct {
 	Y float32
 }
 
+type ID int64
+
 type Player struct {
 	Id       int64
 	NickName string
 	Avatar   string
+	// game state
 	IsLeft   bool
 	Position Point
 	Health   int
