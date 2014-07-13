@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/miraclew/mrs/util"
 	"log"
 )
 
@@ -130,5 +131,19 @@ func UpdatePlayerPoints(playerId int64, points int) (err error) {
 
 func GetPlayerPoints(playerId int64) (points int) {
 	db.QueryRow("select points from players where uid=?", playerId).Scan(&points)
+	return
+}
+
+func GetUidByToken(token string) (uid int64, err error) {
+	err = db.QueryRow("select uid from tokens where token=?", token).Scan(&uid)
+	if err == sql.ErrNoRows {
+		err = NewMissleErr(ERR_INVALID_TOKEN, token)
+	}
+	return
+}
+
+func MakeToken(uid int64) (token string, err error) {
+	token = util.MakeRandomString(16)
+	_, err = db.Exec("insert into tokens (token,uid) values (?,?)", &token, &uid)
 	return
 }

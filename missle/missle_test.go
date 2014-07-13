@@ -1,27 +1,9 @@
 package missle
 
 import (
-	"encoding/json"
 	"fmt"
 	"testing"
 )
-
-type PusherMock struct{}
-
-func (p *PusherMock) NewChannel(subsId []int64) (channelId int64, err error) {
-	return 1, nil
-}
-func (p *PusherMock) PushToUser(userId int64, message interface{}) (err error) {
-	bytes, _ := json.MarshalIndent(message, "", "  ")
-	fmt.Printf("PushToUser: %d, %s\n", userId, string(bytes))
-	return nil
-}
-
-func (p *PusherMock) PushToChannel(chanelId int64, message interface{}) (err error) {
-	bytes, _ := json.MarshalIndent(message, "", "  ")
-	fmt.Printf("PushToChannel: %d, %s\n", chanelId, string(bytes))
-	return nil
-}
 
 func TestA(t *testing.T) {
 	t.Skip("...")
@@ -36,7 +18,7 @@ func TestA(t *testing.T) {
 }
 
 func TestB(t *testing.T) {
-	// t.Skip("...")
+	t.Skip("...")
 	var pusher Pusher
 	pusher = &PusherMock{}
 	match := NewMatch([]int64{1, 2}, pusher)
@@ -52,4 +34,16 @@ func TestB(t *testing.T) {
 	match.PlayerHealth(2, +10)
 
 	match.PlayerHealth(1, -90)
+}
+
+func TestC(t *testing.T) {
+	var pusher Pusher
+	pusher = &PusherMock{}
+
+	game := GetGame()
+	game.Pusher = pusher
+	game.PlayerEnter(1)
+	game.PlayerEnter(2)
+	game.PlayerEnter(3)
+	game.PlayerEnter(4)
 }

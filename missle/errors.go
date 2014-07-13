@@ -5,13 +5,21 @@ import (
 )
 
 const (
-	ERR_INVALID_STATE    = 100
-	ERR_INVALID_POSITION = 101
+	ERR_INVALID_ARGS     = 100
+	ERR_INVALID_STATE    = 101
+	ERR_INVALID_POSITION = 102
+	ERR_DATA_NOT_FOUND   = 103
+
+	ERR_INVALID_TOKEN = 201
 )
 
 var ErrMessageMap = map[int]string{
+	ERR_INVALID_ARGS:     "invalid args: %s",
 	ERR_INVALID_STATE:    "invalid state: %s",
 	ERR_INVALID_POSITION: "invalid position: %f,%f",
+
+	ERR_DATA_NOT_FOUND: "data not found: %s",
+	ERR_INVALID_TOKEN:  "invalid token: %s",
 }
 
 type MissleErr struct {

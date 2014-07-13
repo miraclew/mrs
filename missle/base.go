@@ -16,9 +16,10 @@ type Player struct {
 	NickName string
 	Avatar   string
 	// game state
-	IsLeft   bool
-	Position Point
-	Health   int
+	IsLeft    bool
+	Position  Point
+	Health    int
+	PointsWin int
 }
 
 func MakePositionFor(isLeft bool, order int) *Point {

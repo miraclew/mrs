@@ -30,11 +30,6 @@ func wsServe(listener net.Listener) {
 		maxId++
 		client := push.NewClient(maxId, ws, s)
 		s.Add(client)
-		hello := push.Message{}
-		hello.Header.Id = 1
-		hello.Header.MatchId = 2
-		hello.Body = "hello, this is server"
-		client.Write(&hello)
 		client.Listen()
 	}
 

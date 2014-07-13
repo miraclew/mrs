@@ -1,31 +1,35 @@
 package api
 
 import (
-	// "fmt"
+	"fmt"
+	"github.com/miraclew/mrs/missle"
 	"github.com/miraclew/restful"
 )
-
-type Hello struct {
-	Message string
-}
 
 type UserController struct {
 	restful.ApiController
 }
 
-func (this *UserController) Get() {
-	this.Data = &Hello{Message: "hello"}
-}
-
 func (this *UserController) Post() {
-	username := this.Request.PostFormValue("username")
-	// password := this.Request.PostFormValue("password")
+	values := this.Request.PostForm
+	fmt.Printf("Post: %#v \n", values)
 
-	this.Response.Data = struct {
-		Id      int
-		UseName string
-	}{
-		123,
-		username,
+	action := values.Get("a")
+
+	if len(action) == 0 {
+		this.Data = response(-1, "action is nil")
+		return
+	}
+
+	if action == "register" {
+		username := values.Get("username")
+		password := values.Get("password")
+
+		user := &missle.User{UserName: username, Password: password}
+		user.Save()
+		this.Data = response(0, nil)
+		return
+	} else if action == "autoRegister" {
+
 	}
 }

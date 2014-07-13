@@ -1,6 +1,8 @@
 package missle
 
-import ()
+import (
+	"log"
+)
 
 const (
 	STATE_READY   = 1
@@ -25,7 +27,16 @@ type Match struct {
 var seq int64 = 0
 var matchs = make(map[int64]*Match)
 
-func NewMatch(playersId []int64, pusher Pusher) *Match {
+func NewMatch(playersId []int64, pusher Pusher) (*Match, error) {
+	if playersId == nil || len(playersId) < 2 {
+		return nil, NewMissleErr(ERR_INVALID_ARGS, "playersId is nil or less than 2")
+	}
+
+	if pusher == nil {
+		return nil, NewMissleErr(ERR_INVALID_ARGS, "pusher is nil")
+	}
+
+	log.Printf("NewMatch(%#v, %#v)", playersId, pusher)
 	seq++
 	channelId, _ := pusher.NewChannel(playersId)
 	match := &Match{
@@ -38,7 +49,7 @@ func NewMatch(playersId []int64, pusher Pusher) *Match {
 	}
 
 	matchs[match.Id] = match
-	return match
+	return match, nil
 }
 
 func makePlayers(playersId []int64) map[int64]*Player {
@@ -48,7 +59,7 @@ func makePlayers(playersId []int64) map[int64]*Player {
 		playerId := playersId[i]
 		profile := FindUserById(playerId)
 		pos := MakePositionFor(isLeft, 0)
-		players[playerId] = &Player{playerId, profile.UserName, profile.Avatar, isLeft, *pos, 100}
+		players[playerId] = &Player{playerId, profile.UserName, profile.Avatar, isLeft, *pos, 100, 0}
 
 		isLeft = !isLeft
 	}
@@ -126,10 +137,13 @@ func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) {
 	m.Pusher.PushToChannel(m.ChannelId, msg)
 }
 
-func (m *Match) PlayerHealth(playerId int64, healthChange int) {
-	newHealth := m.changeHealth(playerId, healthChange)
+// p1 hit p2
+func (m *Match) PlayerAttack(p1 int64, p2 int64, damage int) {
+	newHealth, oldHealth := m.changeHealth(p2, -damage)
+	player1 := m.Players[p1]
+	player1.PointsWin += newHealth - oldHealth
 
-	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{playerId, newHealth})
+	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{p2, newHealth})
 	m.Pusher.PushToChannel(m.ChannelId, msg)
 
 	if newHealth == 0 {
@@ -143,17 +157,17 @@ func (m *Match) shouldGameOver() bool {
 	return true
 }
 
-func (m *Match) changeHealth(playerId int64, healthChange int) int {
+func (m *Match) changeHealth(playerId int64, healthChange int) (nh, oh int) {
 	player := m.Players[playerId]
-	if player == nil {
-		return -1
-	}
+	oh = player.Health
+
 	player.Health += healthChange
 	if player.Health < 0 {
 		player.Health = 0
 	}
 
-	return player.Health
+	nh = player.Health
+	return
 }
 
 func (m *Match) newMessage(name string, body interface{}) *Message {
