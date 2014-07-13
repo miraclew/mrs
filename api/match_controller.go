@@ -33,7 +33,7 @@ func (this *MatchController) Post() {
 		game := missle.GetGame()
 		var pusher missle.Pusher
 		pusher = &missle.PusherMock{}
-		game.Pusher = pusher
+		game.SetPuser(pusher)
 
 		err := game.PlayerEnter(playerId)
 		if err != nil {

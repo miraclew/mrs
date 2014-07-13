@@ -10,7 +10,7 @@ import (
 )
 
 type Pusher struct {
-	handler ConnectionHandler
+	handler PushHandler
 	server  Server
 }
 
@@ -53,12 +53,12 @@ func (p *Pusher) Serve(listener net.Listener) {
 				fmt.Println(err)
 			}
 			if p.handler != nil && userId != 0 {
-				p.handler.Disconnected(userId)
+				p.handler.OnDisconnected(userId)
 			}
 		}()
 
 		token := ws.Request().URL.Query().Get("token")
-		userId = p.handler.ValidateToken(token)
+		userId = p.handler.OnValidateToken(token)
 		log.Printf("New connection, token->userId %s -> %d \n", token, userId)
 		if userId == 0 {
 			return
@@ -66,7 +66,7 @@ func (p *Pusher) Serve(listener net.Listener) {
 		client := NewClient(userId, ws, s)
 		s.Add(client)
 		if p.handler != nil {
-			p.handler.Connected(userId)
+			p.handler.OnConnected(userId)
 		}
 		client.Listen()
 	}
@@ -88,11 +88,12 @@ func (p *Pusher) Serve(listener net.Listener) {
 	log.Printf("HTTP: closing %s", listener.Addr().String())
 }
 
-func (p *Pusher) ConnectionHandle(handler ConnectionHandler) {
+func (p *Pusher) ConnectionHandle(handler PushHandler) {
 	p.handler = handler
 }
 
-type ConnectionHandler interface {
-	Connected(userId int64)
-	Disconnected(userId int64)
+type PushHandler interface {
+	OnValidateToken(token string) int64 // token to userId
+	OnConnected(userId int64)
+	OnDisconnected(userId int64)
 }

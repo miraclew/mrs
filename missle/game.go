@@ -8,7 +8,7 @@ import (
 type Game struct {
 	waitQueue []int64           // waiting players
 	players   map[int64]*Player // all online players
-	Pusher    Pusher
+	pusher    Pusher
 }
 
 var game *Game
@@ -27,9 +27,32 @@ func (g *Game) init() {
 	g.players = make(map[int64]*Player)
 }
 
+func (g *Game) SetPuser(pusher Pusher) {
+	g.pusher = pusher
+	pusher.ConnectionHandle(g)
+}
+
+/* ConnectionHandler */
+func (g *Game) OnValidateToken(token string) int64 {
+	uid, err := GetUidByToken(token)
+	if err != nil {
+		uid = 0
+	}
+
+	return uid
+}
+
+func (g *Game) OnConnected(playerId int64) {
+	player, _ := g.initPlayer(playerId)
+	g.players[playerId] = player
+}
+
+func (g *Game) OnDisconnected(playerId int64) {
+	delete(g.players, playerId)
+}
+
 // Player enter game (connected)
 func (g *Game) PlayerEnter(playerId int64) (err error) {
-	_, err = g.initPlayer(playerId)
 	if len(g.waitQueue) > 0 {
 		p1 := g.waitQueue[0]
 		p2 := playerId
@@ -40,7 +63,7 @@ func (g *Game) PlayerEnter(playerId int64) (err error) {
 		g.waitQueue = g.waitQueue[1:]
 
 		var match *Match
-		match, err = NewMatch([]int64{p1, p2}, g.Pusher)
+		match, err = NewMatch([]int64{p1, p2}, g.pusher)
 		if err != nil {
 			log.Printf("NewMatch failed: %s", err.Error())
 			return
@@ -54,7 +77,7 @@ func (g *Game) PlayerEnter(playerId int64) (err error) {
 }
 
 func (g *Game) PlayerExit(playerId int64) {
-	delete(g.players, playerId)
+
 }
 
 func (g *Game) initPlayer(playerId int64) (player *Player, err error) {
@@ -66,6 +89,5 @@ func (g *Game) initPlayer(playerId int64) (player *Player, err error) {
 
 	//log.Printf("initPlayer %d profile: %#v \n", playerId, profile)
 	player = &Player{Id: playerId, NickName: profile.UserName, Avatar: profile.Avatar}
-	g.players[playerId] = player
 	return
 }

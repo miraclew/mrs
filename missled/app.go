@@ -39,6 +39,8 @@ func NewAppOptions() *AppOptions {
 func (a *App) Main() {
 	missle.SetDSN(DSN)
 	pusher := &push.Pusher{}
+	game := missle.GetGame()
+	game.SetPuser(pusher)
 
 	tcpListener, err := net.Listen("tcp", a.tcpAddr.String())
 	if err != nil {

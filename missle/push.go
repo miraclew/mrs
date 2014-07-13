@@ -17,9 +17,9 @@ type Pusher interface {
 }
 
 type PushHandler interface {
-	ValidateToken(token string) int64 // token to userId
-	Connected(userId int64)
-	Disconnected(userId int64)
+	OnValidateToken(token string) int64 // token to userId
+	OnConnected(userId int64)
+	OnDisconnected(userId int64)
 }
 
 type PusherMock struct{}
