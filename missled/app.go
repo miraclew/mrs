@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/miraclew/mrs/missle"
+	"github.com/miraclew/mrs/push"
 	"log"
 	"net"
 	"sync"
@@ -35,6 +37,9 @@ func NewAppOptions() *AppOptions {
 }
 
 func (a *App) Main() {
+	missle.SetDSN(DSN)
+	pusher := &push.Pusher{}
+
 	tcpListener, err := net.Listen("tcp", a.tcpAddr.String())
 	if err != nil {
 		log.Fatalf("FATAL: listen (%s) failed - %s", a.tcpAddr, err.Error())
@@ -55,7 +60,7 @@ func (a *App) Main() {
 
 	a.waitGroup.Add(1)
 	go func() {
-		wsServe(tcpListener)
+		pusher.Serve(tcpListener)
 		a.waitGroup.Done()
 	}()
 }

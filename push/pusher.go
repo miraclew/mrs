@@ -1,10 +1,17 @@
 package push
 
 import (
-// "fmt"
+	"code.google.com/p/go.net/websocket"
+	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"strings"
 )
 
 type Pusher struct {
+	handler ConnectionHandler
+	server  Server
 }
 
 func (p *Pusher) NewChannel(subsId []int64) (channelId int64, err error) {
@@ -31,4 +38,61 @@ func (p *Pusher) PushToChannel(chanelId int64, message interface{}) (err error) 
 
 	err = nil
 	return
+}
+
+func (p *Pusher) Serve(listener net.Listener) {
+	log.Printf("WS: listening on %s", listener.Addr().String())
+
+	s := NewServer()
+	onConnected := func(ws *websocket.Conn) {
+		var userId int64 = 0
+		defer func() {
+			err := ws.Close()
+			if err != nil {
+				// s.errCh <- err
+				fmt.Println(err)
+			}
+			if p.handler != nil && userId != 0 {
+				p.handler.Disconnected(userId)
+			}
+		}()
+
+		token := ws.Request().URL.Query().Get("token")
+		userId = p.handler.ValidateToken(token)
+		log.Printf("New connection, token->userId %s -> %d \n", token, userId)
+		if userId == 0 {
+			return
+		}
+		client := NewClient(userId, ws, s)
+		s.Add(client)
+		if p.handler != nil {
+			p.handler.Connected(userId)
+		}
+		client.Listen()
+	}
+
+	go s.Listen()
+
+	wsHandler := &websocket.Server{Handler: websocket.Handler(onConnected)}
+
+	httpServer := &http.Server{
+		Handler: wsHandler,
+	}
+
+	err := httpServer.Serve(listener)
+	// theres no direct way to detect this error because it is not exposed
+	if err != nil && !strings.Contains(err.Error(), "use of closed network connection") {
+		log.Printf("ERROR: ws.Serve() - %s", err.Error())
+	}
+
+	log.Printf("HTTP: closing %s", listener.Addr().String())
+}
+
+func (p *Pusher) ConnectionHandle(handler ConnectionHandler) {
+	p.handler = handler
+}
+
+type ConnectionHandler interface {
+	Connected(userId int64)
+	Disconnected(userId int64)
 }

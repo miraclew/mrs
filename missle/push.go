@@ -13,10 +13,11 @@ type Pusher interface {
 	PushToChannel(chanelId int64, message interface{}) (err error)
 
 	// IsConnected(userId int64)
-	ConnectionHandle(handler ConnectionHandler)
+	ConnectionHandle(handler PushHandler)
 }
 
-type ConnectionHandler interface {
+type PushHandler interface {
+	ValidateToken(token string) int64 // token to userId
 	Connected(userId int64)
 	Disconnected(userId int64)
 }
@@ -39,6 +40,6 @@ func (p *PusherMock) PushToChannel(chanelId int64, message interface{}) (err err
 	return nil
 }
 
-func (p *PusherMock) ConnectionHandle(handler ConnectionHandler) {
+func (p *PusherMock) ConnectionHandle(handler PushHandler) {
 
 }

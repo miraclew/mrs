@@ -10,15 +10,14 @@ import (
 
 func TestA(t *testing.T) {
 	origin := "http://localhost/"
-	url := "ws://localhost:8081/ws"
+	url := "ws://localhost:8081/ws?token=aaaaabbb"
 	ws, err := websocket.Dial(url, "", origin)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("connected")
-	msg := Message{}
-	msg.Body = "hello from client"
+	msg := "hello from client"
 
 	if err := websocket.JSON.Send(ws, msg); err != nil {
 		log.Fatal(err)

@@ -1,6 +1,14 @@
 package missle
 
+var DSN string = "root:@tcp(localhost:3306)/mr?charset=utf8"
+
 const (
-	DSN = "root:@tcp(localhost:3306)/mr?charset=utf8"
-	MC  = "localhost:11211"
+	MC = "localhost:11211"
 )
+
+func init() {
+}
+
+func SetDSN(dsn string) {
+	DSN = dsn
+}
