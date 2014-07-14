@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-type Pusher interface {
+type PushHandler interface {
 	NewChannel(subsId []int64) (channelId int64, err error)
 	// Push to one user
 	PushToUser(userId int64, message interface{}) (err error)
@@ -13,14 +13,14 @@ type Pusher interface {
 	PushToChannel(chanelId int64, message interface{}) (err error)
 
 	// IsConnected(userId int64)
-	ConnectionHandle(handler PushHandler)
+	//ConnectionHandle(handler PushHandler)
 }
 
-type PushHandler interface {
-	OnValidateToken(token string) int64 // token to userId
-	OnConnected(userId int64)
-	OnDisconnected(userId int64)
-}
+// type PushHandler interface {
+// 	OnValidateToken(token string) int64 // token to userId
+// 	OnConnected(userId int64)
+// 	OnDisconnected(userId int64)
+// }
 
 type PusherMock struct{}
 

@@ -8,7 +8,7 @@ import (
 type Game struct {
 	waitQueue []int64           // waiting players
 	players   map[int64]*Player // all online players
-	pusher    Pusher
+	pusher    PushHandler
 }
 
 var game *Game
@@ -27,9 +27,8 @@ func (g *Game) init() {
 	g.players = make(map[int64]*Player)
 }
 
-func (g *Game) SetPuser(pusher Pusher) {
+func (g *Game) HandlePush(pusher PushHandler) {
 	g.pusher = pusher
-	pusher.ConnectionHandle(g)
 }
 
 /* ConnectionHandler */

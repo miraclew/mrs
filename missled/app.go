@@ -40,7 +40,9 @@ func (a *App) Main() {
 	missle.SetDSN(DSN)
 	pusher := &push.Pusher{}
 	game := missle.GetGame()
-	game.SetPuser(pusher)
+
+	game.HandlePush(pusher)
+	pusher.HandleConnection(game)
 
 	tcpListener, err := net.Listen("tcp", a.tcpAddr.String())
 	if err != nil {

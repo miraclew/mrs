@@ -19,36 +19,36 @@ func (this *MatchController) Post() {
 	token := values.Get("token")
 
 	if (len(action) == 0) || (len(token) == 0) {
-		this.Data = response(-1, "action or token is nil")
+		this.Fail(-1, "action or token is nil")
 		return
 	}
 
 	playerId, err := missle.GetUidByToken(token)
 	if err != nil {
-		this.Data = response(-1, err.Error())
+		this.Fail(-1, err.Error())
 		return
 	}
 
 	if action == "enter" {
 		game := missle.GetGame()
-		var pusher missle.Pusher
+		var pusher missle.PushHandler
 		pusher = &missle.PusherMock{}
-		game.SetPuser(pusher)
+		game.HandlePush(pusher)
 
 		err := game.PlayerEnter(playerId)
 		if err != nil {
-			this.Data = response(-1, err.Error())
+			this.Fail(-1, err.Error())
 			return
 		}
 
-		this.Data = response(0, nil)
+		this.Ok(nil)
 		return
 	}
 
 	matchId, _ := strconv.ParseInt(values.Get("matchId"), 0, 64)
 	match := missle.GetMatch(matchId)
 	if match == nil {
-		this.Data = response(-1, "matchId is nil")
+		this.Fail(-1, "matchId is nil")
 		return
 	}
 
@@ -58,9 +58,9 @@ func (this *MatchController) Post() {
 		err := match.PlayerMove(playerId, missle.Point{float32(x), float32(y)})
 
 		if err != nil {
-			this.Data = response(0, err.Error())
+			this.Fail(-1, err.Error())
 		} else {
-			this.Data = response(0, nil)
+			this.Ok(nil)
 		}
 		return
 	}
@@ -71,7 +71,7 @@ func (this *MatchController) Post() {
 		velocity := missle.Point{float32(x), float32(y)}
 		pos := missle.Point{0, 0}
 		match.PlayerFire(playerId, pos, velocity)
-		this.Data = response(0, nil)
+		this.Ok(nil)
 		return
 	}
 
@@ -81,7 +81,7 @@ func (this *MatchController) Post() {
 		damage, _ := strconv.Atoi(values.Get("damage"))
 
 		match.PlayerAttack(p1, p2, damage)
-		this.Data = response(0, nil)
+		this.Ok(nil)
 		return
 	}
 }

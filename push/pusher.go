@@ -9,8 +9,15 @@ import (
 	"strings"
 )
 
+type ConnectionHandler interface {
+	OnValidateToken(token string) int64 // token to userId
+	OnConnected(userId int64)
+	OnDisconnected(userId int64)
+}
+
+// implements Pushing inteface
 type Pusher struct {
-	handler PushHandler
+	handler ConnectionHandler
 	server  Server
 }
 
@@ -88,12 +95,6 @@ func (p *Pusher) Serve(listener net.Listener) {
 	log.Printf("HTTP: closing %s", listener.Addr().String())
 }
 
-func (p *Pusher) ConnectionHandle(handler PushHandler) {
+func (p *Pusher) HandleConnection(handler ConnectionHandler) {
 	p.handler = handler
-}
-
-type PushHandler interface {
-	OnValidateToken(token string) int64 // token to userId
-	OnConnected(userId int64)
-	OnDisconnected(userId int64)
 }

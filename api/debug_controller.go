@@ -9,5 +9,5 @@ type DebugController struct {
 }
 
 func (this *DebugController) Get() {
-	this.Data = "DebugController"
+	this.Response.Data = "DebugController"
 }

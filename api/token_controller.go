@@ -20,15 +20,15 @@ func (this *TokenController) Post() {
 
 	user := missle.FindUserByCredential(username, password)
 	if user == nil {
-		this.Data = response(ERR_INVALID_CREDENTIAL, "")
+		this.Fail(ERR_INVALID_CREDENTIAL, "")
 		return
 	}
 
 	token, err := missle.MakeToken(user.Uid)
 	if err != nil {
-		this.Data = response(ERR_INTERAL_ERROR, "make token failed")
+		this.Fail(ERR_INTERAL_ERROR, "make token failed")
 		return
 	}
 
-	this.Data = &TokenResponse{user.Uid, token}
+	this.Ok(&TokenResponse{user.Uid, token})
 }

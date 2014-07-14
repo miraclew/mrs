@@ -21,13 +21,14 @@ type Match struct {
 	PlayersId []int64
 	State     int
 	TurnIdx   int
-	Pusher    Pusher
+
+	pusher PushHandler
 }
 
 var seq int64 = 0
 var matchs = make(map[int64]*Match)
 
-func NewMatch(playersId []int64, pusher Pusher) (*Match, error) {
+func NewMatch(playersId []int64, pusher PushHandler) (*Match, error) {
 	if playersId == nil || len(playersId) < 2 {
 		return nil, NewMissleErr(ERR_INVALID_ARGS, "playersId is nil or less than 2")
 	}
@@ -45,7 +46,7 @@ func NewMatch(playersId []int64, pusher Pusher) (*Match, error) {
 		Players:   makePlayers(playersId),
 		PlayersId: playersId,
 		State:     STATE_READY,
-		Pusher:    pusher,
+		pusher:    pusher,
 	}
 
 	matchs[match.Id] = match
@@ -83,7 +84,7 @@ func (m *Match) Begin() (err error) {
 	}
 
 	msg := m.newMessage(MN_MatchBegin, &MatchBegin{players, keyPoints})
-	m.Pusher.PushToChannel(m.ChannelId, msg)
+	m.pusher.PushToChannel(m.ChannelId, msg)
 
 	m.State = STATE_PLAYING
 	return nil
@@ -98,7 +99,7 @@ func (m *Match) NextTurn() {
 	playerId := m.PlayersId[m.TurnIdx]
 
 	msg := m.newMessage(MN_MatchTurn, nil)
-	m.Pusher.PushToUser(playerId, msg)
+	m.pusher.PushToUser(playerId, msg)
 }
 
 func (m *Match) End() {
@@ -113,7 +114,7 @@ func (m *Match) End() {
 		UpdatePlayerPoints(v.Id, point)
 
 		msg := m.newMessage(MN_MatchEnd, &MatchEnd{point})
-		m.Pusher.PushToUser(v.Id, msg)
+		m.pusher.PushToUser(v.Id, msg)
 	}
 	m.State = STATE_END
 }
@@ -127,14 +128,14 @@ func (m *Match) PlayerMove(playerId int64, pos Point) error {
 	player.Position = pos
 
 	msg := m.newMessage(MN_PlayerMove, &PlayerMove{playerId, pos})
-	m.Pusher.PushToChannel(m.ChannelId, msg)
+	m.pusher.PushToChannel(m.ChannelId, msg)
 
 	return nil
 }
 
 func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) {
 	msg := m.newMessage(MN_PlayerFire, &PlayerFire{playerId, velocity})
-	m.Pusher.PushToChannel(m.ChannelId, msg)
+	m.pusher.PushToChannel(m.ChannelId, msg)
 }
 
 // p1 hit p2
@@ -144,7 +145,7 @@ func (m *Match) PlayerAttack(p1 int64, p2 int64, damage int) {
 	player1.PointsWin += newHealth - oldHealth
 
 	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{p2, newHealth})
-	m.Pusher.PushToChannel(m.ChannelId, msg)
+	m.pusher.PushToChannel(m.ChannelId, msg)
 
 	if newHealth == 0 {
 		if m.shouldGameOver() {
