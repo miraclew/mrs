@@ -1,0 +1,5 @@
+
+go get github.com/BurntSushi/toml
+go get "code.google.com/p/go.net/websocket"
+go get "github.com/bradfitz/gomemcache/memcache"
+go get "github.com/go-sql-driver/mysql"
