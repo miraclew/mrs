@@ -14,6 +14,10 @@ type ConnectionHandler interface {
 	OnDisconnected(userId int64)
 }
 
+func NewManager(server *Server, handler ConnectionHandler) *Manager {
+	return &Manager{handler, server}
+}
+
 // implements Pushing inteface
 type Manager struct {
 	handler ConnectionHandler
@@ -50,7 +54,7 @@ func (p *Manager) HandleConnection(handler ConnectionHandler) {
 	p.handler = handler
 }
 
-func (p *Manager) tcpServe(listener net.Listener) {
+func (p *Manager) Serve(listener net.Listener) {
 	log.Printf("TCP: listening on %s", listener.Addr().String())
 
 	for {

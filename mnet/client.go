@@ -97,14 +97,14 @@ func (c *Client) listenRead() {
 		// read data from net connection
 		default:
 			// var msg Packet
-			b := make([]byte, 256)
-			_, err := c.conn.Read(b)
+			b := make([]byte, 10)
+			length, err := c.conn.Read(b)
 			if err == io.EOF {
 				c.doneCh <- true
 			} else if err != nil {
 				c.server.Err(err)
 			} else {
-				c.buf.Write(b)
+				c.buf.Write(b[0:length])
 
 				payload := Payload{}
 				err, more, left := payload.Decode(c.buf.Bytes())

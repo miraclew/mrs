@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func TestB(t *testing.T) {
+func TestConcatedPacket(t *testing.T) {
 	addr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:8081")
 	handleErr(err)
 	conn, err := net.DialTCP("tcp", nil, addr)
@@ -21,7 +21,8 @@ func TestB(t *testing.T) {
 	b, err := payload.Encode()
 	handleErr(err)
 
-	fmt.Printf("Send: % x\n", b)
+	fmt.Printf("Send: %#v\n", payload)
+	fmt.Printf("hex: % x\n", b)
 	_, err = conn.Write(b)
 	handleErr(err)
 	result, err := ioutil.ReadAll(conn)
@@ -32,7 +33,7 @@ func TestB(t *testing.T) {
 
 func handleErr(err error) {
 	if err != nil {
-		fmt.Printf("FATAL error: %s", err.Error())
+		fmt.Printf("FATAL error: %s\n", err.Error())
 		os.Exit(1)
 	}
 }

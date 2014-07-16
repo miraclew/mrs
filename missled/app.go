@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/miraclew/mrs/missle"
+	"github.com/miraclew/mrs/mnet"
 	"github.com/miraclew/mrs/push"
 	"log"
 	"net"
@@ -44,6 +45,9 @@ func (a *App) Main() {
 	game.HandlePush(pusher)
 	pusher.HandleConnection(game)
 
+	server := mnet.NewServer()
+	manager := mnet.NewManager(server, nil)
+
 	tcpListener, err := net.Listen("tcp", a.tcpAddr.String())
 	if err != nil {
 		log.Fatalf("FATAL: listen (%s) failed - %s", a.tcpAddr, err.Error())
@@ -65,7 +69,7 @@ func (a *App) Main() {
 	a.waitGroup.Add(1)
 	go func() {
 		// pusher.Serve(tcpListener)
-		tcpServe(tcpListener)
+		manager.Serve(tcpListener)
 		a.waitGroup.Done()
 	}()
 }

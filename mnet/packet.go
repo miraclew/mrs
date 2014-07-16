@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"hash/crc32"
+	"log"
 )
 
 const (
@@ -50,6 +51,7 @@ func (p *Payload) Encode() (data []byte, err error) {
 }
 
 func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
+	log.Printf("Decode: % x\n", data)
 	more = false
 	err = nil
 	if len(data) < PKG_HEAD_BYTES {
@@ -57,13 +59,16 @@ func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
 		return
 	}
 
-	buf := bytes.NewBuffer(data[0 : PKG_HEAD_BYTES-1])
+	buf := bytes.NewBuffer(data[0:PKG_HEAD_BYTES])
 	err = binary.Read(buf, binary.LittleEndian, &p.length)
 	if err != nil {
 		return
 	}
+	log.Printf("p.length=%d\n", p.length)
 
-	if len(data) < PKG_HEAD_BYTES+int(p.length) {
+	endPos := PKG_HEAD_BYTES + int(p.length)
+	if len(data) < endPos {
+		log.Println("need read more data")
 		more = true
 		return
 	}
@@ -73,12 +78,19 @@ func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
 		return
 	}
 
+	log.Printf("p.cmd=%d\n", p.cmd)
+
 	err = binary.Read(buf, binary.LittleEndian, &p.crc32)
 	if err != nil {
 		return
 	}
 
-	p.body = data[PKG_HEAD_BYTES : p.length-PKG_HEAD_BYTES]
-	left = data[PKG_HEAD_BYTES+p.length:]
+	log.Printf("slice[%d:%d]", PKG_HEAD_BYTES, endPos)
+
+	p.body = data[PKG_HEAD_BYTES:endPos]
+	if endPos < len(data) {
+		left = data[endPos:]
+	}
+
 	return
 }
