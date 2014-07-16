@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"io/ioutil"
 	"net"
 	"os"
 	"testing"
@@ -21,9 +22,12 @@ func TestB(t *testing.T) {
 	handleErr(err)
 
 	fmt.Printf("Send: % x\n", b)
-	conn.Write(b)
-	// handleErr(err)
-	conn.Close()
+	_, err = conn.Write(b)
+	handleErr(err)
+	result, err := ioutil.ReadAll(conn)
+	handleErr(err)
+	fmt.Println(string(result))
+	// conn.Close()
 }
 
 func handleErr(err error) {
