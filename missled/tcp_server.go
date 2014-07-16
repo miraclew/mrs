@@ -30,8 +30,21 @@ func tcpServe(listener net.Listener) {
 		go func(c net.Conn) {
 			io.Copy(c, c)
 			c.Close()
+
 		}(conn)
 	}
 
 	log.Printf("TCP: closing %s", listener.Addr().String())
+}
+
+func handleClient(c net.Conn) {
+	log.Println("New connection...")
+
+	defer func() {
+		log.Println("Connection close")
+		c.Close()
+	}()
+
+	// var buf [512]byte
+
 }

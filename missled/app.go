@@ -38,7 +38,10 @@ func NewAppOptions() *AppOptions {
 
 func (a *App) Main() {
 	missle.SetDSN(DSN)
-	pusher := &push.Pusher{}
+	server := NewServer
+	go server.Listen()
+
+	pusher := &push.Pusher{server: server}
 	game := missle.GetGame()
 
 	game.HandlePush(pusher)
@@ -64,7 +67,8 @@ func (a *App) Main() {
 
 	a.waitGroup.Add(1)
 	go func() {
-		pusher.Serve(tcpListener)
+		// pusher.Serve(tcpListener)
+		tcpServe(tcpListener)
 		a.waitGroup.Done()
 	}()
 }

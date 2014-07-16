@@ -1,0 +1,9 @@
+Packet:
+    Head [4 bytes]
+    Body
+
+Head:
+    CMD [2 bytes]
+    Length [2 bytes]
+
+
