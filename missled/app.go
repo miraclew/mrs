@@ -38,10 +38,7 @@ func NewAppOptions() *AppOptions {
 
 func (a *App) Main() {
 	missle.SetDSN(DSN)
-	server := NewServer
-	go server.Listen()
-
-	pusher := &push.Pusher{server: server}
+	pusher := &push.Pusher{}
 	game := missle.GetGame()
 
 	game.HandlePush(pusher)

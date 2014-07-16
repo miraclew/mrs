@@ -4,11 +4,33 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"net"
+	"os"
 	"testing"
 )
 
-func TestB(t *test.T) {
+func TestB(t *testing.T) {
+	addr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:8081")
+	handleErr(err)
+	conn, err := net.DialTCP("tcp", nil, addr)
+	handleErr(err)
 
+	payload := Payload{cmd: 1, body: []byte("hello")}
+
+	b, err := payload.Encode()
+	handleErr(err)
+
+	fmt.Printf("Send: % x\n", b)
+	conn.Write(b)
+	// handleErr(err)
+	conn.Close()
+}
+
+func handleErr(err error) {
+	if err != nil {
+		fmt.Printf("FATAL error: %s", err.Error())
+		os.Exit(1)
+	}
 }
 
 func TestA(t *testing.T) {
@@ -30,7 +52,7 @@ func TestA(t *testing.T) {
 	fmt.Println("haaa")
 	fmt.Printf("% x", buf.Bytes())
 
-	buf2 := bytes.NewBuffer(buf)
+	buf2 := bytes.NewBuffer(buf.Bytes())
 	binary.Read(buf2, binary.LittleEndian, data)
 
 	fmt.Println("")

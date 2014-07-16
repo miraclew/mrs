@@ -23,6 +23,8 @@ type Payload struct {
 
 func (p *Payload) Encode() (data []byte, err error) {
 	buf := new(bytes.Buffer)
+
+	p.length = uint16(len(p.body))
 	err = binary.Write(buf, binary.LittleEndian, p.length)
 	if err != nil {
 		return
