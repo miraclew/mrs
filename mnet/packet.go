@@ -16,8 +16,8 @@ type Packet struct {
 }
 
 type Payload struct {
+	code   uint16
 	length uint16 // body length
-	cmd    uint16
 	crc32  uint32
 	body   []byte
 }
@@ -25,13 +25,13 @@ type Payload struct {
 func (p *Payload) Encode() (data []byte, err error) {
 	buf := new(bytes.Buffer)
 
-	p.length = uint16(len(p.body))
-	err = binary.Write(buf, binary.LittleEndian, p.length)
+	err = binary.Write(buf, binary.LittleEndian, p.code)
 	if err != nil {
 		return
 	}
 
-	err = binary.Write(buf, binary.LittleEndian, p.cmd)
+	p.length = uint16(len(p.body))
+	err = binary.Write(buf, binary.LittleEndian, p.length)
 	if err != nil {
 		return
 	}
@@ -60,6 +60,11 @@ func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
 	}
 
 	buf := bytes.NewBuffer(data[0:PKG_HEAD_BYTES])
+	err = binary.Read(buf, binary.LittleEndian, &p.code)
+	if err != nil {
+		return
+	}
+
 	err = binary.Read(buf, binary.LittleEndian, &p.length)
 	if err != nil {
 		return
@@ -73,12 +78,7 @@ func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
 		return
 	}
 
-	err = binary.Read(buf, binary.LittleEndian, &p.cmd)
-	if err != nil {
-		return
-	}
-
-	log.Printf("p.cmd=%d\n", p.cmd)
+	log.Printf("p.code=%d\n", p.code)
 
 	err = binary.Read(buf, binary.LittleEndian, &p.crc32)
 	if err != nil {

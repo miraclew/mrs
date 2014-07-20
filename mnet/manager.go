@@ -30,9 +30,9 @@ func (p *Manager) NewChannel(subsId []int64) (channelId int64, err error) {
 }
 
 func (p *Manager) PushToUser(userId int64, message interface{}) (err error) {
-	packet := &Packet{Body: message}
-	client := p.server.clients[userId]
-	client.Write(packet)
+	// packet := &Packet{Body: message}
+	// client := p.server.clients[userId]
+	// client.Write(packet)
 
 	err = nil
 	return
@@ -95,5 +95,9 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 	if p.handler != nil {
 		// p.handler.OnConnected(userId)
 	}
+
+	payload := Payload{cmd: 1, body: []byte("hello")}
+
+	client.Write(&payload)
 	client.Listen()
 }

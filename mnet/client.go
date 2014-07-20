@@ -2,8 +2,10 @@ package mnet
 
 import (
 	"bytes"
-	"encoding/json"
+	// "encoding/json"
+	"code.google.com/p/goprotobuf/proto"
 	"fmt"
+	"github.com/miraclew/mrs/pb"
 	"io"
 	"log"
 	"net"
@@ -15,7 +17,7 @@ type Client struct {
 	id     int64
 	conn   net.Conn
 	server *Server
-	ch     chan *Packet
+	ch     chan *Payload
 	doneCh chan bool
 	buf    bytes.Buffer
 }
@@ -31,7 +33,7 @@ func NewClient(conn net.Conn, server *Server) *Client {
 		panic("server cannot be nil")
 	}
 
-	ch := make(chan *Packet, channelBufSize)
+	ch := make(chan *Payload, channelBufSize)
 	doneCh := make(chan bool)
 
 	return &Client{conn: conn, server: server, ch: ch, doneCh: doneCh}
@@ -41,7 +43,7 @@ func (c *Client) Conn() net.Conn {
 	return c.conn
 }
 
-func (c *Client) Write(msg *Packet) {
+func (c *Client) Write(msg *Payload) {
 	select {
 	case c.ch <- msg:
 	default:
@@ -69,9 +71,9 @@ func (c *Client) listenWrite() {
 
 		// send message to the client
 		case msg := <-c.ch:
-			log.Println("Send:", msg)
-			bytes, _ := json.Marshal(msg)
-			c.conn.Write(bytes)
+			log.Println("Send: %#v", msg)
+			b, _ := msg.Encode()
+			c.conn.Write(b)
 
 		// receive done request
 		case <-c.doneCh:
@@ -96,7 +98,7 @@ func (c *Client) listenRead() {
 
 		// read data from net connection
 		default:
-			// var msg Packet
+			// var msg Payload
 			b := make([]byte, 10)
 			length, err := c.conn.Read(b)
 			if err == io.EOF {
@@ -106,7 +108,7 @@ func (c *Client) listenRead() {
 			} else {
 				c.buf.Write(b[0:length])
 
-				payload := Payload{}
+				payload := &Payload{}
 				err, more, left := payload.Decode(c.buf.Bytes())
 				if err != nil {
 					fmt.Printf("payload.Decode err: %s", err.Error())
@@ -121,10 +123,35 @@ func (c *Client) listenRead() {
 					if len(left) > 0 {
 						c.buf.Write(left)
 					}
-
+					c.processPayload(payload)
 					fmt.Printf("Receive msg: %#v\n", payload)
 				}
 			}
 		}
 	}
+}
+
+func (c *Client) processPayload(payload *Payload) {
+	if payload.code == pb.Code_C_AUTH {
+		auth := &pb.CAuth{}
+		err := proto.Unmarshal(payload.body, auth)
+	} else if payload.code == pb.CMatchEnter {
+		matchEnter := &pb.CMatchEnter{}
+		err := proto.Unmarshal(pb.body, matchEnter)
+	} else if payload.code == pb.Code_C_MATCH_ENTER {
+
+	} else if payload.code == pb.Code_C_PLAYER_MOVE {
+		move := &pb.CPlayerMove{}
+		err := proto.Unmarshal(payload.body, move)
+	} else if payload.code == pb.Code_C_PLAYER_FIRE {
+		fire := &pb.CPlayerFire{}
+		err := proto.Unmarshal(payload.body, fire)
+	} else if payload.code == pb.Code_C_PLAYER_HIT {
+		hit := &pb.CPlayerHit{}
+		err := proto.Unmarshal(payload.body, hit)
+
+	} else if payload.code == pb.Code_C_PLAYER_HEALTH {
+		//health := &pb.CPlayerH
+	}
+
 }
