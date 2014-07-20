@@ -57,6 +57,16 @@ func (g *Game) OnRecievePayload(playerId int64, payload *mnet.Payload) {
 	if code == pb.Code_C_AUTH {
 		auth := &pb.CAuth{}
 		err = proto.Unmarshal(payload.Body, auth)
+		eauth := &pb.EAuth{}
+		user := FindUserByCredential(auth.GetUserName(), auth.GetPassword())
+		var code int32 = 0
+		if user == nil {
+			code = -1
+		}
+		eauth.Code = &code
+
+		msg := &mnet.Message{Code: pb.Code_E_AUTH, MSG: eauth}
+		g.manager.PushToUser(playerId, msg)
 	} else if code == pb.Code_C_MATCH_ENTER {
 		matchEnter := &pb.CMatchEnter{}
 		err = proto.Unmarshal(payload.Body, matchEnter)
