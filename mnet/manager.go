@@ -2,7 +2,6 @@ package mnet
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"fmt"
 	"log"
 	"net"
 	"runtime"
@@ -17,7 +16,7 @@ type ConnectionHandler interface {
 }
 
 func NewManager() *Manager {
-	return &Manager{}
+	return &Manager{server: NewServer()}
 }
 
 // implements Pushing inteface
@@ -88,24 +87,27 @@ func (p *Manager) Serve(listener net.Listener) {
 }
 
 func (p *Manager) handleTcpClient(conn net.Conn) {
+	log.Printf("New TCP Client %s", "...")
 	defer func() {
 		err := conn.Close()
 		if err != nil {
 			// s.errCh <- err
-			fmt.Println(err)
+			log.Printf("Client close error: %s", err.Error())
 		}
+		log.Print("Client disconnected")
 		if p.Handler != nil {
 			//p.Handler.OnDisconnected(userId)
 		}
 	}()
 
 	client := NewClient(conn, p.server, p)
+	p.server.Add(client)
 	if p.Handler != nil {
 		// p.Handler.OnConnected(userId)
 	}
 
-	payload := Payload{Code: 1, Body: []byte("hello")}
+	// payload := Payload{Code: 1, Body: []byte("hello")}
 
-	client.Write(&payload)
+	// client.Write(&payload)
 	client.Listen()
 }
