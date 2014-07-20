@@ -2,7 +2,9 @@ package mnet
 
 import (
 	"bytes"
+	"code.google.com/p/goprotobuf/proto"
 	"encoding/binary"
+	"github.com/miraclew/mrs/pb"
 	"hash/crc32"
 	"log"
 )
@@ -15,34 +17,39 @@ type Packet struct {
 	Body interface{}
 }
 
+type Message struct {
+	Code pb.Code
+	MSG  proto.Message
+}
+
 type Payload struct {
-	code   uint16
-	length uint16 // body length
-	crc32  uint32
-	body   []byte
+	Code   uint16
+	Length uint16 // body length
+	Crc32  uint32
+	Body   []byte
 }
 
 func (p *Payload) Encode() (data []byte, err error) {
 	buf := new(bytes.Buffer)
 
-	err = binary.Write(buf, binary.LittleEndian, p.code)
+	err = binary.Write(buf, binary.LittleEndian, p.Code)
 	if err != nil {
 		return
 	}
 
-	p.length = uint16(len(p.body))
-	err = binary.Write(buf, binary.LittleEndian, p.length)
+	p.Length = uint16(len(p.Body))
+	err = binary.Write(buf, binary.LittleEndian, p.Length)
 	if err != nil {
 		return
 	}
 
-	p.crc32 = crc32.ChecksumIEEE(p.body)
-	err = binary.Write(buf, binary.LittleEndian, p.crc32)
+	p.Crc32 = crc32.ChecksumIEEE(p.Body)
+	err = binary.Write(buf, binary.LittleEndian, p.Crc32)
 	if err != nil {
 		return
 	}
 
-	err = binary.Write(buf, binary.LittleEndian, p.body)
+	err = binary.Write(buf, binary.LittleEndian, p.Body)
 	if err != nil {
 		return
 	}
@@ -60,34 +67,34 @@ func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
 	}
 
 	buf := bytes.NewBuffer(data[0:PKG_HEAD_BYTES])
-	err = binary.Read(buf, binary.LittleEndian, &p.code)
+	err = binary.Read(buf, binary.LittleEndian, &p.Code)
 	if err != nil {
 		return
 	}
 
-	err = binary.Read(buf, binary.LittleEndian, &p.length)
+	err = binary.Read(buf, binary.LittleEndian, &p.Length)
 	if err != nil {
 		return
 	}
-	log.Printf("p.length=%d\n", p.length)
+	log.Printf("p.Length=%d\n", p.Length)
 
-	endPos := PKG_HEAD_BYTES + int(p.length)
+	endPos := PKG_HEAD_BYTES + int(p.Length)
 	if len(data) < endPos {
 		log.Println("need read more data")
 		more = true
 		return
 	}
 
-	log.Printf("p.code=%d\n", p.code)
+	log.Printf("p.Code=%d\n", p.Code)
 
-	err = binary.Read(buf, binary.LittleEndian, &p.crc32)
+	err = binary.Read(buf, binary.LittleEndian, &p.Crc32)
 	if err != nil {
 		return
 	}
 
 	log.Printf("slice[%d:%d]", PKG_HEAD_BYTES, endPos)
 
-	p.body = data[PKG_HEAD_BYTES:endPos]
+	p.Body = data[PKG_HEAD_BYTES:endPos]
 	if endPos < len(data) {
 		left = data[endPos:]
 	}

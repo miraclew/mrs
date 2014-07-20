@@ -30,10 +30,10 @@ func (this *MatchController) Post() {
 	}
 
 	if action == "enter" {
-		game := missle.GetGame()
-		var pusher missle.PushHandler
-		pusher = &missle.PusherMock{}
-		game.HandlePush(pusher)
+		game := missle.NewGame(nil)
+		// var pusher missle.PushHandler
+		// pusher = &missle.PusherMock{}
+		// game.HandlePush(pusher)
 
 		err := game.PlayerEnter(playerId)
 		if err != nil {
@@ -80,7 +80,7 @@ func (this *MatchController) Post() {
 		p2 := playerId
 		damage, _ := strconv.Atoi(values.Get("damage"))
 
-		match.PlayerAttack(p1, p2, damage)
+		match.PlayerHit(p1, p2, int32(damage))
 		this.Ok(nil)
 		return
 	}

@@ -126,7 +126,7 @@ func (user *User) Save() (err error) {
 	return
 }
 
-func UpdatePlayerPoints(playerId int64, points int) (err error) {
+func UpdatePlayerPoints(playerId int64, points int32) (err error) {
 	_, err = db.Exec("update players set points=points+? where uid=?", &points, &playerId)
 	return
 }

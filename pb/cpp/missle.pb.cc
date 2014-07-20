@@ -397,21 +397,21 @@ void protobuf_AddDesc_missle_2eproto() {
     "\030\006 \002(\005\"+\n\005CAuth\022\020\n\010userName\030\001 \002(\t\022\020\n\010pas"
     "sword\030\002 \002(\t\"&\n\005EAuth\022\014\n\004code\030\001 \002(\005\022\017\n\007me"
     "ssage\030\002 \001(\t\"\r\n\013CMatchEnter\"T\n\tEMatcInit\022"
-    "\017\n\007matchId\030\001 \002(\005\022\033\n\007players\030\002 \003(\0132\n.pb.P"
+    "\017\n\007matchId\030\001 \002(\003\022\033\n\007players\030\002 \003(\0132\n.pb.P"
     "layer\022\031\n\006points\030\003 \003(\0132\t.pb.Point\",\n\tEMat"
-    "chEnd\022\017\n\007matchId\030\001 \002(\005\022\016\n\006points\030\002 \002(\005\"/"
-    "\n\nEMatchTurn\022\017\n\007matchId\030\001 \002(\005\022\020\n\010playerI"
-    "d\030\002 \002(\003\";\n\013CPlayerMove\022\017\n\007matchId\030\001 \002(\005\022"
+    "chEnd\022\017\n\007matchId\030\001 \002(\003\022\016\n\006points\030\002 \002(\005\"/"
+    "\n\nEMatchTurn\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerI"
+    "d\030\002 \002(\003\";\n\013CPlayerMove\022\017\n\007matchId\030\001 \002(\003\022"
     "\033\n\010position\030\002 \002(\0132\t.pb.Point\"M\n\013EPlayerM"
-    "ove\022\017\n\007matchId\030\001 \002(\005\022\020\n\010playerId\030\002 \002(\003\022\033"
+    "ove\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\022\033"
     "\n\010position\030\003 \002(\0132\t.pb.Point\"M\n\013CPlayerFi"
-    "re\022\017\n\007matchId\030\001 \002(\005\022\020\n\010playerId\030\002 \002(\003\022\033\n"
+    "re\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\022\033\n"
     "\010velocity\030\003 \002(\0132\t.pb.Point\"M\n\013EPlayerFir"
-    "e\022\017\n\007matchId\030\001 \002(\005\022\020\n\010playerId\030\002 \002(\003\022\033\n\010"
+    "e\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\022\033\n\010"
     "velocity\030\003 \002(\0132\t.pb.Point\"E\n\nCPlayerHit\022"
-    "\017\n\007matchId\030\001 \002(\005\022\n\n\002p1\030\002 \002(\003\022\n\n\002p2\030\003 \002(\003"
+    "\017\n\007matchId\030\001 \002(\003\022\n\n\002p1\030\002 \002(\003\022\n\n\002p2\030\003 \002(\003"
     "\022\016\n\006damage\030\004 \002(\005\"E\n\nEPlayerHit\022\017\n\007matchI"
-    "d\030\001 \002(\005\022\n\n\002p1\030\002 \002(\003\022\n\n\002p2\030\003 \002(\003\022\016\n\006damag"
+    "d\030\001 \002(\003\022\n\n\002p1\030\002 \002(\003\022\n\n\002p2\030\003 \002(\003\022\016\n\006damag"
     "e\030\004 \002(\005*\353\001\n\004Code\022\n\n\006C_AUTH\020\013\022\n\n\006E_AUTH\020\014"
     "\022\021\n\rC_MATCH_ENTER\020\025\022\020\n\014E_MATCH_INIT\020\026\022\020\n"
     "\014E_MATCH_TURN\020\027\022\017\n\013E_MATCH_END\020\030\022\021\n\rC_PL"
@@ -1907,7 +1907,7 @@ EMatcInit::EMatcInit(const EMatcInit& from)
 
 void EMatcInit::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1943,7 +1943,7 @@ EMatcInit* EMatcInit::New() const {
 
 void EMatcInit::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
   }
   players_.Clear();
   points_.Clear();
@@ -1957,12 +1957,12 @@ bool EMatcInit::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -2020,9 +2020,9 @@ bool EMatcInit::MergePartialFromCodedStream(
 
 void EMatcInit::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // repeated .pb.Player players = 2;
@@ -2045,9 +2045,9 @@ void EMatcInit::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* EMatcInit::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // repeated .pb.Player players = 2;
@@ -2075,10 +2075,10 @@ int EMatcInit::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -2201,7 +2201,7 @@ EMatchEnd::EMatchEnd(const EMatchEnd& from)
 
 void EMatchEnd::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   points_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2238,7 +2238,7 @@ EMatchEnd* EMatchEnd::New() const {
 
 void EMatchEnd::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     points_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2251,12 +2251,12 @@ bool EMatchEnd::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -2300,9 +2300,9 @@ bool EMatchEnd::MergePartialFromCodedStream(
 
 void EMatchEnd::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int32 points = 2;
@@ -2318,9 +2318,9 @@ void EMatchEnd::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* EMatchEnd::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int32 points = 2;
@@ -2339,10 +2339,10 @@ int EMatchEnd::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -2450,7 +2450,7 @@ EMatchTurn::EMatchTurn(const EMatchTurn& from)
 
 void EMatchTurn::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   playerid_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2487,7 +2487,7 @@ EMatchTurn* EMatchTurn::New() const {
 
 void EMatchTurn::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     playerid_ = GOOGLE_LONGLONG(0);
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2500,12 +2500,12 @@ bool EMatchTurn::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -2549,9 +2549,9 @@ bool EMatchTurn::MergePartialFromCodedStream(
 
 void EMatchTurn::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int64 playerId = 2;
@@ -2567,9 +2567,9 @@ void EMatchTurn::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* EMatchTurn::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int64 playerId = 2;
@@ -2588,10 +2588,10 @@ int EMatchTurn::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -2700,7 +2700,7 @@ CPlayerMove::CPlayerMove(const CPlayerMove& from)
 
 void CPlayerMove::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   position_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2738,7 +2738,7 @@ CPlayerMove* CPlayerMove::New() const {
 
 void CPlayerMove::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     if (has_position()) {
       if (position_ != NULL) position_->::pb::Point::Clear();
     }
@@ -2753,12 +2753,12 @@ bool CPlayerMove::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -2800,9 +2800,9 @@ bool CPlayerMove::MergePartialFromCodedStream(
 
 void CPlayerMove::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required .pb.Point position = 2;
@@ -2819,9 +2819,9 @@ void CPlayerMove::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* CPlayerMove::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required .pb.Point position = 2;
@@ -2842,10 +2842,10 @@ int CPlayerMove::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -2958,7 +2958,7 @@ EPlayerMove::EPlayerMove(const EPlayerMove& from)
 
 void EPlayerMove::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   playerid_ = GOOGLE_LONGLONG(0);
   position_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2997,7 +2997,7 @@ EPlayerMove* EPlayerMove::New() const {
 
 void EPlayerMove::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     playerid_ = GOOGLE_LONGLONG(0);
     if (has_position()) {
       if (position_ != NULL) position_->::pb::Point::Clear();
@@ -3013,12 +3013,12 @@ bool EPlayerMove::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -3076,9 +3076,9 @@ bool EPlayerMove::MergePartialFromCodedStream(
 
 void EPlayerMove::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int64 playerId = 2;
@@ -3100,9 +3100,9 @@ void EPlayerMove::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* EPlayerMove::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int64 playerId = 2;
@@ -3128,10 +3128,10 @@ int EPlayerMove::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -3255,7 +3255,7 @@ CPlayerFire::CPlayerFire(const CPlayerFire& from)
 
 void CPlayerFire::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   playerid_ = GOOGLE_LONGLONG(0);
   velocity_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3294,7 +3294,7 @@ CPlayerFire* CPlayerFire::New() const {
 
 void CPlayerFire::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     playerid_ = GOOGLE_LONGLONG(0);
     if (has_velocity()) {
       if (velocity_ != NULL) velocity_->::pb::Point::Clear();
@@ -3310,12 +3310,12 @@ bool CPlayerFire::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -3373,9 +3373,9 @@ bool CPlayerFire::MergePartialFromCodedStream(
 
 void CPlayerFire::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int64 playerId = 2;
@@ -3397,9 +3397,9 @@ void CPlayerFire::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* CPlayerFire::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int64 playerId = 2;
@@ -3425,10 +3425,10 @@ int CPlayerFire::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -3552,7 +3552,7 @@ EPlayerFire::EPlayerFire(const EPlayerFire& from)
 
 void EPlayerFire::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   playerid_ = GOOGLE_LONGLONG(0);
   velocity_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3591,7 +3591,7 @@ EPlayerFire* EPlayerFire::New() const {
 
 void EPlayerFire::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     playerid_ = GOOGLE_LONGLONG(0);
     if (has_velocity()) {
       if (velocity_ != NULL) velocity_->::pb::Point::Clear();
@@ -3607,12 +3607,12 @@ bool EPlayerFire::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -3670,9 +3670,9 @@ bool EPlayerFire::MergePartialFromCodedStream(
 
 void EPlayerFire::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int64 playerId = 2;
@@ -3694,9 +3694,9 @@ void EPlayerFire::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* EPlayerFire::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int64 playerId = 2;
@@ -3722,10 +3722,10 @@ int EPlayerFire::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -3849,7 +3849,7 @@ CPlayerHit::CPlayerHit(const CPlayerHit& from)
 
 void CPlayerHit::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   p1_ = GOOGLE_LONGLONG(0);
   p2_ = GOOGLE_LONGLONG(0);
   damage_ = 0;
@@ -3888,7 +3888,7 @@ CPlayerHit* CPlayerHit::New() const {
 
 void CPlayerHit::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     p1_ = GOOGLE_LONGLONG(0);
     p2_ = GOOGLE_LONGLONG(0);
     damage_ = 0;
@@ -3903,12 +3903,12 @@ bool CPlayerHit::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -3984,9 +3984,9 @@ bool CPlayerHit::MergePartialFromCodedStream(
 
 void CPlayerHit::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int64 p1 = 2;
@@ -4012,9 +4012,9 @@ void CPlayerHit::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* CPlayerHit::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int64 p1 = 2;
@@ -4043,10 +4043,10 @@ int CPlayerHit::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 
@@ -4178,7 +4178,7 @@ EPlayerHit::EPlayerHit(const EPlayerHit& from)
 
 void EPlayerHit::SharedCtor() {
   _cached_size_ = 0;
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   p1_ = GOOGLE_LONGLONG(0);
   p2_ = GOOGLE_LONGLONG(0);
   damage_ = 0;
@@ -4217,7 +4217,7 @@ EPlayerHit* EPlayerHit::New() const {
 
 void EPlayerHit::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    matchid_ = 0;
+    matchid_ = GOOGLE_LONGLONG(0);
     p1_ = GOOGLE_LONGLONG(0);
     p2_ = GOOGLE_LONGLONG(0);
     damage_ = 0;
@@ -4232,12 +4232,12 @@ bool EPlayerHit::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 matchId = 1;
+      // required int64 matchId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &matchid_)));
           set_has_matchid();
         } else {
@@ -4313,9 +4313,9 @@ bool EPlayerHit::MergePartialFromCodedStream(
 
 void EPlayerHit::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->matchid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->matchid(), output);
   }
 
   // required int64 p1 = 2;
@@ -4341,9 +4341,9 @@ void EPlayerHit::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* EPlayerHit::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   if (has_matchid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->matchid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->matchid(), target);
   }
 
   // required int64 p1 = 2;
@@ -4372,10 +4372,10 @@ int EPlayerHit::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 matchId = 1;
+    // required int64 matchId = 1;
     if (has_matchid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->matchid());
     }
 

@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/miraclew/mrs/missle"
 	"github.com/miraclew/mrs/mnet"
-	"github.com/miraclew/mrs/push"
 	"log"
 	"net"
 	"sync"
@@ -39,14 +38,9 @@ func NewAppOptions() *AppOptions {
 
 func (a *App) Main() {
 	missle.SetDSN(DSN)
-	pusher := &push.Pusher{}
-	game := missle.GetGame()
 
-	game.HandlePush(pusher)
-	pusher.HandleConnection(game)
-
-	server := mnet.NewServer()
-	manager := mnet.NewManager(server, nil)
+	manager := mnet.NewManager()
+	missle.NewGame(manager)
 
 	tcpListener, err := net.Listen("tcp", a.tcpAddr.String())
 	if err != nil {
@@ -68,7 +62,6 @@ func (a *App) Main() {
 
 	a.waitGroup.Add(1)
 	go func() {
-		// pusher.Serve(tcpListener)
 		manager.Serve(tcpListener)
 		a.waitGroup.Done()
 	}()

@@ -46,53 +46,53 @@ message CMatchEnter {
 }
 
 message EMatcInit {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     repeated Player players = 2;
     repeated Point points = 3;
 }
 
 message EMatchEnd {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int32 points = 2;
 }
 
 message EMatchTurn {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int64 playerId = 2;
 }
 
 message CPlayerMove {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required Point position = 2;
 }
 
 message EPlayerMove {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int64 playerId = 2;
     required Point position = 3;
 }
 
 message CPlayerFire {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int64 playerId = 2;
     required Point velocity = 3;
 }
 
 message EPlayerFire {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int64 playerId = 2;
     required Point velocity = 3;
 }
 
 message CPlayerHit {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int64 p1 = 2;
     required int64 p2 = 3;
     required int32 damage = 4;
 }
 
 message EPlayerHit {
-    required int32 matchId = 1;
+    required int64 matchId = 1;
     required int64 p1 = 2;
     required int64 p2 = 3;
     required int32 damage = 4;

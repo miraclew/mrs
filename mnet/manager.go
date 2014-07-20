@@ -1,6 +1,7 @@
 package mnet
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	"log"
 	"net"
@@ -12,15 +13,16 @@ type ConnectionHandler interface {
 	OnValidateToken(token string) int64 // token to userId
 	OnConnected(userId int64)
 	OnDisconnected(userId int64)
+	OnRecievePayload(userId int64, payload *Payload)
 }
 
-func NewManager(server *Server, handler ConnectionHandler) *Manager {
-	return &Manager{handler, server}
+func NewManager() *Manager {
+	return &Manager{}
 }
 
 // implements Pushing inteface
 type Manager struct {
-	handler ConnectionHandler
+	Handler ConnectionHandler
 	server  *Server
 }
 
@@ -29,16 +31,22 @@ func (p *Manager) NewChannel(subsId []int64) (channelId int64, err error) {
 	return channel.Id, nil
 }
 
-func (p *Manager) PushToUser(userId int64, message interface{}) (err error) {
+func (p *Manager) PushToUser(userId int64, message *Message) (err error) {
 	// packet := &Packet{Body: message}
-	// client := p.server.clients[userId]
-	// client.Write(packet)
+	var body []byte
+	body, err = proto.Marshal(message.MSG)
+	if err != nil {
+		return
+	}
+	payload := &Payload{Code: uint16(message.Code), Body: body}
+	client := p.server.clients[userId]
+	client.Write(payload)
 
 	err = nil
 	return
 }
 
-func (p *Manager) PushToChannel(chanelId int64, message interface{}) (err error) {
+func (p *Manager) PushToChannel(chanelId int64, message *Message) (err error) {
 	channel := GetChannel(chanelId)
 	if channel != nil {
 		for _, v := range channel.Subs {
@@ -51,7 +59,7 @@ func (p *Manager) PushToChannel(chanelId int64, message interface{}) (err error)
 }
 
 func (p *Manager) HandleConnection(handler ConnectionHandler) {
-	p.handler = handler
+	p.Handler = handler
 }
 
 func (p *Manager) Serve(listener net.Listener) {
@@ -86,17 +94,17 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 			// s.errCh <- err
 			fmt.Println(err)
 		}
-		if p.handler != nil {
-			//p.handler.OnDisconnected(userId)
+		if p.Handler != nil {
+			//p.Handler.OnDisconnected(userId)
 		}
 	}()
 
-	client := NewClient(conn, p.server)
-	if p.handler != nil {
-		// p.handler.OnConnected(userId)
+	client := NewClient(conn, p.server, p)
+	if p.Handler != nil {
+		// p.Handler.OnConnected(userId)
 	}
 
-	payload := Payload{cmd: 1, body: []byte("hello")}
+	payload := Payload{Code: 1, Body: []byte("hello")}
 
 	client.Write(&payload)
 	client.Listen()

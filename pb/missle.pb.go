@@ -236,7 +236,7 @@ func (m *CMatchEnter) String() string { return proto.CompactTextString(m) }
 func (*CMatchEnter) ProtoMessage()    {}
 
 type EMatcInit struct {
-	MatchId          *int32    `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64    `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	Players          []*Player `protobuf:"bytes,2,rep,name=players" json:"players,omitempty"`
 	Points           []*Point  `protobuf:"bytes,3,rep,name=points" json:"points,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
@@ -246,7 +246,7 @@ func (m *EMatcInit) Reset()         { *m = EMatcInit{} }
 func (m *EMatcInit) String() string { return proto.CompactTextString(m) }
 func (*EMatcInit) ProtoMessage()    {}
 
-func (m *EMatcInit) GetMatchId() int32 {
+func (m *EMatcInit) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -268,7 +268,7 @@ func (m *EMatcInit) GetPoints() []*Point {
 }
 
 type EMatchEnd struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	Points           *int32 `protobuf:"varint,2,req,name=points" json:"points,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
@@ -277,7 +277,7 @@ func (m *EMatchEnd) Reset()         { *m = EMatchEnd{} }
 func (m *EMatchEnd) String() string { return proto.CompactTextString(m) }
 func (*EMatchEnd) ProtoMessage()    {}
 
-func (m *EMatchEnd) GetMatchId() int32 {
+func (m *EMatchEnd) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -292,7 +292,7 @@ func (m *EMatchEnd) GetPoints() int32 {
 }
 
 type EMatchTurn struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
@@ -301,7 +301,7 @@ func (m *EMatchTurn) Reset()         { *m = EMatchTurn{} }
 func (m *EMatchTurn) String() string { return proto.CompactTextString(m) }
 func (*EMatchTurn) ProtoMessage()    {}
 
-func (m *EMatchTurn) GetMatchId() int32 {
+func (m *EMatchTurn) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -316,7 +316,7 @@ func (m *EMatchTurn) GetPlayerId() int64 {
 }
 
 type CPlayerMove struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	Position         *Point `protobuf:"bytes,2,req,name=position" json:"position,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
@@ -325,7 +325,7 @@ func (m *CPlayerMove) Reset()         { *m = CPlayerMove{} }
 func (m *CPlayerMove) String() string { return proto.CompactTextString(m) }
 func (*CPlayerMove) ProtoMessage()    {}
 
-func (m *CPlayerMove) GetMatchId() int32 {
+func (m *CPlayerMove) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -340,7 +340,7 @@ func (m *CPlayerMove) GetPosition() *Point {
 }
 
 type EPlayerMove struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
 	Position         *Point `protobuf:"bytes,3,req,name=position" json:"position,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
@@ -350,7 +350,7 @@ func (m *EPlayerMove) Reset()         { *m = EPlayerMove{} }
 func (m *EPlayerMove) String() string { return proto.CompactTextString(m) }
 func (*EPlayerMove) ProtoMessage()    {}
 
-func (m *EPlayerMove) GetMatchId() int32 {
+func (m *EPlayerMove) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -372,7 +372,7 @@ func (m *EPlayerMove) GetPosition() *Point {
 }
 
 type CPlayerFire struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
 	Velocity         *Point `protobuf:"bytes,3,req,name=velocity" json:"velocity,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
@@ -382,7 +382,7 @@ func (m *CPlayerFire) Reset()         { *m = CPlayerFire{} }
 func (m *CPlayerFire) String() string { return proto.CompactTextString(m) }
 func (*CPlayerFire) ProtoMessage()    {}
 
-func (m *CPlayerFire) GetMatchId() int32 {
+func (m *CPlayerFire) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -404,7 +404,7 @@ func (m *CPlayerFire) GetVelocity() *Point {
 }
 
 type EPlayerFire struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
 	Velocity         *Point `protobuf:"bytes,3,req,name=velocity" json:"velocity,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
@@ -414,7 +414,7 @@ func (m *EPlayerFire) Reset()         { *m = EPlayerFire{} }
 func (m *EPlayerFire) String() string { return proto.CompactTextString(m) }
 func (*EPlayerFire) ProtoMessage()    {}
 
-func (m *EPlayerFire) GetMatchId() int32 {
+func (m *EPlayerFire) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -436,7 +436,7 @@ func (m *EPlayerFire) GetVelocity() *Point {
 }
 
 type CPlayerHit struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	P1               *int64 `protobuf:"varint,2,req,name=p1" json:"p1,omitempty"`
 	P2               *int64 `protobuf:"varint,3,req,name=p2" json:"p2,omitempty"`
 	Damage           *int32 `protobuf:"varint,4,req,name=damage" json:"damage,omitempty"`
@@ -447,7 +447,7 @@ func (m *CPlayerHit) Reset()         { *m = CPlayerHit{} }
 func (m *CPlayerHit) String() string { return proto.CompactTextString(m) }
 func (*CPlayerHit) ProtoMessage()    {}
 
-func (m *CPlayerHit) GetMatchId() int32 {
+func (m *CPlayerHit) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}
@@ -476,7 +476,7 @@ func (m *CPlayerHit) GetDamage() int32 {
 }
 
 type EPlayerHit struct {
-	MatchId          *int32 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	P1               *int64 `protobuf:"varint,2,req,name=p1" json:"p1,omitempty"`
 	P2               *int64 `protobuf:"varint,3,req,name=p2" json:"p2,omitempty"`
 	Damage           *int32 `protobuf:"varint,4,req,name=damage" json:"damage,omitempty"`
@@ -487,7 +487,7 @@ func (m *EPlayerHit) Reset()         { *m = EPlayerHit{} }
 func (m *EPlayerHit) String() string { return proto.CompactTextString(m) }
 func (*EPlayerHit) ProtoMessage()    {}
 
-func (m *EPlayerHit) GetMatchId() int32 {
+func (m *EPlayerHit) GetMatchId() int64 {
 	if m != nil && m.MatchId != nil {
 		return *m.MatchId
 	}

@@ -1,6 +1,8 @@
 package missle
 
 import (
+	"github.com/miraclew/mrs/mnet"
+	"github.com/miraclew/mrs/pb"
 	"log"
 )
 
@@ -22,31 +24,31 @@ type Match struct {
 	State     int
 	TurnIdx   int
 
-	pusher PushHandler
+	manager *mnet.Manager
 }
 
 var seq int64 = 0
 var matchs = make(map[int64]*Match)
 
-func NewMatch(playersId []int64, pusher PushHandler) (*Match, error) {
+func NewMatch(playersId []int64, manager *mnet.Manager) (*Match, error) {
 	if playersId == nil || len(playersId) < 2 {
 		return nil, NewMissleErr(ERR_INVALID_ARGS, "playersId is nil or less than 2")
 	}
 
-	if pusher == nil {
-		return nil, NewMissleErr(ERR_INVALID_ARGS, "pusher is nil")
+	if manager == nil {
+		return nil, NewMissleErr(ERR_INVALID_ARGS, "manager is nil")
 	}
 
-	log.Printf("NewMatch(%#v, %#v)", playersId, pusher)
+	log.Printf("NewMatch(%#v, %#v)", playersId, manager)
 	seq++
-	channelId, _ := pusher.NewChannel(playersId)
+	channelId, _ := manager.NewChannel(playersId)
 	match := &Match{
 		Id:        seq,
 		ChannelId: channelId,
 		Players:   makePlayers(playersId),
 		PlayersId: playersId,
 		State:     STATE_READY,
-		pusher:    pusher,
+		manager:   manager,
 	}
 
 	matchs[match.Id] = match
@@ -77,15 +79,20 @@ func (m *Match) Begin() (err error) {
 		return
 	}
 
-	keyPoints := MakeKeyPoints(16)
+	// keyPoints := MakeKeyPoints(16)
 	var players []*Player
 	for _, v := range m.Players {
 		players = append(players, v)
 	}
 
-	msg := m.newMessage(MN_MatchBegin, &MatchBegin{players, keyPoints})
-	m.pusher.PushToChannel(m.ChannelId, msg)
+	mi := &pb.EMatcInit{}
+	mi.MatchId = &m.Id
+	pbPlayers := make([]*pb.Player, len(m.Players))
+	mi.Players = pbPlayers
 
+	msg := &mnet.Message{Code: pb.Code_E_MATCH_INIT, MSG: mi}
+
+	m.manager.PushToChannel(m.ChannelId, msg)
 	m.State = STATE_PLAYING
 	return nil
 }
@@ -97,14 +104,15 @@ func (m *Match) NextTurn() {
 	}
 
 	playerId := m.PlayersId[m.TurnIdx]
-
-	msg := m.newMessage(MN_MatchTurn, nil)
-	m.pusher.PushToUser(playerId, msg)
+	mt := &pb.EMatchTurn{}
+	mt.PlayerId = &playerId
+	msg := &mnet.Message{Code: pb.Code_E_MATCH_TURN, MSG: mt}
+	m.manager.PushToUser(playerId, msg)
 }
 
 func (m *Match) End() {
 	for _, v := range m.Players {
-		var point int
+		var point int32
 		if v.Health == 0 {
 			point = -100
 		} else {
@@ -113,8 +121,10 @@ func (m *Match) End() {
 
 		UpdatePlayerPoints(v.Id, point)
 
-		msg := m.newMessage(MN_MatchEnd, &MatchEnd{point})
-		m.pusher.PushToUser(v.Id, msg)
+		me := &pb.EMatchEnd{}
+		me.Points = &point
+		msg := &mnet.Message{Code: pb.Code_E_MATCH_END, MSG: me}
+		m.manager.PushToUser(v.Id, msg)
 	}
 	m.State = STATE_END
 }
@@ -127,25 +137,36 @@ func (m *Match) PlayerMove(playerId int64, pos Point) error {
 	player := m.Players[playerId]
 	player.Position = pos
 
-	msg := m.newMessage(MN_PlayerMove, &PlayerMove{playerId, pos})
-	m.pusher.PushToChannel(m.ChannelId, msg)
+	pm := &pb.EPlayerMove{}
+	pm.PlayerId = &playerId
+	pm.Position = &pb.Point{X: &pos.X, Y: &pos.Y}
+	msg := &mnet.Message{Code: pb.Code_E_PLAYER_MOVE, MSG: pm}
+	m.manager.PushToChannel(m.ChannelId, msg)
 
 	return nil
 }
 
 func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) {
-	msg := m.newMessage(MN_PlayerFire, &PlayerFire{playerId, velocity})
-	m.pusher.PushToChannel(m.ChannelId, msg)
+	pf := &pb.EPlayerFire{}
+	pf.PlayerId = &playerId
+	pf.Velocity = &pb.Point{X: &velocity.X, Y: &velocity.Y}
+	msg := &mnet.Message{Code: pb.Code_E_PLAYER_FIRE, MSG: pf}
+	m.manager.PushToChannel(m.ChannelId, msg)
 }
 
 // p1 hit p2
-func (m *Match) PlayerAttack(p1 int64, p2 int64, damage int) {
+func (m *Match) PlayerHit(p1 int64, p2 int64, damage int32) {
 	newHealth, oldHealth := m.changeHealth(p2, -damage)
 	player1 := m.Players[p1]
 	player1.PointsWin += newHealth - oldHealth
 
-	msg := m.newMessage(MN_PlayerHealth, &PlayerHealth{p2, newHealth})
-	m.pusher.PushToChannel(m.ChannelId, msg)
+	ph := &pb.EPlayerHit{}
+	ph.P1 = &p1
+	ph.P2 = &p2
+	ph.Damage = &damage
+	msg := &mnet.Message{Code: pb.Code_E_PLAYER_HIT, MSG: ph}
+
+	m.manager.PushToChannel(m.ChannelId, msg)
 
 	if newHealth == 0 {
 		if m.shouldGameOver() {
@@ -158,7 +179,7 @@ func (m *Match) shouldGameOver() bool {
 	return true
 }
 
-func (m *Match) changeHealth(playerId int64, healthChange int) (nh, oh int) {
+func (m *Match) changeHealth(playerId int64, healthChange int32) (nh, oh int32) {
 	player := m.Players[playerId]
 	oh = player.Health
 

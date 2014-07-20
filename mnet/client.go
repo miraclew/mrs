@@ -3,9 +3,7 @@ package mnet
 import (
 	"bytes"
 	// "encoding/json"
-	"code.google.com/p/goprotobuf/proto"
 	"fmt"
-	"github.com/miraclew/mrs/pb"
 	"io"
 	"log"
 	"net"
@@ -14,16 +12,17 @@ import (
 const channelBufSize = 100
 
 type Client struct {
-	id     int64
-	conn   net.Conn
-	server *Server
-	ch     chan *Payload
-	doneCh chan bool
-	buf    bytes.Buffer
+	id      int64
+	conn    net.Conn
+	server  *Server
+	manager *Manager
+	ch      chan *Payload
+	doneCh  chan bool
+	buf     bytes.Buffer
 }
 
 // Create new chat client.
-func NewClient(conn net.Conn, server *Server) *Client {
+func NewClient(conn net.Conn, server *Server, manager *Manager) *Client {
 
 	if conn == nil {
 		panic("conn cannot be nil")
@@ -36,7 +35,7 @@ func NewClient(conn net.Conn, server *Server) *Client {
 	ch := make(chan *Payload, channelBufSize)
 	doneCh := make(chan bool)
 
-	return &Client{conn: conn, server: server, ch: ch, doneCh: doneCh}
+	return &Client{conn: conn, server: server, ch: ch, doneCh: doneCh, manager: manager}
 }
 
 func (c *Client) Conn() net.Conn {
@@ -123,35 +122,11 @@ func (c *Client) listenRead() {
 					if len(left) > 0 {
 						c.buf.Write(left)
 					}
-					c.processPayload(payload)
+
+					c.manager.Handler.OnRecievePayload(c.id, payload)
 					fmt.Printf("Receive msg: %#v\n", payload)
 				}
 			}
 		}
 	}
-}
-
-func (c *Client) processPayload(payload *Payload) {
-	if payload.code == pb.Code_C_AUTH {
-		auth := &pb.CAuth{}
-		err := proto.Unmarshal(payload.body, auth)
-	} else if payload.code == pb.CMatchEnter {
-		matchEnter := &pb.CMatchEnter{}
-		err := proto.Unmarshal(pb.body, matchEnter)
-	} else if payload.code == pb.Code_C_MATCH_ENTER {
-
-	} else if payload.code == pb.Code_C_PLAYER_MOVE {
-		move := &pb.CPlayerMove{}
-		err := proto.Unmarshal(payload.body, move)
-	} else if payload.code == pb.Code_C_PLAYER_FIRE {
-		fire := &pb.CPlayerFire{}
-		err := proto.Unmarshal(payload.body, fire)
-	} else if payload.code == pb.Code_C_PLAYER_HIT {
-		hit := &pb.CPlayerHit{}
-		err := proto.Unmarshal(payload.body, hit)
-
-	} else if payload.code == pb.Code_C_PLAYER_HEALTH {
-		//health := &pb.CPlayerH
-	}
-
 }

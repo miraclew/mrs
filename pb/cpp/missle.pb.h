@@ -642,12 +642,12 @@ class EMatcInit : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // repeated .pb.Player players = 2;
   inline int players_size() const;
@@ -680,9 +680,9 @@ class EMatcInit : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::RepeatedPtrField< ::pb::Player > players_;
   ::google::protobuf::RepeatedPtrField< ::pb::Point > points_;
-  ::google::protobuf::int32 matchid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -750,12 +750,12 @@ class EMatchEnd : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int32 points = 2;
   inline bool has_points() const;
@@ -773,7 +773,7 @@ class EMatchEnd : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 matchid_;
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int32 points_;
 
   mutable int _cached_size_;
@@ -842,12 +842,12 @@ class EMatchTurn : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
@@ -865,8 +865,8 @@ class EMatchTurn : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int64 playerid_;
-  ::google::protobuf::int32 matchid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -934,12 +934,12 @@ class CPlayerMove : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required .pb.Point position = 2;
   inline bool has_position() const;
@@ -959,8 +959,8 @@ class CPlayerMove : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::pb::Point* position_;
-  ::google::protobuf::int32 matchid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -1028,12 +1028,12 @@ class EPlayerMove : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
@@ -1062,9 +1062,9 @@ class EPlayerMove : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int64 playerid_;
   ::pb::Point* position_;
-  ::google::protobuf::int32 matchid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1132,12 +1132,12 @@ class CPlayerFire : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
@@ -1166,9 +1166,9 @@ class CPlayerFire : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int64 playerid_;
   ::pb::Point* velocity_;
-  ::google::protobuf::int32 matchid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1236,12 +1236,12 @@ class EPlayerFire : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
@@ -1270,9 +1270,9 @@ class EPlayerFire : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int64 playerid_;
   ::pb::Point* velocity_;
-  ::google::protobuf::int32 matchid_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -1340,12 +1340,12 @@ class CPlayerHit : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int64 p1 = 2;
   inline bool has_p1() const;
@@ -1381,10 +1381,10 @@ class CPlayerHit : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int64 p1_;
-  ::google::protobuf::int32 matchid_;
-  ::google::protobuf::int32 damage_;
   ::google::protobuf::int64 p2_;
+  ::google::protobuf::int32 damage_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -1452,12 +1452,12 @@ class EPlayerHit : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 matchId = 1;
+  // required int64 matchId = 1;
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int32 matchid() const;
-  inline void set_matchid(::google::protobuf::int32 value);
+  inline ::google::protobuf::int64 matchid() const;
+  inline void set_matchid(::google::protobuf::int64 value);
 
   // required int64 p1 = 2;
   inline bool has_p1() const;
@@ -1493,10 +1493,10 @@ class EPlayerHit : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 matchid_;
   ::google::protobuf::int64 p1_;
-  ::google::protobuf::int32 matchid_;
-  ::google::protobuf::int32 damage_;
   ::google::protobuf::int64 p2_;
+  ::google::protobuf::int32 damage_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -2055,7 +2055,7 @@ inline void EAuth::set_allocated_message(::std::string* message) {
 
 // EMatcInit
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool EMatcInit::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2066,13 +2066,13 @@ inline void EMatcInit::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EMatcInit::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 EMatcInit::matchid() const {
+inline ::google::protobuf::int64 EMatcInit::matchid() const {
   return matchid_;
 }
-inline void EMatcInit::set_matchid(::google::protobuf::int32 value) {
+inline void EMatcInit::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2131,7 +2131,7 @@ EMatcInit::mutable_points() {
 
 // EMatchEnd
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool EMatchEnd::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2142,13 +2142,13 @@ inline void EMatchEnd::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EMatchEnd::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 EMatchEnd::matchid() const {
+inline ::google::protobuf::int64 EMatchEnd::matchid() const {
   return matchid_;
 }
-inline void EMatchEnd::set_matchid(::google::protobuf::int32 value) {
+inline void EMatchEnd::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2179,7 +2179,7 @@ inline void EMatchEnd::set_points(::google::protobuf::int32 value) {
 
 // EMatchTurn
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool EMatchTurn::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2190,13 +2190,13 @@ inline void EMatchTurn::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EMatchTurn::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 EMatchTurn::matchid() const {
+inline ::google::protobuf::int64 EMatchTurn::matchid() const {
   return matchid_;
 }
-inline void EMatchTurn::set_matchid(::google::protobuf::int32 value) {
+inline void EMatchTurn::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2227,7 +2227,7 @@ inline void EMatchTurn::set_playerid(::google::protobuf::int64 value) {
 
 // CPlayerMove
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool CPlayerMove::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2238,13 +2238,13 @@ inline void CPlayerMove::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CPlayerMove::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 CPlayerMove::matchid() const {
+inline ::google::protobuf::int64 CPlayerMove::matchid() const {
   return matchid_;
 }
-inline void CPlayerMove::set_matchid(::google::protobuf::int32 value) {
+inline void CPlayerMove::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2291,7 +2291,7 @@ inline void CPlayerMove::set_allocated_position(::pb::Point* position) {
 
 // EPlayerMove
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool EPlayerMove::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2302,13 +2302,13 @@ inline void EPlayerMove::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EPlayerMove::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 EPlayerMove::matchid() const {
+inline ::google::protobuf::int64 EPlayerMove::matchid() const {
   return matchid_;
 }
-inline void EPlayerMove::set_matchid(::google::protobuf::int32 value) {
+inline void EPlayerMove::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2377,7 +2377,7 @@ inline void EPlayerMove::set_allocated_position(::pb::Point* position) {
 
 // CPlayerFire
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool CPlayerFire::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2388,13 +2388,13 @@ inline void CPlayerFire::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CPlayerFire::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 CPlayerFire::matchid() const {
+inline ::google::protobuf::int64 CPlayerFire::matchid() const {
   return matchid_;
 }
-inline void CPlayerFire::set_matchid(::google::protobuf::int32 value) {
+inline void CPlayerFire::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2463,7 +2463,7 @@ inline void CPlayerFire::set_allocated_velocity(::pb::Point* velocity) {
 
 // EPlayerFire
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool EPlayerFire::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2474,13 +2474,13 @@ inline void EPlayerFire::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EPlayerFire::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 EPlayerFire::matchid() const {
+inline ::google::protobuf::int64 EPlayerFire::matchid() const {
   return matchid_;
 }
-inline void EPlayerFire::set_matchid(::google::protobuf::int32 value) {
+inline void EPlayerFire::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2549,7 +2549,7 @@ inline void EPlayerFire::set_allocated_velocity(::pb::Point* velocity) {
 
 // CPlayerHit
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool CPlayerHit::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2560,13 +2560,13 @@ inline void CPlayerHit::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CPlayerHit::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 CPlayerHit::matchid() const {
+inline ::google::protobuf::int64 CPlayerHit::matchid() const {
   return matchid_;
 }
-inline void CPlayerHit::set_matchid(::google::protobuf::int32 value) {
+inline void CPlayerHit::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2641,7 +2641,7 @@ inline void CPlayerHit::set_damage(::google::protobuf::int32 value) {
 
 // EPlayerHit
 
-// required int32 matchId = 1;
+// required int64 matchId = 1;
 inline bool EPlayerHit::has_matchid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -2652,13 +2652,13 @@ inline void EPlayerHit::clear_has_matchid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EPlayerHit::clear_matchid() {
-  matchid_ = 0;
+  matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int32 EPlayerHit::matchid() const {
+inline ::google::protobuf::int64 EPlayerHit::matchid() const {
   return matchid_;
 }
-inline void EPlayerHit::set_matchid(::google::protobuf::int32 value) {
+inline void EPlayerHit::set_matchid(::google::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }

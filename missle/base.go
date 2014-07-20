@@ -18,8 +18,8 @@ type Player struct {
 	// game state
 	IsLeft    bool
 	Position  Point
-	Health    int
-	PointsWin int
+	Health    int32
+	PointsWin int32
 }
 
 func MakePositionFor(isLeft bool, order int) *Point {

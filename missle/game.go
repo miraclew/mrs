@@ -1,34 +1,35 @@
 package missle
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"fmt"
+	"github.com/miraclew/mrs/mnet"
+	"github.com/miraclew/mrs/pb"
 	"log"
 )
 
 type Game struct {
 	waitQueue []int64           // waiting players
 	players   map[int64]*Player // all online players
-	pusher    PushHandler
+	manager   *mnet.Manager
 }
 
 var game *Game
 
 func init() {
-	game = &Game{}
-	game.init()
 }
 
-func GetGame() *Game {
+func NewGame(manager *mnet.Manager) *Game {
+	game = &Game{}
+	game.init()
+	game.manager = manager
+	manager.Handler = game
 	return game
 }
 
 func (g *Game) init() {
 	g.waitQueue = []int64{}
 	g.players = make(map[int64]*Player)
-}
-
-func (g *Game) HandlePush(pusher PushHandler) {
-	g.pusher = pusher
 }
 
 /* ConnectionHandler */
@@ -50,6 +51,42 @@ func (g *Game) OnDisconnected(playerId int64) {
 	delete(g.players, playerId)
 }
 
+func (g *Game) OnRecievePayload(playerId int64, payload *mnet.Payload) {
+	var err error
+	code := pb.Code(payload.Code)
+	if code == pb.Code_C_AUTH {
+		auth := &pb.CAuth{}
+		err = proto.Unmarshal(payload.Body, auth)
+	} else if code == pb.Code_C_MATCH_ENTER {
+		matchEnter := &pb.CMatchEnter{}
+		err = proto.Unmarshal(payload.Body, matchEnter)
+		g.PlayerEnter(playerId)
+	} else if code == pb.Code_C_PLAYER_MOVE {
+		move := &pb.CPlayerMove{}
+		err = proto.Unmarshal(payload.Body, move)
+
+		match := GetMatch(move.GetMatchId())
+		match.PlayerMove(playerId, Point{X: move.GetPosition().GetX(), Y: move.GetPosition().GetY()})
+	} else if code == pb.Code_C_PLAYER_FIRE {
+		fire := &pb.CPlayerFire{}
+		err = proto.Unmarshal(payload.Body, fire)
+
+		match := GetMatch(fire.GetMatchId())
+		match.PlayerFire(playerId, Point{}, Point{X: fire.GetVelocity().GetX(), Y: fire.GetVelocity().GetY()})
+	} else if code == pb.Code_C_PLAYER_HIT {
+		hit := &pb.CPlayerHit{}
+		err = proto.Unmarshal(payload.Body, hit)
+		match := GetMatch(hit.GetMatchId())
+		match.PlayerHit(hit.GetP1(), hit.GetP2(), hit.GetDamage())
+	} else if code == pb.Code_C_PLAYER_HEALTH {
+
+	}
+
+	if err != nil {
+		log.Printf("OnRecievePayload error:%s", err.Error())
+	}
+}
+
 // Player enter game (connected)
 func (g *Game) PlayerEnter(playerId int64) (err error) {
 	if len(g.waitQueue) > 0 {
@@ -62,7 +99,7 @@ func (g *Game) PlayerEnter(playerId int64) (err error) {
 		g.waitQueue = g.waitQueue[1:]
 
 		var match *Match
-		match, err = NewMatch([]int64{p1, p2}, g.pusher)
+		match, err = NewMatch([]int64{p1, p2}, g.manager)
 		if err != nil {
 			log.Printf("NewMatch failed: %s", err.Error())
 			return
