@@ -1,0 +1,100 @@
+package pb;
+
+message Point {
+    required float x = 1;
+    required float y = 2;
+}
+
+message Player {
+    required int64 id = 1;
+    required string nickName = 2;
+    required string avatar = 3;
+
+    required bool isLeft = 4;
+    required Point position = 5;
+    required int32 health = 6;
+}
+
+enum Code {
+    C_AUTH = 11;
+    E_AUTH = 12;
+
+    C_MATCH_ENTER = 21;
+    E_MATCH_INIT = 22;
+    E_MATCH_TURN = 23;
+    E_MATCH_END = 24;
+    C_PLAYER_MOVE = 31;
+    E_PLAYER_MOVE = 32;
+    C_PLAYER_FIRE = 33;
+    E_PLAYER_FIRE = 34;
+    C_PLAYER_HIT = 35;
+    E_PLAYER_HIT = 36;
+    C_PLAYER_HEALTH = 37;
+}
+
+message CAuth {
+  required string userName = 1;
+  required string password = 2;
+}
+
+message EAuth {
+    required int32 code = 1;
+    optional string message = 2;
+}
+
+message CMatchEnter {
+}
+
+message EMatcInit {
+    required int32 matchId = 1;
+    repeated Player players = 2;
+    repeated Point points = 3;
+}
+
+message EMatchEnd {
+    required int32 matchId = 1;
+    required int32 points = 2;
+}
+
+message EMatchTurn {
+    required int32 matchId = 1;
+    required int64 playerId = 2;
+}
+
+message CPlayerMove {
+    required int32 matchId = 1;
+    required Point position = 2;
+}
+
+message EPlayerMove {
+    required int32 matchId = 1;
+    required int64 playerId = 2;
+    required Point position = 3;
+}
+
+message CPlayerFire {
+    required int32 matchId = 1;
+    required int64 playerId = 2;
+    required Point velocity = 3;
+}
+
+message EPlayerFire {
+    required int32 matchId = 1;
+    required int64 playerId = 2;
+    required Point velocity = 3;
+}
+
+message CPlayerHit {
+    required int32 matchId = 1;
+    required int64 p1 = 2;
+    required int64 p2 = 3;
+    required int32 damage = 4;
+}
+
+message EPlayerHit {
+    required int32 matchId = 1;
+    required int64 p1 = 2;
+    required int64 p2 = 3;
+    required int32 damage = 4;
+}
+
