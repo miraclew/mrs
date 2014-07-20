@@ -11,6 +11,7 @@ import (
 type Game struct {
 	waitQueue []int64           // waiting players
 	players   map[int64]*Player // all online players
+	clients   map[int64]int64   // map userId <=> client.Id
 	manager   *mnet.Manager
 }
 
@@ -22,6 +23,7 @@ func init() {
 func NewGame(manager *mnet.Manager) *Game {
 	game = &Game{}
 	game.init()
+	game.nextClientId = 1
 	game.manager = manager
 	manager.Handler = game
 	return game
@@ -42,16 +44,16 @@ func (g *Game) OnValidateToken(token string) int64 {
 	return uid
 }
 
-func (g *Game) OnConnected(playerId int64) {
+func (g *Game) OnConnected(clientId int64) {
 	player, _ := g.initPlayer(playerId)
 	g.players[playerId] = player
 }
 
-func (g *Game) OnDisconnected(playerId int64) {
+func (g *Game) OnDisconnected(clientId int64) {
 	delete(g.players, playerId)
 }
 
-func (g *Game) OnRecievePayload(playerId int64, payload *mnet.Payload) {
+func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
 	var err error
 	code := pb.Code(payload.Code)
 	if code == pb.Code_C_AUTH {

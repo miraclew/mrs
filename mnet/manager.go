@@ -21,8 +21,9 @@ func NewManager() *Manager {
 
 // implements Pushing inteface
 type Manager struct {
-	Handler ConnectionHandler
-	server  *Server
+	Handler      ConnectionHandler
+	server       *Server
+	nextClientId int64
 }
 
 func (p *Manager) NewChannel(subsId []int64) (channelId int64, err error) {
@@ -101,6 +102,8 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 	}()
 
 	client := NewClient(conn, p.server, p)
+	client.id = p.nextClientId
+	p.nextClientId++
 	p.server.Add(client)
 	if p.Handler != nil {
 		// p.Handler.OnConnected(userId)
