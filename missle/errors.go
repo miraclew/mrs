@@ -10,7 +10,8 @@ const (
 	ERR_INVALID_POSITION = 102
 	ERR_DATA_NOT_FOUND   = 103
 
-	ERR_INVALID_TOKEN = 201
+	ERR_INVALID_CREDENTIAL = 201
+	ERR_INVALID_TOKEN      = 202
 )
 
 var ErrMessageMap = map[int]string{

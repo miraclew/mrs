@@ -9,14 +9,13 @@ import (
 )
 
 type ConnectionHandler interface {
-	OnValidateToken(token string) int64 // token to userId
-	OnConnected(userId int64)
-	OnDisconnected(userId int64)
-	OnRecievePayload(userId int64, payload *Payload)
+	OnConnected(clientId int64)
+	OnDisconnected(clientId int64)
+	OnRecievePayload(clientId int64, payload *Payload)
 }
 
-func NewManager() *Manager {
-	return &Manager{server: NewServer()}
+func NewManager(server *Server) *Manager {
+	return &Manager{server: server, nextClientId: 1}
 }
 
 // implements Pushing inteface
@@ -31,7 +30,8 @@ func (p *Manager) NewChannel(subsId []int64) (channelId int64, err error) {
 	return channel.Id, nil
 }
 
-func (p *Manager) PushToUser(userId int64, message *Message) (err error) {
+func (p *Manager) PushToClient(clientId int64, message *Message) (err error) {
+	log.Printf("PushToClient(%d): %s", clientId, message.String())
 	// packet := &Packet{Body: message}
 	var body []byte
 	body, err = proto.Marshal(message.MSG)
@@ -39,7 +39,7 @@ func (p *Manager) PushToUser(userId int64, message *Message) (err error) {
 		return
 	}
 	payload := &Payload{Code: uint16(message.Code), Body: body}
-	client := p.server.clients[userId]
+	client := p.server.clients[clientId]
 	client.Write(payload)
 
 	err = nil
@@ -50,7 +50,7 @@ func (p *Manager) PushToChannel(chanelId int64, message *Message) (err error) {
 	channel := GetChannel(chanelId)
 	if channel != nil {
 		for _, v := range channel.Subs {
-			p.PushToUser(v, message)
+			p.PushToClient(v, message)
 		}
 	}
 
@@ -88,7 +88,6 @@ func (p *Manager) Serve(listener net.Listener) {
 }
 
 func (p *Manager) handleTcpClient(conn net.Conn) {
-	log.Printf("New TCP Client %s", "...")
 	defer func() {
 		err := conn.Close()
 		if err != nil {
@@ -97,7 +96,7 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 		}
 		log.Print("Client disconnected")
 		if p.Handler != nil {
-			//p.Handler.OnDisconnected(userId)
+			//p.Handler.OnDisconnected(clientId)
 		}
 	}()
 
@@ -106,11 +105,9 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 	p.nextClientId++
 	p.server.Add(client)
 	if p.Handler != nil {
-		// p.Handler.OnConnected(userId)
+		// p.Handler.OnConnected(clientId)
 	}
 
-	// payload := Payload{Code: 1, Body: []byte("hello")}
-
-	// client.Write(&payload)
+	log.Printf("New Client: %d", client.id)
 	client.Listen()
 }

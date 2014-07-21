@@ -25,12 +25,13 @@ type Match struct {
 	TurnIdx   int
 
 	manager *mnet.Manager
+	game    *Game
 }
 
 var seq int64 = 0
 var matchs = make(map[int64]*Match)
 
-func NewMatch(playersId []int64, manager *mnet.Manager) (*Match, error) {
+func NewMatch(game *Game, playersId []int64, manager *mnet.Manager) (*Match, error) {
 	if playersId == nil || len(playersId) < 2 {
 		return nil, NewMissleErr(ERR_INVALID_ARGS, "playersId is nil or less than 2")
 	}
@@ -49,6 +50,7 @@ func NewMatch(playersId []int64, manager *mnet.Manager) (*Match, error) {
 		PlayersId: playersId,
 		State:     STATE_READY,
 		manager:   manager,
+		game:      game,
 	}
 
 	matchs[match.Id] = match
@@ -107,7 +109,7 @@ func (m *Match) NextTurn() {
 	mt := &pb.EMatchTurn{}
 	mt.PlayerId = &playerId
 	msg := &mnet.Message{Code: pb.Code_E_MATCH_TURN, MSG: mt}
-	m.manager.PushToUser(playerId, msg)
+	m.pushToUser(playerId, msg)
 }
 
 func (m *Match) End() {
@@ -124,7 +126,7 @@ func (m *Match) End() {
 		me := &pb.EMatchEnd{}
 		me.Points = &point
 		msg := &mnet.Message{Code: pb.Code_E_MATCH_END, MSG: me}
-		m.manager.PushToUser(v.Id, msg)
+		m.pushToUser(v.Id, msg)
 	}
 	m.State = STATE_END
 }
@@ -192,11 +194,11 @@ func (m *Match) changeHealth(playerId int64, healthChange int32) (nh, oh int32) 
 	return
 }
 
-func (m *Match) newMessage(name string, body interface{}) *Message {
-	msg := &Message{}
-	msg.Header.Name = name
-	msg.Header.ChannelId = m.ChannelId
-	msg.Header.MatchId = m.Id
-	msg.Body = body
-	return msg
+func (m *Match) pushToUser(userId int64, msg *mnet.Message) {
+	clientId, ok := m.game.GetClientId(userId)
+	if ok {
+		m.manager.PushToClient(clientId, msg)
+	} else {
+		log.Println("pushToUser failed, not online?")
+	}
 }

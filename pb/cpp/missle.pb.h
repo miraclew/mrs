@@ -480,10 +480,17 @@ class EAuth : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 code() const;
   inline void set_code(::google::protobuf::int32 value);
 
-  // optional string message = 2;
+  // required int64 userId = 2;
+  inline bool has_userid() const;
+  inline void clear_userid();
+  static const int kUserIdFieldNumber = 2;
+  inline ::google::protobuf::int64 userid() const;
+  inline void set_userid(::google::protobuf::int64 value);
+
+  // optional string message = 3;
   inline bool has_message() const;
   inline void clear_message();
-  static const int kMessageFieldNumber = 2;
+  static const int kMessageFieldNumber = 3;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
@@ -496,16 +503,19 @@ class EAuth : public ::google::protobuf::Message {
  private:
   inline void set_has_code();
   inline void clear_has_code();
+  inline void set_has_userid();
+  inline void clear_has_userid();
   inline void set_has_message();
   inline void clear_has_message();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
+  ::google::protobuf::int64 userid_;
   ::std::string* message_;
   ::google::protobuf::int32 code_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1977,15 +1987,37 @@ inline void EAuth::set_code(::google::protobuf::int32 value) {
   code_ = value;
 }
 
-// optional string message = 2;
-inline bool EAuth::has_message() const {
+// required int64 userId = 2;
+inline bool EAuth::has_userid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void EAuth::set_has_message() {
+inline void EAuth::set_has_userid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void EAuth::clear_has_message() {
+inline void EAuth::clear_has_userid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void EAuth::clear_userid() {
+  userid_ = GOOGLE_LONGLONG(0);
+  clear_has_userid();
+}
+inline ::google::protobuf::int64 EAuth::userid() const {
+  return userid_;
+}
+inline void EAuth::set_userid(::google::protobuf::int64 value) {
+  set_has_userid();
+  userid_ = value;
+}
+
+// optional string message = 3;
+inline bool EAuth::has_message() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void EAuth::set_has_message() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void EAuth::clear_has_message() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void EAuth::clear_message() {
   if (message_ != &::google::protobuf::internal::kEmptyString) {

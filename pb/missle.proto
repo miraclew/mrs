@@ -39,7 +39,8 @@ message CAuth {
 
 message EAuth {
     required int32 code = 1;
-    optional string message = 2;
+    required int64 userId = 2;
+    optional string message = 3;
 }
 
 message CMatchEnter {

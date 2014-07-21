@@ -205,7 +205,8 @@ func (m *CAuth) GetPassword() string {
 
 type EAuth struct {
 	Code             *int32  `protobuf:"varint,1,req,name=code" json:"code,omitempty"`
-	Message          *string `protobuf:"bytes,2,opt,name=message" json:"message,omitempty"`
+	UserId           *int64  `protobuf:"varint,2,req,name=userId" json:"userId,omitempty"`
+	Message          *string `protobuf:"bytes,3,opt,name=message" json:"message,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
@@ -216,6 +217,13 @@ func (*EAuth) ProtoMessage()    {}
 func (m *EAuth) GetCode() int32 {
 	if m != nil && m.Code != nil {
 		return *m.Code
+	}
+	return 0
+}
+
+func (m *EAuth) GetUserId() int64 {
+	if m != nil && m.UserId != nil {
+		return *m.UserId
 	}
 	return 0
 }

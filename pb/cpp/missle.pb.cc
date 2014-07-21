@@ -126,8 +126,9 @@ void protobuf_AssignDesc_missle_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(CAuth));
   EAuth_descriptor_ = file->message_type(3);
-  static const int EAuth_offsets_[2] = {
+  static const int EAuth_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(EAuth, code_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(EAuth, userid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(EAuth, message_),
   };
   EAuth_reflection_ =
@@ -395,30 +396,30 @@ void protobuf_AddDesc_missle_2eproto() {
     "ame\030\002 \002(\t\022\016\n\006avatar\030\003 \002(\t\022\016\n\006isLeft\030\004 \002("
     "\010\022\033\n\010position\030\005 \002(\0132\t.pb.Point\022\016\n\006health"
     "\030\006 \002(\005\"+\n\005CAuth\022\020\n\010userName\030\001 \002(\t\022\020\n\010pas"
-    "sword\030\002 \002(\t\"&\n\005EAuth\022\014\n\004code\030\001 \002(\005\022\017\n\007me"
-    "ssage\030\002 \001(\t\"\r\n\013CMatchEnter\"T\n\tEMatcInit\022"
-    "\017\n\007matchId\030\001 \002(\003\022\033\n\007players\030\002 \003(\0132\n.pb.P"
-    "layer\022\031\n\006points\030\003 \003(\0132\t.pb.Point\",\n\tEMat"
-    "chEnd\022\017\n\007matchId\030\001 \002(\003\022\016\n\006points\030\002 \002(\005\"/"
-    "\n\nEMatchTurn\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerI"
-    "d\030\002 \002(\003\";\n\013CPlayerMove\022\017\n\007matchId\030\001 \002(\003\022"
-    "\033\n\010position\030\002 \002(\0132\t.pb.Point\"M\n\013EPlayerM"
-    "ove\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\022\033"
-    "\n\010position\030\003 \002(\0132\t.pb.Point\"M\n\013CPlayerFi"
-    "re\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\022\033\n"
-    "\010velocity\030\003 \002(\0132\t.pb.Point\"M\n\013EPlayerFir"
-    "e\022\017\n\007matchId\030\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\022\033\n\010"
-    "velocity\030\003 \002(\0132\t.pb.Point\"E\n\nCPlayerHit\022"
-    "\017\n\007matchId\030\001 \002(\003\022\n\n\002p1\030\002 \002(\003\022\n\n\002p2\030\003 \002(\003"
-    "\022\016\n\006damage\030\004 \002(\005\"E\n\nEPlayerHit\022\017\n\007matchI"
-    "d\030\001 \002(\003\022\n\n\002p1\030\002 \002(\003\022\n\n\002p2\030\003 \002(\003\022\016\n\006damag"
-    "e\030\004 \002(\005*\353\001\n\004Code\022\n\n\006C_AUTH\020\013\022\n\n\006E_AUTH\020\014"
-    "\022\021\n\rC_MATCH_ENTER\020\025\022\020\n\014E_MATCH_INIT\020\026\022\020\n"
-    "\014E_MATCH_TURN\020\027\022\017\n\013E_MATCH_END\020\030\022\021\n\rC_PL"
-    "AYER_MOVE\020\037\022\021\n\rE_PLAYER_MOVE\020 \022\021\n\rC_PLAY"
-    "ER_FIRE\020!\022\021\n\rE_PLAYER_FIRE\020\"\022\020\n\014C_PLAYER"
-    "_HIT\020#\022\020\n\014E_PLAYER_HIT\020$\022\023\n\017C_PLAYER_HEA"
-    "LTH\020%", 1125);
+    "sword\030\002 \002(\t\"6\n\005EAuth\022\014\n\004code\030\001 \002(\005\022\016\n\006us"
+    "erId\030\002 \002(\003\022\017\n\007message\030\003 \001(\t\"\r\n\013CMatchEnt"
+    "er\"T\n\tEMatcInit\022\017\n\007matchId\030\001 \002(\003\022\033\n\007play"
+    "ers\030\002 \003(\0132\n.pb.Player\022\031\n\006points\030\003 \003(\0132\t."
+    "pb.Point\",\n\tEMatchEnd\022\017\n\007matchId\030\001 \002(\003\022\016"
+    "\n\006points\030\002 \002(\005\"/\n\nEMatchTurn\022\017\n\007matchId\030"
+    "\001 \002(\003\022\020\n\010playerId\030\002 \002(\003\";\n\013CPlayerMove\022\017"
+    "\n\007matchId\030\001 \002(\003\022\033\n\010position\030\002 \002(\0132\t.pb.P"
+    "oint\"M\n\013EPlayerMove\022\017\n\007matchId\030\001 \002(\003\022\020\n\010"
+    "playerId\030\002 \002(\003\022\033\n\010position\030\003 \002(\0132\t.pb.Po"
+    "int\"M\n\013CPlayerFire\022\017\n\007matchId\030\001 \002(\003\022\020\n\010p"
+    "layerId\030\002 \002(\003\022\033\n\010velocity\030\003 \002(\0132\t.pb.Poi"
+    "nt\"M\n\013EPlayerFire\022\017\n\007matchId\030\001 \002(\003\022\020\n\010pl"
+    "ayerId\030\002 \002(\003\022\033\n\010velocity\030\003 \002(\0132\t.pb.Poin"
+    "t\"E\n\nCPlayerHit\022\017\n\007matchId\030\001 \002(\003\022\n\n\002p1\030\002"
+    " \002(\003\022\n\n\002p2\030\003 \002(\003\022\016\n\006damage\030\004 \002(\005\"E\n\nEPla"
+    "yerHit\022\017\n\007matchId\030\001 \002(\003\022\n\n\002p1\030\002 \002(\003\022\n\n\002p"
+    "2\030\003 \002(\003\022\016\n\006damage\030\004 \002(\005*\353\001\n\004Code\022\n\n\006C_AU"
+    "TH\020\013\022\n\n\006E_AUTH\020\014\022\021\n\rC_MATCH_ENTER\020\025\022\020\n\014E"
+    "_MATCH_INIT\020\026\022\020\n\014E_MATCH_TURN\020\027\022\017\n\013E_MAT"
+    "CH_END\020\030\022\021\n\rC_PLAYER_MOVE\020\037\022\021\n\rE_PLAYER_"
+    "MOVE\020 \022\021\n\rC_PLAYER_FIRE\020!\022\021\n\rE_PLAYER_FI"
+    "RE\020\"\022\020\n\014C_PLAYER_HIT\020#\022\020\n\014E_PLAYER_HIT\020$"
+    "\022\023\n\017C_PLAYER_HEALTH\020%", 1141);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "missle.proto", &protobuf_RegisterTypes);
   Point::default_instance_ = new Point();
@@ -1465,6 +1466,7 @@ void CAuth::Swap(CAuth* other) {
 
 #ifndef _MSC_VER
 const int EAuth::kCodeFieldNumber;
+const int EAuth::kUserIdFieldNumber;
 const int EAuth::kMessageFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1485,6 +1487,7 @@ EAuth::EAuth(const EAuth& from)
 void EAuth::SharedCtor() {
   _cached_size_ = 0;
   code_ = 0;
+  userid_ = GOOGLE_LONGLONG(0);
   message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1525,6 +1528,7 @@ EAuth* EAuth::New() const {
 void EAuth::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     code_ = 0;
+    userid_ = GOOGLE_LONGLONG(0);
     if (has_message()) {
       if (message_ != &::google::protobuf::internal::kEmptyString) {
         message_->clear();
@@ -1552,12 +1556,28 @@ bool EAuth::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_message;
+        if (input->ExpectTag(16)) goto parse_userId;
         break;
       }
 
-      // optional string message = 2;
+      // required int64 userId = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_userId:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &userid_)));
+          set_has_userid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_message;
+        break;
+      }
+
+      // optional string message = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_message:
@@ -1596,13 +1616,18 @@ void EAuth::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
   }
 
-  // optional string message = 2;
+  // required int64 userId = 2;
+  if (has_userid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->userid(), output);
+  }
+
+  // optional string message = 3;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->message(), output);
+      3, this->message(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1618,14 +1643,19 @@ void EAuth::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
   }
 
-  // optional string message = 2;
+  // required int64 userId = 2;
+  if (has_userid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->userid(), target);
+  }
+
+  // optional string message = 3;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->message(), target);
+        3, this->message(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1646,7 +1676,14 @@ int EAuth::ByteSize() const {
           this->code());
     }
 
-    // optional string message = 2;
+    // required int64 userId = 2;
+    if (has_userid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->userid());
+    }
+
+    // optional string message = 3;
     if (has_message()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -1683,6 +1720,9 @@ void EAuth::MergeFrom(const EAuth& from) {
     if (from.has_code()) {
       set_code(from.code());
     }
+    if (from.has_userid()) {
+      set_userid(from.userid());
+    }
     if (from.has_message()) {
       set_message(from.message());
     }
@@ -1703,7 +1743,7 @@ void EAuth::CopyFrom(const EAuth& from) {
 }
 
 bool EAuth::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -1711,6 +1751,7 @@ bool EAuth::IsInitialized() const {
 void EAuth::Swap(EAuth* other) {
   if (other != this) {
     std::swap(code_, other->code_);
+    std::swap(userid_, other->userid_);
     std::swap(message_, other->message_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

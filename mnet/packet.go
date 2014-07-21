@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/binary"
+	"fmt"
 	"github.com/miraclew/mrs/pb"
 	"hash/crc32"
 	"log"
@@ -20,6 +21,10 @@ type Packet struct {
 type Message struct {
 	Code pb.Code
 	MSG  proto.Message
+}
+
+func (m *Message) String() string {
+	return fmt.Sprintf("Message: Code=%#v MSG: %#v", m.Code, m.MSG.String())
 }
 
 type Payload struct {

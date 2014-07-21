@@ -42,12 +42,12 @@ func (c *Client) Conn() net.Conn {
 	return c.conn
 }
 
-func (c *Client) Write(msg *Payload) {
+func (c *Client) Write(payload *Payload) {
 	select {
-	case c.ch <- msg:
+	case c.ch <- payload:
 	default:
 		c.server.Del(c)
-		err := fmt.Errorf("client %d is disconnected.", c.id)
+		err := fmt.Errorf("Client(%d) is disconnected.", c.id)
 		c.server.Err(err)
 	}
 }
@@ -69,9 +69,9 @@ func (c *Client) listenWrite() {
 		select {
 
 		// send message to the client
-		case msg := <-c.ch:
-			log.Println("Send: %#v", msg)
-			b, _ := msg.Encode()
+		case payload := <-c.ch:
+			log.Printf("Client(%d) send payload: %#v", c.id, payload)
+			b, _ := payload.Encode()
 			c.conn.Write(b)
 
 		// receive done request
@@ -97,7 +97,6 @@ func (c *Client) listenRead() {
 
 		// read data from net connection
 		default:
-			// var msg Payload
 			b := make([]byte, 10)
 			length, err := c.conn.Read(b)
 			if err == io.EOF {
@@ -105,12 +104,13 @@ func (c *Client) listenRead() {
 			} else if err != nil {
 				c.server.Err(err)
 			} else {
+				log.Printf("Client(%d) recv raw: % x\n", c.id, b)
 				c.buf.Write(b[0:length])
 
 				payload := &Payload{}
 				err, more, left := payload.Decode(c.buf.Bytes())
 				if err != nil {
-					fmt.Printf("payload.Decode err: %s", err.Error())
+					log.Printf("Client(%d) payload.Decode err: %s", c.id, err.Error())
 					c.doneCh <- true
 					return
 				}
@@ -124,7 +124,7 @@ func (c *Client) listenRead() {
 					}
 
 					c.manager.Handler.OnRecievePayload(c.id, payload)
-					fmt.Printf("Receive msg: %#v\n", payload)
+					log.Printf("Client(%d) receive payload: %#v\n", c.id, payload)
 				}
 			}
 		}

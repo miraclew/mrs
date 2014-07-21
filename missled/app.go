@@ -39,7 +39,10 @@ func NewAppOptions() *AppOptions {
 func (a *App) Main() {
 	missle.SetDSN(DSN)
 
-	manager := mnet.NewManager()
+	server := mnet.NewServer()
+	go server.Listen()
+
+	manager := mnet.NewManager(server)
 	missle.NewGame(manager)
 
 	tcpListener, err := net.Listen("tcp", a.tcpAddr.String())
