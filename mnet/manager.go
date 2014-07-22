@@ -32,25 +32,31 @@ func (p *Manager) NewChannel(subsId []int64) (channelId int64, err error) {
 
 func (p *Manager) PushToClient(clientId int64, message *Message) (err error) {
 	log.Printf("PushToClient(%d): %s", clientId, message.String())
-	// packet := &Packet{Body: message}
 	var body []byte
 	body, err = proto.Marshal(message.MSG)
 	if err != nil {
+		log.Printf("err: %s", err.Error())
 		return
 	}
 	payload := &Payload{Code: uint16(message.Code), Body: body}
-	client := p.server.clients[clientId]
-	client.Write(payload)
+	client, ok := p.server.clients[clientId]
+	if ok {
+		client.Write(payload)
+	} else {
+		log.Printf("Warn: Client(%d) have not connection", clientId)
+	}
 
 	err = nil
 	return
 }
 
 func (p *Manager) PushToChannel(chanelId int64, message *Message) (err error) {
+	log.Printf("PushToChannel(%d)", chanelId)
 	channel := GetChannel(chanelId)
 	if channel != nil {
-		for _, v := range channel.Subs {
-			p.PushToClient(v, message)
+		var userId int64
+		for _, userId = range channel.Subs {
+			p.PushToClient(userId, message)
 		}
 	}
 
@@ -88,6 +94,8 @@ func (p *Manager) Serve(listener net.Listener) {
 }
 
 func (p *Manager) handleTcpClient(conn net.Conn) {
+	clientId := p.nextClientId
+	p.nextClientId++
 	defer func() {
 		err := conn.Close()
 		if err != nil {
@@ -96,16 +104,15 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 		}
 		log.Print("Client disconnected")
 		if p.Handler != nil {
-			//p.Handler.OnDisconnected(clientId)
+			p.Handler.OnDisconnected(clientId)
 		}
 	}()
 
 	client := NewClient(conn, p.server, p)
-	client.id = p.nextClientId
-	p.nextClientId++
+	client.id = clientId
 	p.server.Add(client)
 	if p.Handler != nil {
-		// p.Handler.OnConnected(clientId)
+		p.Handler.OnConnected(clientId)
 	}
 
 	log.Printf("New Client: %d", client.id)

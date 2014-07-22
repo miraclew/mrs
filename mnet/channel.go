@@ -12,6 +12,10 @@ type Channel struct {
 var seq int64 = 0
 var channels map[int64]*Channel
 
+func init() {
+	channels = make(map[int64]*Channel)
+}
+
 func NewChannel(subs []int64) *Channel {
 	seq++
 	channel := &Channel{

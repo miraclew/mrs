@@ -124,7 +124,6 @@ func (c *Client) listenRead() {
 					}
 
 					c.manager.Handler.OnRecievePayload(c.id, payload)
-					log.Printf("Client(%d) receive payload: %#v\n", c.id, payload)
 				}
 			}
 		}

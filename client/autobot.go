@@ -1,7 +1,11 @@
 package main
 
 import (
+	"github.com/miraclew/mrs/missle/model"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 const (
@@ -10,20 +14,32 @@ const (
 
 func main() {
 	log.Println("I'm Optimus Prime, we're here, we're waiting.")
-	db := initDb()
+	db := model.InitDb(DSN)
 	// seedData(db)
 
-	var users []User
+	var users []model.User
 	_, err := db.Select(&users, "select * from users order by id limit 2")
 	checkErr(err, "Select failed")
-	log.Println("All rows:")
-	for x, u := range users {
-		log.Printf("    %d: %v\n", x, u)
-		client := &DefaultClient{}
-		go client.runAs(&u)
+	// log.Println("All rows:")
+	for _, u := range users {
+		client := DefaultClient{user: u}
+		// log.Printf("%#v\n", client)
+		go client.run()
 	}
 
-	for {
+	exitChan := make(chan int)
+	signalChan := make(chan os.Signal, 1)
+	go func() {
+		<-signalChan
+		exitChan <- 1
+	}()
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
+	<-exitChan
+}
+
+func checkErr(err error, msg string) {
+	if err != nil {
+		log.Fatalln(msg, err)
 	}
 }

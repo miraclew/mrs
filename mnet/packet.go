@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/miraclew/mrs/pb"
 	"hash/crc32"
-	"log"
+	// "log"
 )
 
 const (
@@ -63,7 +63,7 @@ func (p *Payload) Encode() (data []byte, err error) {
 }
 
 func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
-	log.Printf("Decode: % x\n", data)
+	// log.Printf("Decode: % x\n", data)
 	more = false
 	err = nil
 	if len(data) < PKG_HEAD_BYTES {
@@ -81,23 +81,23 @@ func (p *Payload) Decode(data []byte) (err error, more bool, left []byte) {
 	if err != nil {
 		return
 	}
-	log.Printf("p.Length=%d\n", p.Length)
+	// log.Printf("p.Length=%d\n", p.Length)
 
 	endPos := PKG_HEAD_BYTES + int(p.Length)
 	if len(data) < endPos {
-		log.Println("need read more data")
+		// log.Println("need read more data")
 		more = true
 		return
 	}
 
-	log.Printf("p.Code=%d\n", p.Code)
+	// log.Printf("p.Code=%d\n", p.Code)
 
 	err = binary.Read(buf, binary.LittleEndian, &p.Crc32)
 	if err != nil {
 		return
 	}
 
-	log.Printf("slice[%d:%d]", PKG_HEAD_BYTES, endPos)
+	// log.Printf("slice[%d:%d]", PKG_HEAD_BYTES, endPos)
 
 	p.Body = data[PKG_HEAD_BYTES:endPos]
 	if endPos < len(data) {
