@@ -3,4 +3,4 @@ protoc --cpp_out=cpp *.proto
 
 go install
 
-cp cpp/* ~/git/cetris/Cetris/pb/
+cp cpp/* ~/git/cetris/Cetris/

@@ -37,8 +37,6 @@ func NewAppOptions() *AppOptions {
 }
 
 func (a *App) Main() {
-	missle.SetDSN(DSN)
-
 	server := mnet.NewServer()
 	go server.Listen()
 

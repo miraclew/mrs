@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	DSN = "root:abc123@tcp(localhost:3306)/mr?charset=utf8"
+	DSN = "root@tcp(localhost:3306)/mr?charset=utf8"
 	MC  = "localhost:11211"
 )
 
