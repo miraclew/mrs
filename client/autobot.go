@@ -9,16 +9,16 @@ import (
 )
 
 const (
-	DSN = "root:abc123@tcp(localhost:3306)/mr?charset=utf8"
+	DSN = "root@tcp(localhost:3306)/mr?charset=utf8"
 )
 
 func main() {
 	log.Println("I'm Optimus Prime, we're here, we're waiting.")
 	db := model.InitDb(DSN)
-	// seedData(db)
+	// model.SeedData(db)
 
 	var users []model.User
-	_, err := db.Select(&users, "select * from users order by id limit 2")
+	_, err := db.Select(&users, "select * from users order by id limit 1")
 	checkErr(err, "Select failed")
 	// log.Println("All rows:")
 	for _, u := range users {

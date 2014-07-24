@@ -25,7 +25,14 @@ type User struct {
 	Gender    int
 	LastLogin int64
 	CreatedAt int64
-	UpdatedAT int64
+	UpdatedAt int64
+}
+
+type Player struct {
+	UserId    int64
+	Points    int
+	CreatedAt int64
+	UpdatedAt int64
 }
 
 func InitDb(dsn string) *gorp.DbMap {
@@ -35,6 +42,7 @@ func InitDb(dsn string) *gorp.DbMap {
 	// construct a gorp DbMap
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
 	dbmap.AddTableWithName(User{}, "users").SetKeys(true, "Id")
+	dbmap.AddTableWithName(Player{}, "players").SetKeys(true, "UserId")
 	dbmap.TraceOn("[gorp]", log.New(os.Stdout, "myapp:", log.Lmicroseconds))
 
 	// create the table. in a production system you'd generally
@@ -45,7 +53,7 @@ func InitDb(dsn string) *gorp.DbMap {
 	return dbmap
 }
 
-func seedData(db *gorp.DbMap) {
+func SeedData(db *gorp.DbMap) {
 	names := []string{"Optimus Prime", "BumbleBee", "Hound", "Drift", "Crosshair", "Grimilock", "Slug", "Strafe", "Scron"}
 	avatar := []string{
 		"http://a.hiphotos.baidu.com/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=4dc8e79100087bf469e15fbb93ba3c49/08f790529822720e5cae3a2079cb0a46f31fab8c.jpg",
@@ -58,6 +66,7 @@ func seedData(db *gorp.DbMap) {
 		"http://baike.baidu.com/picture/10900924/11204216/0/b3119313b07eca8031001d3c932397dda04483e7?fr=lemma&ct=single",
 		"http://baike.baidu.com/picture/10900924/11204216/0/e850352ac65c10381d6aea19b0119313b17e89d0?fr=lemma&ct=single",
 	}
+
 	for i := 0; i < len(names); i++ {
 		user := &User{
 			UserName: names[i],
@@ -66,6 +75,8 @@ func seedData(db *gorp.DbMap) {
 			CreatedAt: time.Now().UnixNano(),
 		}
 		db.Insert(user)
+		player := &Player{UserId: user.Id, Points: 0}
+		db.Insert(player)
 	}
 }
 
