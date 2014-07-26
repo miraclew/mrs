@@ -24,7 +24,7 @@ type Message struct {
 }
 
 func (m *Message) String() string {
-	return fmt.Sprintf("Message: Code=%#v MSG: %#v", m.Code, m.MSG.String())
+	return fmt.Sprintf("Message: Code=%s MSG: %s", m.Code.String(), m.MSG.String())
 }
 
 type Payload struct {

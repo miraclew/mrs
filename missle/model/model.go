@@ -57,14 +57,14 @@ func SeedData(db *gorp.DbMap) {
 	names := []string{"Optimus Prime", "BumbleBee", "Hound", "Drift", "Crosshair", "Grimilock", "Slug", "Strafe", "Scron"}
 	avatar := []string{
 		"http://a.hiphotos.baidu.com/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=4dc8e79100087bf469e15fbb93ba3c49/08f790529822720e5cae3a2079cb0a46f31fab8c.jpg",
-		"http://baike.baidu.com/picture/10900924/11204216/0/b2de9c82d158ccbfd2f169e01bd8bc3eb035419f?fr=lemma&ct=single",
+		"http://g.hiphotos.baidu.com/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=ea97df3b2d2eb938f86072a0b40bee50/b2de9c82d158ccbfd2f169e01bd8bc3eb035419f.jpg",
 		"http://baike.baidu.com/picture/10900924/11204216/0/b2de9c82d158ccbfd6436de01bd8bc3eb0354169?fr=lemma&ct=single",
 		"http://baike.baidu.com/picture/10900924/11204216/0/a8ec8a13632762d0cbc87f65a2ec08fa503dc672?fr=lemma&ct=single",
 		"http://baike.baidu.com/picture/10900924/11204216/0/5fdf8db1cb134954a5212fb5544e9258d1094a20?fr=lemma&ct=single",
 		"http://baike.baidu.com/picture/10900924/11204216/0/35a85edf8db1cb13dfa00ec8df54564e93584b1b?fr=lemma&ct=single",
 		"http://baike.baidu.com/picture/10900924/11204216/0/e850352ac65c103806d0f119b0119313b17e89ba?fr=lemma&ct=single",
 		"http://baike.baidu.com/picture/10900924/11204216/0/b3119313b07eca8031001d3c932397dda04483e7?fr=lemma&ct=single",
-		"http://baike.baidu.com/picture/10900924/11204216/0/e850352ac65c10381d6aea19b0119313b17e89d0?fr=lemma&ct=single",
+		"http://g.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=b91fbe287b310a55d029d6a6d62c28cc/e850352ac65c10381d6aea19b0119313b17e89d0.jpg",
 	}
 
 	for i := 0; i < len(names); i++ {

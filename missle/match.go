@@ -26,6 +26,7 @@ type Match struct {
 	PlayersId []int64
 	State     int
 	TurnIdx   int
+	turnTimer time.Timer
 
 	manager *mnet.Manager
 	game    *Game
@@ -144,6 +145,9 @@ func (m *Match) NextTurn() {
 	if m.State == STATE_END {
 		return
 	}
+	if m.turnTimer != nil {
+		m.turnTimer.Stop()
+	}
 
 	m.TurnIdx++
 	if m.TurnIdx >= len(m.Players) {
@@ -155,10 +159,10 @@ func (m *Match) NextTurn() {
 	mt.MatchId = &m.Id
 	mt.PlayerId = &playerId
 	msg := &mnet.Message{Code: pb.Code_E_MATCH_TURN, MSG: mt}
-	m.pushToUser(playerId, msg)
+	m.manager.PushToChannel(m.ChannelId, msg)
 
 	// schedule next turn
-	time.AfterFunc(time.Duration(2)*time.Second, m.NextTurn)
+	m.turnTimer = time.AfterFunc(time.Duration(5)*time.Second, m.NextTurn)
 }
 
 func (m *Match) End() {
@@ -212,12 +216,19 @@ func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) error {
 	if m.State == STATE_END {
 		return NewMissleErr(ERR_INVALID_STATE, m.State)
 	}
+	if playerId2 := m.PlayersId[m.TurnIdx]; playerId != playerId2 {
+		log.Printf("It's not your(%d) turn to fire, turn: %d", playerId2, playerId)
+		return NewMissleErr(ERR_INVALID_STATE, m.State)
+	}
+
 	pf := &pb.EPlayerFire{}
 	pf.MatchId = &m.Id
 	pf.PlayerId = &playerId
 	pf.Velocity = &pb.Point{X: &velocity.X, Y: &velocity.Y}
 	msg := &mnet.Message{Code: pb.Code_E_PLAYER_FIRE, MSG: pf}
 	m.manager.PushToChannel(m.ChannelId, msg)
+
+	// wait a few time(missle hit) to trigger next turn
 	return nil
 }
 

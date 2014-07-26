@@ -10,6 +10,8 @@ import (
 	"github.com/miraclew/mrs/mnet"
 	"github.com/miraclew/mrs/pb"
 	"io"
+	"math/rand"
+	"time"
 )
 
 const (
@@ -121,15 +123,17 @@ func (d *DefaultClient) OnRecievePayload(payload *mnet.Payload) (err error) {
 		err = proto.Unmarshal(payload.Body, mt)
 		if err == nil {
 			log.Printf("%s EMatchTurn: %#v\n", d.user.NickName, mt.String())
-			// fire
-			matchId := d.match.GetMatchId()
-			fire := &pb.CPlayerFire{}
-			fire.MatchId = &matchId
-			fire.PlayerId = &d.user.Id
-			var x float32 = 0.1
-			var y float32 = 0.2
-			fire.Velocity = &pb.Point{X: &x, Y: &y}
-			d.send(pb.Code_C_PLAYER_FIRE, fire)
+			time.AfterFunc(time.Duration(rand.Float32()*5)*time.Second, func() {
+				// fire
+				matchId := d.match.GetMatchId()
+				fire := &pb.CPlayerFire{}
+				fire.MatchId = &matchId
+				fire.PlayerId = &d.user.Id
+				var x float32 = rand.Float32()
+				var y float32 = rand.Float32()
+				fire.Velocity = &pb.Point{X: &x, Y: &y}
+				d.send(pb.Code_C_PLAYER_FIRE, fire)
+			})
 		}
 	case pb.Code_E_MATCH_END:
 		me := &pb.EMatchEnd{}
@@ -137,6 +141,8 @@ func (d *DefaultClient) OnRecievePayload(payload *mnet.Payload) (err error) {
 		if err == nil {
 			log.Printf("%s Game Over: %s", d.user.NickName, me.String())
 			d.match = nil
+			log.Printf("enter ...", "")
+			d.send(pb.Code_C_MATCH_ENTER, &pb.CMatchEnter{})
 		}
 	case pb.Code_E_PLAYER_MOVE:
 	case pb.Code_E_PLAYER_FIRE:
@@ -145,15 +151,16 @@ func (d *DefaultClient) OnRecievePayload(payload *mnet.Payload) (err error) {
 		if err == nil {
 			log.Printf("%s EPlayerFire: %#v\n", d.user.NickName, pf)
 		}
-		matchId := d.match.GetMatchId()
-		var damage int32 = 20
-		otherGuyId := d.getOtherGuy()
-		hit := &pb.CPlayerHit{}
-		hit.MatchId = &matchId
-		hit.P1 = &otherGuyId
-		hit.P2 = &d.user.Id
-		hit.Damage = &damage
-		d.send(pb.Code_C_PLAYER_HIT, hit)
+		// send hit cmd
+		// matchId := d.match.GetMatchId()
+		// var damage int32 = 10
+		// otherGuyId := d.getOtherGuy()
+		// hit := &pb.CPlayerHit{}
+		// hit.MatchId = &matchId
+		// hit.P1 = &otherGuyId
+		// hit.P2 = &d.user.Id
+		// hit.Damage = &damage
+		// d.send(pb.Code_C_PLAYER_HIT, hit)
 	case pb.Code_E_PLAYER_HIT:
 
 	}
