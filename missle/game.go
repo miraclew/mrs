@@ -72,10 +72,11 @@ func (g *Game) OnDisconnected(clientId int64) {
 }
 
 func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
-	log.Printf("Client(%d) recv payload: %#v", clientId, payload)
 	var err error
 	playerId := g.c2uMap[clientId]
 	code := pb.Code(payload.Code)
+	log.Printf("Client(%d) playersId(%d) recv payload: %#v", clientId, playerId, code.String())
+
 	if code == pb.Code_C_AUTH {
 		auth := &pb.CAuth{}
 		err = proto.Unmarshal(payload.Body, auth)
@@ -125,13 +126,11 @@ func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
 		hit := &pb.CPlayerHit{}
 		err = proto.Unmarshal(payload.Body, hit)
 		if err == nil {
-			log.Printf("%#v", hit)
+			log.Printf("%s", hit.String())
 			match := GetMatch(hit.GetMatchId())
 			if match != nil {
 				match.PlayerHit(hit.GetP1(), hit.GetP2(), hit.GetDamage())
 			}
-		} else {
-			log.Printf("fuck %s", err.Error())
 		}
 	} else {
 		log.Printf("Error: unknown command %d", code)

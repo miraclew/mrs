@@ -22,11 +22,12 @@ const (
 )
 
 type DefaultClient struct {
-	user  model.User
-	conn  *net.TCPConn
-	state int
-	buf   bytes.Buffer
-	match *pb.EMatcInit
+	user     model.User
+	conn     *net.TCPConn
+	state    int
+	buf      bytes.Buffer
+	match    *pb.EMatcInit
+	playerId int64
 }
 
 func (d *DefaultClient) run() {
@@ -104,6 +105,7 @@ func (d *DefaultClient) OnRecievePayload(payload *mnet.Payload) (err error) {
 		err = proto.Unmarshal(payload.Body, eauth)
 		if err == nil {
 			if *eauth.Code == 0 {
+				d.playerId = eauth.GetUserId()
 				log.Println("Auth OK, enter game")
 				d.send(pb.Code_C_MATCH_ENTER, &pb.CMatchEnter{})
 			} else {
@@ -121,7 +123,7 @@ func (d *DefaultClient) OnRecievePayload(payload *mnet.Payload) (err error) {
 	case pb.Code_E_MATCH_TURN:
 		mt := &pb.EMatchTurn{}
 		err = proto.Unmarshal(payload.Body, mt)
-		if err == nil {
+		if err == nil && mt.GetPlayerId() == d.playerId {
 			log.Printf("%s EMatchTurn: %#v\n", d.user.NickName, mt.String())
 			time.AfterFunc(time.Duration(rand.Float32()*5)*time.Second, func() {
 				// fire

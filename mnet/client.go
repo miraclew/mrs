@@ -70,7 +70,7 @@ func (c *Client) listenWrite() {
 
 		// send message to the client
 		case payload := <-c.ch:
-			log.Printf("Client(%d) send payload: %#v", c.id, payload)
+			//log.Printf("Client(%d) send payload: %#v", c.id, payload)
 			b, _ := payload.Encode()
 			c.conn.Write(b)
 
@@ -104,7 +104,7 @@ func (c *Client) listenRead() {
 			} else if err != nil {
 				c.server.Err(err)
 			} else {
-				log.Printf("Client(%d) recv raw: % x\n", c.id, b)
+				//log.Printf("Client(%d) recv raw: % x\n", c.id, b)
 				c.buf.Write(b[0:length])
 
 				payload := &Payload{}

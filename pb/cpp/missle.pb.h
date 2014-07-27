@@ -69,19 +69,19 @@ const Code Code_MIN = C_AUTH;
 const Code Code_MAX = C_PLAYER_HEALTH;
 const int Code_ARRAYSIZE = Code_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* Code_descriptor();
+const ::google_public::protobuf::EnumDescriptor* Code_descriptor();
 inline const ::std::string& Code_Name(Code value) {
-  return ::google::protobuf::internal::NameOfEnum(
+  return ::google_public::protobuf::internal::NameOfEnum(
     Code_descriptor(), value);
 }
 inline bool Code_Parse(
     const ::std::string& name, Code* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<Code>(
+  return ::google_public::protobuf::internal::ParseNamedEnum<Code>(
     Code_descriptor(), name, value);
 }
 // ===================================================================
 
-class Point : public ::google::protobuf::Message {
+class Point : public ::google_public::protobuf::Message {
  public:
   Point();
   virtual ~Point();
@@ -93,15 +93,15 @@ class Point : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const Point& default_instance();
 
   void Swap(Point* other);
@@ -109,8 +109,8 @@ class Point : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   Point* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const Point& from);
   void MergeFrom(const Point& from);
   void Clear();
@@ -118,10 +118,10 @@ class Point : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -129,7 +129,7 @@ class Point : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -156,13 +156,13 @@ class Point : public ::google::protobuf::Message {
   inline void set_has_y();
   inline void clear_has_y();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
   float x_;
   float y_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -173,7 +173,7 @@ class Point : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class Player : public ::google::protobuf::Message {
+class Player : public ::google_public::protobuf::Message {
  public:
   Player();
   virtual ~Player();
@@ -185,15 +185,15 @@ class Player : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const Player& default_instance();
 
   void Swap(Player* other);
@@ -201,8 +201,8 @@ class Player : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   Player* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const Player& from);
   void MergeFrom(const Player& from);
   void Clear();
@@ -210,10 +210,10 @@ class Player : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -221,7 +221,7 @@ class Player : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -231,8 +231,8 @@ class Player : public ::google::protobuf::Message {
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::int64 id() const;
-  inline void set_id(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 id() const;
+  inline void set_id(::google_public::protobuf::int64 value);
 
   // required string nickName = 2;
   inline bool has_nickname() const;
@@ -278,8 +278,8 @@ class Player : public ::google::protobuf::Message {
   inline bool has_health() const;
   inline void clear_health();
   static const int kHealthFieldNumber = 6;
-  inline ::google::protobuf::int32 health() const;
-  inline void set_health(::google::protobuf::int32 value);
+  inline ::google_public::protobuf::int32 health() const;
+  inline void set_health(::google_public::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:pb.Player)
  private:
@@ -296,17 +296,17 @@ class Player : public ::google::protobuf::Message {
   inline void set_has_health();
   inline void clear_has_health();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 id_;
+  ::google_public::protobuf::int64 id_;
   ::std::string* nickname_;
   ::std::string* avatar_;
   ::pb::Point* position_;
   bool isleft_;
-  ::google::protobuf::int32 health_;
+  ::google_public::protobuf::int32 health_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -317,7 +317,7 @@ class Player : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CAuth : public ::google::protobuf::Message {
+class CAuth : public ::google_public::protobuf::Message {
  public:
   CAuth();
   virtual ~CAuth();
@@ -329,15 +329,15 @@ class CAuth : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const CAuth& default_instance();
 
   void Swap(CAuth* other);
@@ -345,8 +345,8 @@ class CAuth : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   CAuth* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const CAuth& from);
   void MergeFrom(const CAuth& from);
   void Clear();
@@ -354,10 +354,10 @@ class CAuth : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -365,7 +365,7 @@ class CAuth : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -402,13 +402,13 @@ class CAuth : public ::google::protobuf::Message {
   inline void set_has_password();
   inline void clear_has_password();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* username_;
   ::std::string* password_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -419,7 +419,7 @@ class CAuth : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EAuth : public ::google::protobuf::Message {
+class EAuth : public ::google_public::protobuf::Message {
  public:
   EAuth();
   virtual ~EAuth();
@@ -431,15 +431,15 @@ class EAuth : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EAuth& default_instance();
 
   void Swap(EAuth* other);
@@ -447,8 +447,8 @@ class EAuth : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EAuth* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EAuth& from);
   void MergeFrom(const EAuth& from);
   void Clear();
@@ -456,10 +456,10 @@ class EAuth : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -467,7 +467,7 @@ class EAuth : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -477,15 +477,15 @@ class EAuth : public ::google::protobuf::Message {
   inline bool has_code() const;
   inline void clear_code();
   static const int kCodeFieldNumber = 1;
-  inline ::google::protobuf::int32 code() const;
-  inline void set_code(::google::protobuf::int32 value);
+  inline ::google_public::protobuf::int32 code() const;
+  inline void set_code(::google_public::protobuf::int32 value);
 
   // required int64 userId = 2;
   inline bool has_userid() const;
   inline void clear_userid();
   static const int kUserIdFieldNumber = 2;
-  inline ::google::protobuf::int64 userid() const;
-  inline void set_userid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 userid() const;
+  inline void set_userid(::google_public::protobuf::int64 value);
 
   // optional string message = 3;
   inline bool has_message() const;
@@ -508,14 +508,14 @@ class EAuth : public ::google::protobuf::Message {
   inline void set_has_message();
   inline void clear_has_message();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 userid_;
+  ::google_public::protobuf::int64 userid_;
   ::std::string* message_;
-  ::google::protobuf::int32 code_;
+  ::google_public::protobuf::int32 code_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -526,7 +526,7 @@ class EAuth : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CMatchEnter : public ::google::protobuf::Message {
+class CMatchEnter : public ::google_public::protobuf::Message {
  public:
   CMatchEnter();
   virtual ~CMatchEnter();
@@ -538,15 +538,15 @@ class CMatchEnter : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const CMatchEnter& default_instance();
 
   void Swap(CMatchEnter* other);
@@ -554,8 +554,8 @@ class CMatchEnter : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   CMatchEnter* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const CMatchEnter& from);
   void MergeFrom(const CMatchEnter& from);
   void Clear();
@@ -563,10 +563,10 @@ class CMatchEnter : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -574,7 +574,7 @@ class CMatchEnter : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -583,11 +583,11 @@ class CMatchEnter : public ::google::protobuf::Message {
   // @@protoc_insertion_point(class_scope:pb.CMatchEnter)
  private:
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google_public::protobuf::uint32 _has_bits_[1];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -598,7 +598,7 @@ class CMatchEnter : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EMatcInit : public ::google::protobuf::Message {
+class EMatcInit : public ::google_public::protobuf::Message {
  public:
   EMatcInit();
   virtual ~EMatcInit();
@@ -610,15 +610,15 @@ class EMatcInit : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EMatcInit& default_instance();
 
   void Swap(EMatcInit* other);
@@ -626,8 +626,8 @@ class EMatcInit : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EMatcInit* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EMatcInit& from);
   void MergeFrom(const EMatcInit& from);
   void Clear();
@@ -635,10 +635,10 @@ class EMatcInit : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -646,7 +646,7 @@ class EMatcInit : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -656,8 +656,8 @@ class EMatcInit : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // repeated .pb.Player players = 2;
   inline int players_size() const;
@@ -666,9 +666,9 @@ class EMatcInit : public ::google::protobuf::Message {
   inline const ::pb::Player& players(int index) const;
   inline ::pb::Player* mutable_players(int index);
   inline ::pb::Player* add_players();
-  inline const ::google::protobuf::RepeatedPtrField< ::pb::Player >&
+  inline const ::google_public::protobuf::RepeatedPtrField< ::pb::Player >&
       players() const;
-  inline ::google::protobuf::RepeatedPtrField< ::pb::Player >*
+  inline ::google_public::protobuf::RepeatedPtrField< ::pb::Player >*
       mutable_players();
 
   // repeated .pb.Point points = 3;
@@ -678,9 +678,9 @@ class EMatcInit : public ::google::protobuf::Message {
   inline const ::pb::Point& points(int index) const;
   inline ::pb::Point* mutable_points(int index);
   inline ::pb::Point* add_points();
-  inline const ::google::protobuf::RepeatedPtrField< ::pb::Point >&
+  inline const ::google_public::protobuf::RepeatedPtrField< ::pb::Point >&
       points() const;
-  inline ::google::protobuf::RepeatedPtrField< ::pb::Point >*
+  inline ::google_public::protobuf::RepeatedPtrField< ::pb::Point >*
       mutable_points();
 
   // @@protoc_insertion_point(class_scope:pb.EMatcInit)
@@ -688,14 +688,14 @@ class EMatcInit : public ::google::protobuf::Message {
   inline void set_has_matchid();
   inline void clear_has_matchid();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::RepeatedPtrField< ::pb::Player > players_;
-  ::google::protobuf::RepeatedPtrField< ::pb::Point > points_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::RepeatedPtrField< ::pb::Player > players_;
+  ::google_public::protobuf::RepeatedPtrField< ::pb::Point > points_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -706,7 +706,7 @@ class EMatcInit : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EMatchEnd : public ::google::protobuf::Message {
+class EMatchEnd : public ::google_public::protobuf::Message {
  public:
   EMatchEnd();
   virtual ~EMatchEnd();
@@ -718,15 +718,15 @@ class EMatchEnd : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EMatchEnd& default_instance();
 
   void Swap(EMatchEnd* other);
@@ -734,8 +734,8 @@ class EMatchEnd : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EMatchEnd* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EMatchEnd& from);
   void MergeFrom(const EMatchEnd& from);
   void Clear();
@@ -743,10 +743,10 @@ class EMatchEnd : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -754,7 +754,7 @@ class EMatchEnd : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -764,15 +764,15 @@ class EMatchEnd : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int32 points = 2;
   inline bool has_points() const;
   inline void clear_points();
   static const int kPointsFieldNumber = 2;
-  inline ::google::protobuf::int32 points() const;
-  inline void set_points(::google::protobuf::int32 value);
+  inline ::google_public::protobuf::int32 points() const;
+  inline void set_points(::google_public::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:pb.EMatchEnd)
  private:
@@ -781,13 +781,13 @@ class EMatchEnd : public ::google::protobuf::Message {
   inline void set_has_points();
   inline void clear_has_points();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int32 points_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int32 points_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -798,7 +798,7 @@ class EMatchEnd : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EMatchTurn : public ::google::protobuf::Message {
+class EMatchTurn : public ::google_public::protobuf::Message {
  public:
   EMatchTurn();
   virtual ~EMatchTurn();
@@ -810,15 +810,15 @@ class EMatchTurn : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EMatchTurn& default_instance();
 
   void Swap(EMatchTurn* other);
@@ -826,8 +826,8 @@ class EMatchTurn : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EMatchTurn* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EMatchTurn& from);
   void MergeFrom(const EMatchTurn& from);
   void Clear();
@@ -835,10 +835,10 @@ class EMatchTurn : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -846,7 +846,7 @@ class EMatchTurn : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -856,15 +856,15 @@ class EMatchTurn : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayerIdFieldNumber = 2;
-  inline ::google::protobuf::int64 playerid() const;
-  inline void set_playerid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 playerid() const;
+  inline void set_playerid(::google_public::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:pb.EMatchTurn)
  private:
@@ -873,13 +873,13 @@ class EMatchTurn : public ::google::protobuf::Message {
   inline void set_has_playerid();
   inline void clear_has_playerid();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int64 playerid_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 playerid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -890,7 +890,7 @@ class EMatchTurn : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CPlayerMove : public ::google::protobuf::Message {
+class CPlayerMove : public ::google_public::protobuf::Message {
  public:
   CPlayerMove();
   virtual ~CPlayerMove();
@@ -902,15 +902,15 @@ class CPlayerMove : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const CPlayerMove& default_instance();
 
   void Swap(CPlayerMove* other);
@@ -918,8 +918,8 @@ class CPlayerMove : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   CPlayerMove* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const CPlayerMove& from);
   void MergeFrom(const CPlayerMove& from);
   void Clear();
@@ -927,10 +927,10 @@ class CPlayerMove : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -938,7 +938,7 @@ class CPlayerMove : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -948,8 +948,8 @@ class CPlayerMove : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required .pb.Point position = 2;
   inline bool has_position() const;
@@ -967,13 +967,13 @@ class CPlayerMove : public ::google::protobuf::Message {
   inline void set_has_position();
   inline void clear_has_position();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 matchid_;
   ::pb::Point* position_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -984,7 +984,7 @@ class CPlayerMove : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EPlayerMove : public ::google::protobuf::Message {
+class EPlayerMove : public ::google_public::protobuf::Message {
  public:
   EPlayerMove();
   virtual ~EPlayerMove();
@@ -996,15 +996,15 @@ class EPlayerMove : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EPlayerMove& default_instance();
 
   void Swap(EPlayerMove* other);
@@ -1012,8 +1012,8 @@ class EPlayerMove : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EPlayerMove* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EPlayerMove& from);
   void MergeFrom(const EPlayerMove& from);
   void Clear();
@@ -1021,10 +1021,10 @@ class EPlayerMove : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1032,7 +1032,7 @@ class EPlayerMove : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -1042,15 +1042,15 @@ class EPlayerMove : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayerIdFieldNumber = 2;
-  inline ::google::protobuf::int64 playerid() const;
-  inline void set_playerid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 playerid() const;
+  inline void set_playerid(::google_public::protobuf::int64 value);
 
   // required .pb.Point position = 3;
   inline bool has_position() const;
@@ -1070,14 +1070,14 @@ class EPlayerMove : public ::google::protobuf::Message {
   inline void set_has_position();
   inline void clear_has_position();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int64 playerid_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 playerid_;
   ::pb::Point* position_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1088,7 +1088,7 @@ class EPlayerMove : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CPlayerFire : public ::google::protobuf::Message {
+class CPlayerFire : public ::google_public::protobuf::Message {
  public:
   CPlayerFire();
   virtual ~CPlayerFire();
@@ -1100,15 +1100,15 @@ class CPlayerFire : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const CPlayerFire& default_instance();
 
   void Swap(CPlayerFire* other);
@@ -1116,8 +1116,8 @@ class CPlayerFire : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   CPlayerFire* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const CPlayerFire& from);
   void MergeFrom(const CPlayerFire& from);
   void Clear();
@@ -1125,10 +1125,10 @@ class CPlayerFire : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1136,7 +1136,7 @@ class CPlayerFire : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -1146,15 +1146,15 @@ class CPlayerFire : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayerIdFieldNumber = 2;
-  inline ::google::protobuf::int64 playerid() const;
-  inline void set_playerid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 playerid() const;
+  inline void set_playerid(::google_public::protobuf::int64 value);
 
   // required .pb.Point velocity = 3;
   inline bool has_velocity() const;
@@ -1174,14 +1174,14 @@ class CPlayerFire : public ::google::protobuf::Message {
   inline void set_has_velocity();
   inline void clear_has_velocity();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int64 playerid_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 playerid_;
   ::pb::Point* velocity_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1192,7 +1192,7 @@ class CPlayerFire : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EPlayerFire : public ::google::protobuf::Message {
+class EPlayerFire : public ::google_public::protobuf::Message {
  public:
   EPlayerFire();
   virtual ~EPlayerFire();
@@ -1204,15 +1204,15 @@ class EPlayerFire : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EPlayerFire& default_instance();
 
   void Swap(EPlayerFire* other);
@@ -1220,8 +1220,8 @@ class EPlayerFire : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EPlayerFire* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EPlayerFire& from);
   void MergeFrom(const EPlayerFire& from);
   void Clear();
@@ -1229,10 +1229,10 @@ class EPlayerFire : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1240,7 +1240,7 @@ class EPlayerFire : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -1250,15 +1250,15 @@ class EPlayerFire : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int64 playerId = 2;
   inline bool has_playerid() const;
   inline void clear_playerid();
   static const int kPlayerIdFieldNumber = 2;
-  inline ::google::protobuf::int64 playerid() const;
-  inline void set_playerid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 playerid() const;
+  inline void set_playerid(::google_public::protobuf::int64 value);
 
   // required .pb.Point velocity = 3;
   inline bool has_velocity() const;
@@ -1278,14 +1278,14 @@ class EPlayerFire : public ::google::protobuf::Message {
   inline void set_has_velocity();
   inline void clear_has_velocity();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int64 playerid_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 playerid_;
   ::pb::Point* velocity_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1296,7 +1296,7 @@ class EPlayerFire : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CPlayerHit : public ::google::protobuf::Message {
+class CPlayerHit : public ::google_public::protobuf::Message {
  public:
   CPlayerHit();
   virtual ~CPlayerHit();
@@ -1308,15 +1308,15 @@ class CPlayerHit : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const CPlayerHit& default_instance();
 
   void Swap(CPlayerHit* other);
@@ -1324,8 +1324,8 @@ class CPlayerHit : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   CPlayerHit* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const CPlayerHit& from);
   void MergeFrom(const CPlayerHit& from);
   void Clear();
@@ -1333,10 +1333,10 @@ class CPlayerHit : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1344,7 +1344,7 @@ class CPlayerHit : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -1354,29 +1354,29 @@ class CPlayerHit : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int64 p1 = 2;
   inline bool has_p1() const;
   inline void clear_p1();
   static const int kP1FieldNumber = 2;
-  inline ::google::protobuf::int64 p1() const;
-  inline void set_p1(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 p1() const;
+  inline void set_p1(::google_public::protobuf::int64 value);
 
   // required int64 p2 = 3;
   inline bool has_p2() const;
   inline void clear_p2();
   static const int kP2FieldNumber = 3;
-  inline ::google::protobuf::int64 p2() const;
-  inline void set_p2(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 p2() const;
+  inline void set_p2(::google_public::protobuf::int64 value);
 
   // required int32 damage = 4;
   inline bool has_damage() const;
   inline void clear_damage();
   static const int kDamageFieldNumber = 4;
-  inline ::google::protobuf::int32 damage() const;
-  inline void set_damage(::google::protobuf::int32 value);
+  inline ::google_public::protobuf::int32 damage() const;
+  inline void set_damage(::google_public::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:pb.CPlayerHit)
  private:
@@ -1389,15 +1389,15 @@ class CPlayerHit : public ::google::protobuf::Message {
   inline void set_has_damage();
   inline void clear_has_damage();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int64 p1_;
-  ::google::protobuf::int64 p2_;
-  ::google::protobuf::int32 damage_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 p1_;
+  ::google_public::protobuf::int64 p2_;
+  ::google_public::protobuf::int32 damage_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1408,7 +1408,7 @@ class CPlayerHit : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class EPlayerHit : public ::google::protobuf::Message {
+class EPlayerHit : public ::google_public::protobuf::Message {
  public:
   EPlayerHit();
   virtual ~EPlayerHit();
@@ -1420,15 +1420,15 @@ class EPlayerHit : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
     return _unknown_fields_;
   }
 
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
     return &_unknown_fields_;
   }
 
-  static const ::google::protobuf::Descriptor* descriptor();
+  static const ::google_public::protobuf::Descriptor* descriptor();
   static const EPlayerHit& default_instance();
 
   void Swap(EPlayerHit* other);
@@ -1436,8 +1436,8 @@ class EPlayerHit : public ::google::protobuf::Message {
   // implements Message ----------------------------------------------
 
   EPlayerHit* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
   void CopyFrom(const EPlayerHit& from);
   void MergeFrom(const EPlayerHit& from);
   void Clear();
@@ -1445,10 +1445,10 @@ class EPlayerHit : public ::google::protobuf::Message {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
+      ::google_public::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1456,7 +1456,7 @@ class EPlayerHit : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::google_public::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
 
@@ -1466,29 +1466,29 @@ class EPlayerHit : public ::google::protobuf::Message {
   inline bool has_matchid() const;
   inline void clear_matchid();
   static const int kMatchIdFieldNumber = 1;
-  inline ::google::protobuf::int64 matchid() const;
-  inline void set_matchid(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
 
   // required int64 p1 = 2;
   inline bool has_p1() const;
   inline void clear_p1();
   static const int kP1FieldNumber = 2;
-  inline ::google::protobuf::int64 p1() const;
-  inline void set_p1(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 p1() const;
+  inline void set_p1(::google_public::protobuf::int64 value);
 
   // required int64 p2 = 3;
   inline bool has_p2() const;
   inline void clear_p2();
   static const int kP2FieldNumber = 3;
-  inline ::google::protobuf::int64 p2() const;
-  inline void set_p2(::google::protobuf::int64 value);
+  inline ::google_public::protobuf::int64 p2() const;
+  inline void set_p2(::google_public::protobuf::int64 value);
 
   // required int32 damage = 4;
   inline bool has_damage() const;
   inline void clear_damage();
   static const int kDamageFieldNumber = 4;
-  inline ::google::protobuf::int32 damage() const;
-  inline void set_damage(::google::protobuf::int32 value);
+  inline ::google_public::protobuf::int32 damage() const;
+  inline void set_damage(::google_public::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:pb.EPlayerHit)
  private:
@@ -1501,15 +1501,15 @@ class EPlayerHit : public ::google::protobuf::Message {
   inline void set_has_damage();
   inline void clear_has_damage();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int64 matchid_;
-  ::google::protobuf::int64 p1_;
-  ::google::protobuf::int64 p2_;
-  ::google::protobuf::int32 damage_;
+  ::google_public::protobuf::int64 matchid_;
+  ::google_public::protobuf::int64 p1_;
+  ::google_public::protobuf::int64 p2_;
+  ::google_public::protobuf::int32 damage_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1587,10 +1587,10 @@ inline void Player::clear_id() {
   id_ = GOOGLE_LONGLONG(0);
   clear_has_id();
 }
-inline ::google::protobuf::int64 Player::id() const {
+inline ::google_public::protobuf::int64 Player::id() const {
   return id_;
 }
-inline void Player::set_id(::google::protobuf::int64 value) {
+inline void Player::set_id(::google_public::protobuf::int64 value) {
   set_has_id();
   id_ = value;
 }
@@ -1606,7 +1606,7 @@ inline void Player::clear_has_nickname() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void Player::clear_nickname() {
-  if (nickname_ != &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ != &::google_public::protobuf::internal::kEmptyString) {
     nickname_->clear();
   }
   clear_has_nickname();
@@ -1616,44 +1616,44 @@ inline const ::std::string& Player::nickname() const {
 }
 inline void Player::set_nickname(const ::std::string& value) {
   set_has_nickname();
-  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ == &::google_public::protobuf::internal::kEmptyString) {
     nickname_ = new ::std::string;
   }
   nickname_->assign(value);
 }
 inline void Player::set_nickname(const char* value) {
   set_has_nickname();
-  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ == &::google_public::protobuf::internal::kEmptyString) {
     nickname_ = new ::std::string;
   }
   nickname_->assign(value);
 }
 inline void Player::set_nickname(const char* value, size_t size) {
   set_has_nickname();
-  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ == &::google_public::protobuf::internal::kEmptyString) {
     nickname_ = new ::std::string;
   }
   nickname_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* Player::mutable_nickname() {
   set_has_nickname();
-  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ == &::google_public::protobuf::internal::kEmptyString) {
     nickname_ = new ::std::string;
   }
   return nickname_;
 }
 inline ::std::string* Player::release_nickname() {
   clear_has_nickname();
-  if (nickname_ == &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ == &::google_public::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
     ::std::string* temp = nickname_;
-    nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    nickname_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
     return temp;
   }
 }
 inline void Player::set_allocated_nickname(::std::string* nickname) {
-  if (nickname_ != &::google::protobuf::internal::kEmptyString) {
+  if (nickname_ != &::google_public::protobuf::internal::kEmptyString) {
     delete nickname_;
   }
   if (nickname) {
@@ -1661,7 +1661,7 @@ inline void Player::set_allocated_nickname(::std::string* nickname) {
     nickname_ = nickname;
   } else {
     clear_has_nickname();
-    nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    nickname_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
   }
 }
 
@@ -1676,7 +1676,7 @@ inline void Player::clear_has_avatar() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void Player::clear_avatar() {
-  if (avatar_ != &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ != &::google_public::protobuf::internal::kEmptyString) {
     avatar_->clear();
   }
   clear_has_avatar();
@@ -1686,44 +1686,44 @@ inline const ::std::string& Player::avatar() const {
 }
 inline void Player::set_avatar(const ::std::string& value) {
   set_has_avatar();
-  if (avatar_ == &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ == &::google_public::protobuf::internal::kEmptyString) {
     avatar_ = new ::std::string;
   }
   avatar_->assign(value);
 }
 inline void Player::set_avatar(const char* value) {
   set_has_avatar();
-  if (avatar_ == &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ == &::google_public::protobuf::internal::kEmptyString) {
     avatar_ = new ::std::string;
   }
   avatar_->assign(value);
 }
 inline void Player::set_avatar(const char* value, size_t size) {
   set_has_avatar();
-  if (avatar_ == &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ == &::google_public::protobuf::internal::kEmptyString) {
     avatar_ = new ::std::string;
   }
   avatar_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* Player::mutable_avatar() {
   set_has_avatar();
-  if (avatar_ == &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ == &::google_public::protobuf::internal::kEmptyString) {
     avatar_ = new ::std::string;
   }
   return avatar_;
 }
 inline ::std::string* Player::release_avatar() {
   clear_has_avatar();
-  if (avatar_ == &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ == &::google_public::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
     ::std::string* temp = avatar_;
-    avatar_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    avatar_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
     return temp;
   }
 }
 inline void Player::set_allocated_avatar(::std::string* avatar) {
-  if (avatar_ != &::google::protobuf::internal::kEmptyString) {
+  if (avatar_ != &::google_public::protobuf::internal::kEmptyString) {
     delete avatar_;
   }
   if (avatar) {
@@ -1731,7 +1731,7 @@ inline void Player::set_allocated_avatar(::std::string* avatar) {
     avatar_ = avatar;
   } else {
     clear_has_avatar();
-    avatar_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    avatar_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
   }
 }
 
@@ -1809,10 +1809,10 @@ inline void Player::clear_health() {
   health_ = 0;
   clear_has_health();
 }
-inline ::google::protobuf::int32 Player::health() const {
+inline ::google_public::protobuf::int32 Player::health() const {
   return health_;
 }
-inline void Player::set_health(::google::protobuf::int32 value) {
+inline void Player::set_health(::google_public::protobuf::int32 value) {
   set_has_health();
   health_ = value;
 }
@@ -1832,7 +1832,7 @@ inline void CAuth::clear_has_username() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CAuth::clear_username() {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
+  if (username_ != &::google_public::protobuf::internal::kEmptyString) {
     username_->clear();
   }
   clear_has_username();
@@ -1842,44 +1842,44 @@ inline const ::std::string& CAuth::username() const {
 }
 inline void CAuth::set_username(const ::std::string& value) {
   set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
+  if (username_ == &::google_public::protobuf::internal::kEmptyString) {
     username_ = new ::std::string;
   }
   username_->assign(value);
 }
 inline void CAuth::set_username(const char* value) {
   set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
+  if (username_ == &::google_public::protobuf::internal::kEmptyString) {
     username_ = new ::std::string;
   }
   username_->assign(value);
 }
 inline void CAuth::set_username(const char* value, size_t size) {
   set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
+  if (username_ == &::google_public::protobuf::internal::kEmptyString) {
     username_ = new ::std::string;
   }
   username_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* CAuth::mutable_username() {
   set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
+  if (username_ == &::google_public::protobuf::internal::kEmptyString) {
     username_ = new ::std::string;
   }
   return username_;
 }
 inline ::std::string* CAuth::release_username() {
   clear_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
+  if (username_ == &::google_public::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
     ::std::string* temp = username_;
-    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    username_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
     return temp;
   }
 }
 inline void CAuth::set_allocated_username(::std::string* username) {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
+  if (username_ != &::google_public::protobuf::internal::kEmptyString) {
     delete username_;
   }
   if (username) {
@@ -1887,7 +1887,7 @@ inline void CAuth::set_allocated_username(::std::string* username) {
     username_ = username;
   } else {
     clear_has_username();
-    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    username_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
   }
 }
 
@@ -1902,7 +1902,7 @@ inline void CAuth::clear_has_password() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void CAuth::clear_password() {
-  if (password_ != &::google::protobuf::internal::kEmptyString) {
+  if (password_ != &::google_public::protobuf::internal::kEmptyString) {
     password_->clear();
   }
   clear_has_password();
@@ -1912,44 +1912,44 @@ inline const ::std::string& CAuth::password() const {
 }
 inline void CAuth::set_password(const ::std::string& value) {
   set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
+  if (password_ == &::google_public::protobuf::internal::kEmptyString) {
     password_ = new ::std::string;
   }
   password_->assign(value);
 }
 inline void CAuth::set_password(const char* value) {
   set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
+  if (password_ == &::google_public::protobuf::internal::kEmptyString) {
     password_ = new ::std::string;
   }
   password_->assign(value);
 }
 inline void CAuth::set_password(const char* value, size_t size) {
   set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
+  if (password_ == &::google_public::protobuf::internal::kEmptyString) {
     password_ = new ::std::string;
   }
   password_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* CAuth::mutable_password() {
   set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
+  if (password_ == &::google_public::protobuf::internal::kEmptyString) {
     password_ = new ::std::string;
   }
   return password_;
 }
 inline ::std::string* CAuth::release_password() {
   clear_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
+  if (password_ == &::google_public::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
     ::std::string* temp = password_;
-    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    password_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
     return temp;
   }
 }
 inline void CAuth::set_allocated_password(::std::string* password) {
-  if (password_ != &::google::protobuf::internal::kEmptyString) {
+  if (password_ != &::google_public::protobuf::internal::kEmptyString) {
     delete password_;
   }
   if (password) {
@@ -1957,7 +1957,7 @@ inline void CAuth::set_allocated_password(::std::string* password) {
     password_ = password;
   } else {
     clear_has_password();
-    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    password_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
   }
 }
 
@@ -1979,10 +1979,10 @@ inline void EAuth::clear_code() {
   code_ = 0;
   clear_has_code();
 }
-inline ::google::protobuf::int32 EAuth::code() const {
+inline ::google_public::protobuf::int32 EAuth::code() const {
   return code_;
 }
-inline void EAuth::set_code(::google::protobuf::int32 value) {
+inline void EAuth::set_code(::google_public::protobuf::int32 value) {
   set_has_code();
   code_ = value;
 }
@@ -2001,10 +2001,10 @@ inline void EAuth::clear_userid() {
   userid_ = GOOGLE_LONGLONG(0);
   clear_has_userid();
 }
-inline ::google::protobuf::int64 EAuth::userid() const {
+inline ::google_public::protobuf::int64 EAuth::userid() const {
   return userid_;
 }
-inline void EAuth::set_userid(::google::protobuf::int64 value) {
+inline void EAuth::set_userid(::google_public::protobuf::int64 value) {
   set_has_userid();
   userid_ = value;
 }
@@ -2020,7 +2020,7 @@ inline void EAuth::clear_has_message() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void EAuth::clear_message() {
-  if (message_ != &::google::protobuf::internal::kEmptyString) {
+  if (message_ != &::google_public::protobuf::internal::kEmptyString) {
     message_->clear();
   }
   clear_has_message();
@@ -2030,44 +2030,44 @@ inline const ::std::string& EAuth::message() const {
 }
 inline void EAuth::set_message(const ::std::string& value) {
   set_has_message();
-  if (message_ == &::google::protobuf::internal::kEmptyString) {
+  if (message_ == &::google_public::protobuf::internal::kEmptyString) {
     message_ = new ::std::string;
   }
   message_->assign(value);
 }
 inline void EAuth::set_message(const char* value) {
   set_has_message();
-  if (message_ == &::google::protobuf::internal::kEmptyString) {
+  if (message_ == &::google_public::protobuf::internal::kEmptyString) {
     message_ = new ::std::string;
   }
   message_->assign(value);
 }
 inline void EAuth::set_message(const char* value, size_t size) {
   set_has_message();
-  if (message_ == &::google::protobuf::internal::kEmptyString) {
+  if (message_ == &::google_public::protobuf::internal::kEmptyString) {
     message_ = new ::std::string;
   }
   message_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* EAuth::mutable_message() {
   set_has_message();
-  if (message_ == &::google::protobuf::internal::kEmptyString) {
+  if (message_ == &::google_public::protobuf::internal::kEmptyString) {
     message_ = new ::std::string;
   }
   return message_;
 }
 inline ::std::string* EAuth::release_message() {
   clear_has_message();
-  if (message_ == &::google::protobuf::internal::kEmptyString) {
+  if (message_ == &::google_public::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
     ::std::string* temp = message_;
-    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    message_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
     return temp;
   }
 }
 inline void EAuth::set_allocated_message(::std::string* message) {
-  if (message_ != &::google::protobuf::internal::kEmptyString) {
+  if (message_ != &::google_public::protobuf::internal::kEmptyString) {
     delete message_;
   }
   if (message) {
@@ -2075,7 +2075,7 @@ inline void EAuth::set_allocated_message(::std::string* message) {
     message_ = message;
   } else {
     clear_has_message();
-    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    message_ = const_cast< ::std::string*>(&::google_public::protobuf::internal::kEmptyString);
   }
 }
 
@@ -2101,10 +2101,10 @@ inline void EMatcInit::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 EMatcInit::matchid() const {
+inline ::google_public::protobuf::int64 EMatcInit::matchid() const {
   return matchid_;
 }
-inline void EMatcInit::set_matchid(::google::protobuf::int64 value) {
+inline void EMatcInit::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2125,11 +2125,11 @@ inline ::pb::Player* EMatcInit::mutable_players(int index) {
 inline ::pb::Player* EMatcInit::add_players() {
   return players_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::pb::Player >&
+inline const ::google_public::protobuf::RepeatedPtrField< ::pb::Player >&
 EMatcInit::players() const {
   return players_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::pb::Player >*
+inline ::google_public::protobuf::RepeatedPtrField< ::pb::Player >*
 EMatcInit::mutable_players() {
   return &players_;
 }
@@ -2150,11 +2150,11 @@ inline ::pb::Point* EMatcInit::mutable_points(int index) {
 inline ::pb::Point* EMatcInit::add_points() {
   return points_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::pb::Point >&
+inline const ::google_public::protobuf::RepeatedPtrField< ::pb::Point >&
 EMatcInit::points() const {
   return points_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::pb::Point >*
+inline ::google_public::protobuf::RepeatedPtrField< ::pb::Point >*
 EMatcInit::mutable_points() {
   return &points_;
 }
@@ -2177,10 +2177,10 @@ inline void EMatchEnd::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 EMatchEnd::matchid() const {
+inline ::google_public::protobuf::int64 EMatchEnd::matchid() const {
   return matchid_;
 }
-inline void EMatchEnd::set_matchid(::google::protobuf::int64 value) {
+inline void EMatchEnd::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2199,10 +2199,10 @@ inline void EMatchEnd::clear_points() {
   points_ = 0;
   clear_has_points();
 }
-inline ::google::protobuf::int32 EMatchEnd::points() const {
+inline ::google_public::protobuf::int32 EMatchEnd::points() const {
   return points_;
 }
-inline void EMatchEnd::set_points(::google::protobuf::int32 value) {
+inline void EMatchEnd::set_points(::google_public::protobuf::int32 value) {
   set_has_points();
   points_ = value;
 }
@@ -2225,10 +2225,10 @@ inline void EMatchTurn::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 EMatchTurn::matchid() const {
+inline ::google_public::protobuf::int64 EMatchTurn::matchid() const {
   return matchid_;
 }
-inline void EMatchTurn::set_matchid(::google::protobuf::int64 value) {
+inline void EMatchTurn::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2247,10 +2247,10 @@ inline void EMatchTurn::clear_playerid() {
   playerid_ = GOOGLE_LONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::int64 EMatchTurn::playerid() const {
+inline ::google_public::protobuf::int64 EMatchTurn::playerid() const {
   return playerid_;
 }
-inline void EMatchTurn::set_playerid(::google::protobuf::int64 value) {
+inline void EMatchTurn::set_playerid(::google_public::protobuf::int64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2273,10 +2273,10 @@ inline void CPlayerMove::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 CPlayerMove::matchid() const {
+inline ::google_public::protobuf::int64 CPlayerMove::matchid() const {
   return matchid_;
 }
-inline void CPlayerMove::set_matchid(::google::protobuf::int64 value) {
+inline void CPlayerMove::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2337,10 +2337,10 @@ inline void EPlayerMove::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 EPlayerMove::matchid() const {
+inline ::google_public::protobuf::int64 EPlayerMove::matchid() const {
   return matchid_;
 }
-inline void EPlayerMove::set_matchid(::google::protobuf::int64 value) {
+inline void EPlayerMove::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2359,10 +2359,10 @@ inline void EPlayerMove::clear_playerid() {
   playerid_ = GOOGLE_LONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::int64 EPlayerMove::playerid() const {
+inline ::google_public::protobuf::int64 EPlayerMove::playerid() const {
   return playerid_;
 }
-inline void EPlayerMove::set_playerid(::google::protobuf::int64 value) {
+inline void EPlayerMove::set_playerid(::google_public::protobuf::int64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2423,10 +2423,10 @@ inline void CPlayerFire::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 CPlayerFire::matchid() const {
+inline ::google_public::protobuf::int64 CPlayerFire::matchid() const {
   return matchid_;
 }
-inline void CPlayerFire::set_matchid(::google::protobuf::int64 value) {
+inline void CPlayerFire::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2445,10 +2445,10 @@ inline void CPlayerFire::clear_playerid() {
   playerid_ = GOOGLE_LONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::int64 CPlayerFire::playerid() const {
+inline ::google_public::protobuf::int64 CPlayerFire::playerid() const {
   return playerid_;
 }
-inline void CPlayerFire::set_playerid(::google::protobuf::int64 value) {
+inline void CPlayerFire::set_playerid(::google_public::protobuf::int64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2509,10 +2509,10 @@ inline void EPlayerFire::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 EPlayerFire::matchid() const {
+inline ::google_public::protobuf::int64 EPlayerFire::matchid() const {
   return matchid_;
 }
-inline void EPlayerFire::set_matchid(::google::protobuf::int64 value) {
+inline void EPlayerFire::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2531,10 +2531,10 @@ inline void EPlayerFire::clear_playerid() {
   playerid_ = GOOGLE_LONGLONG(0);
   clear_has_playerid();
 }
-inline ::google::protobuf::int64 EPlayerFire::playerid() const {
+inline ::google_public::protobuf::int64 EPlayerFire::playerid() const {
   return playerid_;
 }
-inline void EPlayerFire::set_playerid(::google::protobuf::int64 value) {
+inline void EPlayerFire::set_playerid(::google_public::protobuf::int64 value) {
   set_has_playerid();
   playerid_ = value;
 }
@@ -2595,10 +2595,10 @@ inline void CPlayerHit::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 CPlayerHit::matchid() const {
+inline ::google_public::protobuf::int64 CPlayerHit::matchid() const {
   return matchid_;
 }
-inline void CPlayerHit::set_matchid(::google::protobuf::int64 value) {
+inline void CPlayerHit::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2617,10 +2617,10 @@ inline void CPlayerHit::clear_p1() {
   p1_ = GOOGLE_LONGLONG(0);
   clear_has_p1();
 }
-inline ::google::protobuf::int64 CPlayerHit::p1() const {
+inline ::google_public::protobuf::int64 CPlayerHit::p1() const {
   return p1_;
 }
-inline void CPlayerHit::set_p1(::google::protobuf::int64 value) {
+inline void CPlayerHit::set_p1(::google_public::protobuf::int64 value) {
   set_has_p1();
   p1_ = value;
 }
@@ -2639,10 +2639,10 @@ inline void CPlayerHit::clear_p2() {
   p2_ = GOOGLE_LONGLONG(0);
   clear_has_p2();
 }
-inline ::google::protobuf::int64 CPlayerHit::p2() const {
+inline ::google_public::protobuf::int64 CPlayerHit::p2() const {
   return p2_;
 }
-inline void CPlayerHit::set_p2(::google::protobuf::int64 value) {
+inline void CPlayerHit::set_p2(::google_public::protobuf::int64 value) {
   set_has_p2();
   p2_ = value;
 }
@@ -2661,10 +2661,10 @@ inline void CPlayerHit::clear_damage() {
   damage_ = 0;
   clear_has_damage();
 }
-inline ::google::protobuf::int32 CPlayerHit::damage() const {
+inline ::google_public::protobuf::int32 CPlayerHit::damage() const {
   return damage_;
 }
-inline void CPlayerHit::set_damage(::google::protobuf::int32 value) {
+inline void CPlayerHit::set_damage(::google_public::protobuf::int32 value) {
   set_has_damage();
   damage_ = value;
 }
@@ -2687,10 +2687,10 @@ inline void EPlayerHit::clear_matchid() {
   matchid_ = GOOGLE_LONGLONG(0);
   clear_has_matchid();
 }
-inline ::google::protobuf::int64 EPlayerHit::matchid() const {
+inline ::google_public::protobuf::int64 EPlayerHit::matchid() const {
   return matchid_;
 }
-inline void EPlayerHit::set_matchid(::google::protobuf::int64 value) {
+inline void EPlayerHit::set_matchid(::google_public::protobuf::int64 value) {
   set_has_matchid();
   matchid_ = value;
 }
@@ -2709,10 +2709,10 @@ inline void EPlayerHit::clear_p1() {
   p1_ = GOOGLE_LONGLONG(0);
   clear_has_p1();
 }
-inline ::google::protobuf::int64 EPlayerHit::p1() const {
+inline ::google_public::protobuf::int64 EPlayerHit::p1() const {
   return p1_;
 }
-inline void EPlayerHit::set_p1(::google::protobuf::int64 value) {
+inline void EPlayerHit::set_p1(::google_public::protobuf::int64 value) {
   set_has_p1();
   p1_ = value;
 }
@@ -2731,10 +2731,10 @@ inline void EPlayerHit::clear_p2() {
   p2_ = GOOGLE_LONGLONG(0);
   clear_has_p2();
 }
-inline ::google::protobuf::int64 EPlayerHit::p2() const {
+inline ::google_public::protobuf::int64 EPlayerHit::p2() const {
   return p2_;
 }
-inline void EPlayerHit::set_p2(::google::protobuf::int64 value) {
+inline void EPlayerHit::set_p2(::google_public::protobuf::int64 value) {
   set_has_p2();
   p2_ = value;
 }
@@ -2753,10 +2753,10 @@ inline void EPlayerHit::clear_damage() {
   damage_ = 0;
   clear_has_damage();
 }
-inline ::google::protobuf::int32 EPlayerHit::damage() const {
+inline ::google_public::protobuf::int32 EPlayerHit::damage() const {
   return damage_;
 }
-inline void EPlayerHit::set_damage(::google::protobuf::int32 value) {
+inline void EPlayerHit::set_damage(::google_public::protobuf::int32 value) {
   set_has_damage();
   damage_ = value;
 }
@@ -2767,7 +2767,7 @@ inline void EPlayerHit::set_damage(::google::protobuf::int32 value) {
 }  // namespace pb
 
 #ifndef SWIG
-namespace google {
+namespace google_public {
 namespace protobuf {
 
 template <>
