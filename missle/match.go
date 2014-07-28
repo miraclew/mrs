@@ -26,6 +26,8 @@ type Match struct {
 	PlayersId []int64
 	State     int
 	TurnIdx   int
+	turnTimer *time.Timer
+	turns     int // turns aleady run
 
 	manager *mnet.Manager
 	game    *Game
@@ -54,6 +56,7 @@ func NewMatch(game *Game, playersId []int64, manager *mnet.Manager) (*Match, err
 	}
 	channelId, _ := manager.NewChannel(clientsId)
 
+	turns := 10 * len(playersId)
 	match := &Match{
 		Id:        seq,
 		ChannelId: channelId,
@@ -61,6 +64,7 @@ func NewMatch(game *Game, playersId []int64, manager *mnet.Manager) (*Match, err
 		State:     STATE_READY,
 		manager:   manager,
 		game:      game,
+		turns:     turns,
 	}
 	match.InitKeyPoints()
 	match.SetPlayers(playersId)
@@ -144,6 +148,12 @@ func (m *Match) NextTurn() {
 	if m.State == STATE_END {
 		return
 	}
+	if m.turnTimer != nil {
+		m.turnTimer.Stop()
+	}
+	if m.turns <= 0 {
+		m.End()
+	}
 
 	m.TurnIdx++
 	if m.TurnIdx >= len(m.Players) {
@@ -155,10 +165,11 @@ func (m *Match) NextTurn() {
 	mt.MatchId = &m.Id
 	mt.PlayerId = &playerId
 	msg := &mnet.Message{Code: pb.Code_E_MATCH_TURN, MSG: mt}
-	m.pushToUser(playerId, msg)
+	m.manager.PushToChannel(m.ChannelId, msg)
 
 	// schedule next turn
-	time.AfterFunc(time.Duration(2)*time.Second, m.NextTurn)
+	m.turnTimer = time.AfterFunc(time.Duration(5)*time.Second, m.NextTurn)
+	m.turns--
 }
 
 func (m *Match) End() {
@@ -212,12 +223,19 @@ func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) error {
 	if m.State == STATE_END {
 		return NewMissleErr(ERR_INVALID_STATE, m.State)
 	}
+	if playerId2 := m.PlayersId[m.TurnIdx]; playerId != playerId2 {
+		log.Printf("PlayerFire, it's not your(%d) turn to fire, turn: %d", playerId2, playerId)
+		return NewMissleErr(ERR_INVALID_STATE, m.State)
+	}
+
 	pf := &pb.EPlayerFire{}
 	pf.MatchId = &m.Id
 	pf.PlayerId = &playerId
 	pf.Velocity = &pb.Point{X: &velocity.X, Y: &velocity.Y}
 	msg := &mnet.Message{Code: pb.Code_E_PLAYER_FIRE, MSG: pf}
 	m.manager.PushToChannel(m.ChannelId, msg)
+
+	// wait a few time(missle hit) to trigger next turn
 	return nil
 }
 
@@ -226,24 +244,34 @@ func (m *Match) PlayerHit(p1 int64, p2 int64, damage int32) error {
 	if m.State == STATE_END {
 		return NewMissleErr(ERR_INVALID_STATE, m.State)
 	}
-	newHealth, oldHealth := m.changeHealth(p2, -damage)
-	player1 := m.Players[p1]
-	player1.PointsWin += newHealth - oldHealth
+	// if playerId := m.PlayersId[m.TurnIdx]; p1 != playerId {
+	// 	log.Printf("PlayerHit, it's not your(%d) turn to fire, turn: %d", p1, playerId)
+	// 	return NewMissleErr(ERR_INVALID_STATE, m.State)
+	// }
 
-	ph := &pb.EPlayerHit{}
-	ph.MatchId = &m.Id
-	ph.P1 = &p1
-	ph.P2 = &p2
-	ph.Damage = &damage
-	msg := &mnet.Message{Code: pb.Code_E_PLAYER_HIT, MSG: ph}
+	if p2 > 0 && damage > 0 {
+		newHealth, oldHealth := m.changeHealth(p2, -damage)
+		player1 := m.Players[p1]
+		player1.PointsWin += newHealth - oldHealth
 
-	m.manager.PushToChannel(m.ChannelId, msg)
+		ph := &pb.EPlayerHit{}
+		ph.MatchId = &m.Id
+		ph.P1 = &p1
+		ph.P2 = &p2
+		ph.Damage = &damage
+		msg := &mnet.Message{Code: pb.Code_E_PLAYER_HIT, MSG: ph}
 
-	if newHealth == 0 {
-		if m.shouldGameOver() {
-			m.End()
+		m.manager.PushToChannel(m.ChannelId, msg)
+
+		if newHealth == 0 {
+			if m.shouldGameOver() {
+				m.End()
+			}
 		}
 	}
+
+	m.NextTurn()
+
 	return nil
 }
 
