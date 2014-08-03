@@ -11,12 +11,14 @@ import (
 )
 
 type Game struct {
-	waitQueue []int64           // waiting players
+	waitQueue *WaitQueue        // waiting players
 	players   map[int64]*Player // all online players
 	c2uMap    map[int64]int64   // map client.Id => userId
 	u2cMap    map[int64]int64   // map userId => client.Id
 	manager   *mnet.Manager
 	Db        *gorp.DbMap
+
+	seqUserId int64
 }
 
 var game *Game
@@ -29,12 +31,13 @@ func NewGame(manager *mnet.Manager) *Game {
 	game.init()
 	game.manager = manager
 	game.Db = model.InitDb(DSN)
+	game.seqUserId = 1
 	manager.Handler = game
 	return game
 }
 
 func (g *Game) init() {
-	g.waitQueue = []int64{}
+	g.waitQueue = &WaitQueue{}
 	g.players = make(map[int64]*Player)
 	g.c2uMap = make(map[int64]int64)
 	g.u2cMap = make(map[int64]int64)
@@ -61,11 +64,20 @@ func (g *Game) OnConnected(clientId int64) {
 }
 
 func (g *Game) OnDisconnected(clientId int64) {
-	// delete(g.players, playerId)
 	userId, ok := g.c2uMap[clientId]
 	if ok {
 		delete(g.c2uMap, clientId)
 		delete(g.u2cMap, userId)
+		g.waitQueue.Delete(userId)
+		player := g.GetPlayer(userId)
+		log.Printf("player disconnected: %#v", player)
+		if player != nil && player.MatchId != 0 {
+			match := GetMatch(player.MatchId)
+			if match != nil {
+				match.PlayerExit(userId)
+			}
+			player.MatchId = 0
+		}
 	}
 	log.Printf("c2uMap= %#v\n", g.c2uMap)
 	log.Printf("u2cMap= %#v\n", g.u2cMap)
@@ -84,15 +96,20 @@ func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
 			log.Printf("CAuth: %s", auth.String())
 		}
 		eauth := &pb.EAuth{}
-		//user := FindUserByCredential(auth.GetUserName(), auth.GetPassword())
 		user := model.User{}
-		err = g.Db.SelectOne(&user, "select id from users where UserName=? and Password=?", auth.GetUserName(), auth.GetPassword())
+		// err = g.Db.SelectOne(&user, "select id from users where UserName=? and Password=?", auth.GetUserName(), auth.GetPassword())
+		err = g.Db.SelectOne(&user, "select * from users where Id=?", g.seqUserId)
+		g.seqUserId++
+		if g.seqUserId > 9 {
+			g.seqUserId = 1
+		}
+
 		var code int32 = 0
 		if err != nil {
 			code = ERR_INVALID_CREDENTIAL
 			log.Printf("Auth failed: (username=%s)", auth.GetUserName())
 		} else {
-			log.Printf("Auth success: (username=%s) clientId:%d userId:%d", auth.GetUserName(), clientId, user.Id)
+			log.Printf("Auth success: (username=%s) clientId:%d userId:%d", user.UserName, clientId, user.Id)
 			g.c2uMap[clientId] = user.Id
 			g.u2cMap[user.Id] = clientId
 		}
@@ -132,6 +149,15 @@ func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
 				match.PlayerHit(hit.GetP1(), hit.GetP2(), hit.GetDamage())
 			}
 		}
+	} else if code == pb.Code_C_MATCH_EXIT {
+		exit := &pb.CMatchExit{}
+		err = proto.Unmarshal(payload.Body, exit)
+		if err == nil {
+			if match := GetMatch(exit.GetMatchId()); match != nil {
+				match.PlayerExit(playerId)
+			}
+		}
+
 	} else {
 		log.Printf("Error: unknown command %d", code)
 	}
@@ -143,14 +169,14 @@ func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
 
 // Player enter game (connected)
 func (g *Game) PlayerEnter(playerId int64) (err error) {
-	if len(g.waitQueue) > 0 {
-		p1 := g.waitQueue[0]
+	if g.waitQueue.Len() > 0 {
+		p1, _ := g.waitQueue.Pop().(int64)
 		p2 := playerId
 		if p1 == p2 {
+			g.waitQueue.Push(playerId)
 			err = NewMissleErr(ERR_INVALID_STATE, fmt.Sprintf("userId: %d already enter game", p1))
 			return
 		}
-		g.waitQueue = g.waitQueue[1:]
 
 		log.Printf("NewMatch for p1=%d, p2=%d", p1, p2)
 		var match *Match
@@ -161,8 +187,10 @@ func (g *Game) PlayerEnter(playerId int64) (err error) {
 		}
 		match.Begin()
 	} else {
-		g.waitQueue = append(g.waitQueue, playerId)
+		g.waitQueue.Push(playerId)
 	}
+
+	log.Printf("WaitQueue %s\n", g.waitQueue)
 
 	return
 }
@@ -171,14 +199,40 @@ func (g *Game) PlayerExit(playerId int64) {
 
 }
 
+func (g *Game) GetPlayer(playerId int64) *Player {
+	player, ok := g.players[playerId]
+	if ok {
+		return player
+	}
+	return nil
+}
+
+func (g *Game) initMatchPlayers(matchId int64, playersId []int64) {
+	isLeft := true
+	for i := 0; i < len(playersId); i++ {
+		playerId := playersId[i]
+		player := g.GetPlayer(playerId)
+		if player == nil {
+			player, _ = g.initPlayer(playerId)
+		}
+		player.IsLeft = isLeft
+		player.MatchId = matchId
+		player.Health = 100
+		player.Position = MakePositionFor(isLeft, 0)
+		g.players[playerId] = player
+		isLeft = !isLeft
+	}
+}
+
 func (g *Game) initPlayer(playerId int64) (player *Player, err error) {
-	profile := FindUserById(playerId)
-	if profile == nil {
-		err = NewMissleErr(ERR_DATA_NOT_FOUND, fmt.Sprintf("userId: %d", playerId))
+	user := model.User{}
+	err = g.Db.SelectOne(&user, "select * from users where Id=?", playerId)
+	if err != nil {
+		log.Fatalf("Find user err: %s", err.Error())
 		return
 	}
 
-	//log.Printf("initPlayer %d profile: %#v \n", playerId, profile)
-	player = &Player{Id: playerId, NickName: profile.UserName, Avatar: profile.Avatar}
+	player = &Player{playerId, user.UserName, user.Avatar, 0, true, &Point{}, 100, 0}
+	g.players[playerId] = player
 	return
 }

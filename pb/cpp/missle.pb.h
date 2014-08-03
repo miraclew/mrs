@@ -39,6 +39,7 @@ class Player;
 class CAuth;
 class EAuth;
 class CMatchEnter;
+class CMatchExit;
 class EMatcInit;
 class EMatchEnd;
 class EMatchTurn;
@@ -56,6 +57,7 @@ enum Code {
   E_MATCH_INIT = 22,
   E_MATCH_TURN = 23,
   E_MATCH_END = 24,
+  C_MATCH_EXIT = 25,
   C_PLAYER_MOVE = 31,
   E_PLAYER_MOVE = 32,
   C_PLAYER_FIRE = 33,
@@ -595,6 +597,88 @@ class CMatchEnter : public ::google_public::protobuf::Message {
 
   void InitAsDefaultInstance();
   static CMatchEnter* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class CMatchExit : public ::google_public::protobuf::Message {
+ public:
+  CMatchExit();
+  virtual ~CMatchExit();
+
+  CMatchExit(const CMatchExit& from);
+
+  inline CMatchExit& operator=(const CMatchExit& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google_public::protobuf::Descriptor* descriptor();
+  static const CMatchExit& default_instance();
+
+  void Swap(CMatchExit* other);
+
+  // implements Message ----------------------------------------------
+
+  CMatchExit* New() const;
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
+  void CopyFrom(const CMatchExit& from);
+  void MergeFrom(const CMatchExit& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google_public::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google_public::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 matchId = 1;
+  inline bool has_matchid() const;
+  inline void clear_matchid();
+  static const int kMatchIdFieldNumber = 1;
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:pb.CMatchExit)
+ private:
+  inline void set_has_matchid();
+  inline void clear_has_matchid();
+
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google_public::protobuf::int64 matchid_;
+
+  mutable int _cached_size_;
+  ::google_public::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_missle_2eproto();
+  friend void protobuf_AssignDesc_missle_2eproto();
+  friend void protobuf_ShutdownFile_missle_2eproto();
+
+  void InitAsDefaultInstance();
+  static CMatchExit* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2082,6 +2166,32 @@ inline void EAuth::set_allocated_message(::std::string* message) {
 // -------------------------------------------------------------------
 
 // CMatchEnter
+
+// -------------------------------------------------------------------
+
+// CMatchExit
+
+// required int64 matchId = 1;
+inline bool CMatchExit::has_matchid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CMatchExit::set_has_matchid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CMatchExit::clear_has_matchid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CMatchExit::clear_matchid() {
+  matchid_ = GOOGLE_LONGLONG(0);
+  clear_has_matchid();
+}
+inline ::google_public::protobuf::int64 CMatchExit::matchid() const {
+  return matchid_;
+}
+inline void CMatchExit::set_matchid(::google_public::protobuf::int64 value) {
+  set_has_matchid();
+  matchid_ = value;
+}
 
 // -------------------------------------------------------------------
 

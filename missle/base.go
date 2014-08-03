@@ -16,8 +16,9 @@ type Player struct {
 	NickName string
 	Avatar   string
 	// game state
+	MatchId   int64
 	IsLeft    bool
-	Position  Point
+	Position  *Point
 	Health    int32
 	PointsWin int32
 }

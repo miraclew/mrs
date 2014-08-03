@@ -101,6 +101,7 @@ func (c *Client) listenRead() {
 			length, err := c.conn.Read(b)
 			if err == io.EOF {
 				c.doneCh <- true
+				c.manager.Handler.OnDisconnected(c.id)
 			} else if err != nil {
 				c.server.Err(err)
 			} else {

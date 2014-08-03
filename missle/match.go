@@ -1,7 +1,6 @@
 package missle
 
 import (
-	"github.com/miraclew/mrs/missle/model"
 	"github.com/miraclew/mrs/mnet"
 	"github.com/miraclew/mrs/pb"
 	"log"
@@ -21,7 +20,7 @@ type MatchPlayer struct {
 type Match struct {
 	Id        int64
 	ChannelId int64
-	Players   map[int64]*Player
+	// Players   map[int64]*Player
 	KeyPoints []*Point
 	PlayersId []int64
 	State     int
@@ -67,7 +66,7 @@ func NewMatch(game *Game, playersId []int64, manager *mnet.Manager) (*Match, err
 		turns:     turns,
 	}
 	match.InitKeyPoints()
-	match.SetPlayers(playersId)
+	game.initMatchPlayers(match.Id, playersId)
 
 	matchs[match.Id] = match
 	return match, nil
@@ -75,27 +74,6 @@ func NewMatch(game *Game, playersId []int64, manager *mnet.Manager) (*Match, err
 
 func (m *Match) InitKeyPoints() {
 	m.KeyPoints = MakeKeyPoints(16)
-}
-
-func (m *Match) SetPlayers(playersId []int64) (err error) {
-	players := make(map[int64]*Player)
-	isLeft := true
-	for i := 0; i < len(playersId); i++ {
-		playerId := playersId[i]
-		user := model.User{}
-		err = m.game.Db.SelectOne(&user, "select * from users where Id=?", playerId)
-		if err != nil {
-			log.Fatalf("Find user err: %s", err.Error())
-			return
-		}
-		pos := MakePositionFor(isLeft, 0)
-		players[playerId] = &Player{playerId, user.UserName, user.Avatar, isLeft, *pos, 100, 0}
-
-		isLeft = !isLeft
-	}
-	m.Players = players
-	log.Printf("select len=%d %#v", len(players), players)
-	return
 }
 
 func GetMatch(id int64) *Match {
@@ -115,7 +93,8 @@ func (m *Match) Begin() (err error) {
 	mi := &pb.EMatcInit{}
 	mi.MatchId = &m.Id
 	pbPlayers := make([]*pb.Player, 0)
-	for _, v := range m.Players {
+	for _, p := range m.PlayersId {
+		v := m.game.GetPlayer(p)
 		player := &pb.Player{}
 		player.Id = &v.Id
 		player.NickName = &v.NickName
@@ -151,12 +130,12 @@ func (m *Match) NextTurn() {
 	if m.turnTimer != nil {
 		m.turnTimer.Stop()
 	}
-	if m.turns <= 0 {
-		m.End()
-	}
+	// if m.turns <= 0 {
+	// 	m.End()
+	// }
 
 	m.TurnIdx++
-	if m.TurnIdx >= len(m.Players) {
+	if m.TurnIdx >= len(m.PlayersId) {
 		m.TurnIdx = 0
 	}
 
@@ -173,28 +152,40 @@ func (m *Match) NextTurn() {
 }
 
 func (m *Match) End() {
-	log.Printf("MatchEnd: %#v\n", m.Players)
+	log.Printf("MatchEnd: %#v\n", m.PlayersId)
 	if m.State == STATE_END {
 		return
 	}
 	m.State = STATE_END // should before send message, to avoid send twice
 
-	for _, v := range m.Players {
+	for _, v := range m.PlayersId {
+		player := m.game.GetPlayer(v)
 		var point int32
-		if v.Health <= 0 {
+		if player.Health <= 0 {
 			point = -100
 		} else {
 			point = 100
 		}
+		player.MatchId = 0
 
-		UpdatePlayerPoints(v.Id, point)
+		UpdatePlayerPoints(v, point)
 
 		me := &pb.EMatchEnd{}
-		me.MatchId = &m.Id
+		me.MatchId = &v
 		me.Points = &point
 		msg := &mnet.Message{Code: pb.Code_E_MATCH_END, MSG: me}
-		m.pushToUser(v.Id, msg)
+		m.pushToUser(v, msg)
 	}
+}
+
+func (m *Match) PlayerExit(playerId int64) error {
+	log.Printf("PlayerExit: %d", playerId)
+	if m.State == STATE_END {
+		return NewMissleErr(ERR_INVALID_STATE, m.State)
+	}
+
+	m.End()
+	return nil
 }
 
 func (m *Match) PlayerMove(playerId int64, pos Point) error {
@@ -206,8 +197,8 @@ func (m *Match) PlayerMove(playerId int64, pos Point) error {
 		return NewMissleErr(ERR_INVALID_POSITION, pos.X, pos.Y)
 	}
 
-	player := m.Players[playerId]
-	player.Position = pos
+	player := m.game.GetPlayer(playerId)
+	player.Position = &pos
 
 	pm := &pb.EPlayerMove{}
 	pm.MatchId = &m.Id
@@ -251,7 +242,7 @@ func (m *Match) PlayerHit(p1 int64, p2 int64, damage int32) error {
 
 	if p2 > 0 && damage > 0 {
 		newHealth, oldHealth := m.changeHealth(p2, -damage)
-		player1 := m.Players[p1]
+		player1 := m.game.GetPlayer(p1)
 		player1.PointsWin += newHealth - oldHealth
 
 		ph := &pb.EPlayerHit{}
@@ -270,7 +261,7 @@ func (m *Match) PlayerHit(p1 int64, p2 int64, damage int32) error {
 		}
 	}
 
-	m.NextTurn()
+	// m.NextTurn()
 
 	return nil
 }
@@ -280,7 +271,7 @@ func (m *Match) shouldGameOver() bool {
 }
 
 func (m *Match) changeHealth(playerId int64, healthChange int32) (nh, oh int32) {
-	player := m.Players[playerId]
+	player := m.game.GetPlayer(playerId)
 	oh = player.Health
 
 	player.Health += healthChange
