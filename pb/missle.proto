@@ -82,13 +82,15 @@ message EPlayerMove {
 message CPlayerFire {
     required int64 matchId = 1;
     required int64 playerId = 2;
-    required Point velocity = 3;
+    required Point position = 3;
+    required Point velocity = 4;
 }
 
 message EPlayerFire {
     required int64 matchId = 1;
     required int64 playerId = 2;
-    required Point velocity = 3;
+    required Point position = 3;
+    required Point velocity = 4;
 }
 
 message CPlayerHit {

@@ -11,6 +11,8 @@ const (
 	STATE_READY   = 1
 	STATE_PLAYING = 2
 	STATE_END     = 3
+
+	TURN_TIME = 10 // 10 seconds per turn
 )
 
 type MatchPlayer struct {
@@ -147,7 +149,7 @@ func (m *Match) NextTurn() {
 	m.manager.PushToChannel(m.ChannelId, msg)
 
 	// schedule next turn
-	m.turnTimer = time.AfterFunc(time.Duration(5)*time.Second, m.NextTurn)
+	m.turnTimer = time.AfterFunc(time.Duration(TURN_TIME)*time.Second, m.NextTurn)
 	m.turns--
 }
 
@@ -223,6 +225,7 @@ func (m *Match) PlayerFire(playerId int64, pos Point, velocity Point) error {
 	pf.MatchId = &m.Id
 	pf.PlayerId = &playerId
 	pf.Velocity = &pb.Point{X: &velocity.X, Y: &velocity.Y}
+	pf.Position = &pb.Point{X: &pos.X, Y: &pos.Y}
 	msg := &mnet.Message{Code: pb.Code_E_PLAYER_FIRE, MSG: pf}
 	m.manager.PushToChannel(m.ChannelId, msg)
 

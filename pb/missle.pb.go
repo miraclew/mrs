@@ -402,7 +402,8 @@ func (m *EPlayerMove) GetPosition() *Point {
 type CPlayerFire struct {
 	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
-	Velocity         *Point `protobuf:"bytes,3,req,name=velocity" json:"velocity,omitempty"`
+	Position         *Point `protobuf:"bytes,3,req,name=position" json:"position,omitempty"`
+	Velocity         *Point `protobuf:"bytes,4,req,name=velocity" json:"velocity,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
@@ -424,6 +425,13 @@ func (m *CPlayerFire) GetPlayerId() int64 {
 	return 0
 }
 
+func (m *CPlayerFire) GetPosition() *Point {
+	if m != nil {
+		return m.Position
+	}
+	return nil
+}
+
 func (m *CPlayerFire) GetVelocity() *Point {
 	if m != nil {
 		return m.Velocity
@@ -434,7 +442,8 @@ func (m *CPlayerFire) GetVelocity() *Point {
 type EPlayerFire struct {
 	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
-	Velocity         *Point `protobuf:"bytes,3,req,name=velocity" json:"velocity,omitempty"`
+	Position         *Point `protobuf:"bytes,3,req,name=position" json:"position,omitempty"`
+	Velocity         *Point `protobuf:"bytes,4,req,name=velocity" json:"velocity,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
@@ -454,6 +463,13 @@ func (m *EPlayerFire) GetPlayerId() int64 {
 		return *m.PlayerId
 	}
 	return 0
+}
+
+func (m *EPlayerFire) GetPosition() *Point {
+	if m != nil {
+		return m.Position
+	}
+	return nil
 }
 
 func (m *EPlayerFire) GetVelocity() *Point {

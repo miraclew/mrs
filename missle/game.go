@@ -137,7 +137,9 @@ func (g *Game) OnRecievePayload(clientId int64, payload *mnet.Payload) {
 
 		match := GetMatch(fire.GetMatchId())
 		if match != nil {
-			match.PlayerFire(playerId, Point{}, Point{X: fire.GetVelocity().GetX(), Y: fire.GetVelocity().GetY()})
+			match.PlayerFire(playerId,
+				Point{X: fire.GetPosition().GetX(), Y: fire.GetPosition().GetY()},
+				Point{X: fire.GetVelocity().GetX(), Y: fire.GetVelocity().GetY()})
 		}
 	} else if code == pb.Code_C_PLAYER_HIT {
 		hit := &pb.CPlayerHit{}

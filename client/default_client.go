@@ -134,6 +134,9 @@ func (d *DefaultClient) OnRecievePayload(payload *mnet.Payload) (err error) {
 				var x float32 = rand.Float32()
 				var y float32 = rand.Float32()
 				fire.Velocity = &pb.Point{X: &x, Y: &y}
+				x = rand.Float32()
+				y = rand.Float32()
+				fire.Position = &pb.Point{X: &x, Y: &y}
 				d.send(pb.Code_C_PLAYER_FIRE, fire)
 			})
 		}

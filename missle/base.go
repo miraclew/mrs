@@ -39,7 +39,7 @@ func MakeKeyPoints(count int) []*Point {
 		paddingTop, paddingBottom float32
 		ny, dy                    float32
 	)
-	minDX = 1.0 / 8
+	minDX = 1.0 / 12
 	minDY = 1.0 / 48
 	rangeDX = 1.0 / 12
 	rangeDY = 1.0 / 8
@@ -55,9 +55,9 @@ func MakeKeyPoints(count int) []*Point {
 		points[i] = &Point{X: x, Y: y}
 		if i == 0 {
 			x = 0
-			y = 1.0 / 2
+			y = 0.45
 		} else {
-			x = rand.Float32()*rangeDX + minDX
+			x += rand.Float32()*rangeDX + minDX
 
 			for {
 				dy = rand.Float32()*rangeDY + minDY
