@@ -10,26 +10,35 @@ import (
 	// "math"
 )
 
-func drawPath(gc *draw2d.ImageGraphicContext, w int, h int, points []*missle.Point) {
-	gc.MoveTo(float64(points[0].X*float32(w)), float64(points[0].Y*float32(h)))
+func drawPath(gc *draw2d.ImageGraphicContext, w int, h int, points []*missle.Point, translate bool) {
 	for i := 1; i < len(points); i++ {
 		gc.BeginPath()
-		gc.MoveTo(float64(points[i-1].X*float32(w)), float64(points[i-1].Y*float32(h)))
-		gc.LineTo(float64(points[i].X*float32(w)), float64(points[i].Y*float32(h)))
+		p0 := *points[i-1]
+		p1 := *points[i]
+		if translate {
+			p0 = translatePoint(w, h, p0)
+			p1 = translatePoint(w, h, p1)
+		}
+		gc.MoveTo(float64(p0.X), float64(float32(h)-p0.Y))
+		gc.LineTo(float64(p1.X), float64(float32(h)-p1.Y))
 		gc.Stroke()
 	}
+}
+
+func translatePoint(w int, h int, p missle.Point) missle.Point {
+	return missle.Point{p.X * float32(w), p.Y * float32(h)}
 }
 
 func draw(gc *draw2d.ImageGraphicContext, w int, h int) {
 	fmt.Printf("w:%d h:%d", w, h)
 	kps := missle.MakeKeyPoints(16)
 	points := generateHill(kps)
-	drawPath(gc, w, h, points)
+	drawPath(gc, w, h, points, true)
 
-	curve := missle.CreateBodyMovingCurve(missle.Point{100, 100},
-		missle.Point{10, 10}, missle.Point{0, -10}, 100, 0.1)
+	curve := missle.CreateBodyMovingCurve(missle.Point{100, 500},
+		missle.Point{10, 20}, missle.Point{0, -10}, 100, 0.1)
 	fmt.Println(curve)
-	drawPath(gc, w, h, curve.Points)
+	drawPath(gc, w, h, curve.Points, false)
 }
 
 func main() {

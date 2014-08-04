@@ -42,7 +42,7 @@ func CreateBodyMovingCurve(position Point, velocity Point,
 	for i := 0; i < steps; i++ {
 		position = pAdd(position, pMultiply(velocity, deltaTime))
 		velocity = pAdd(velocity, pMultiply(acceleration, deltaTime))
-		curve.Points = append(curve.Points, &position)
+		curve.Points = append(curve.Points, &Point{position.X, position.Y})
 	}
 	return &curve
 }
