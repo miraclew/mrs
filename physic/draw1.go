@@ -9,7 +9,7 @@ import (
 	"math"
 )
 
-func main() {
+func main2() {
 	window, err := x11.NewWindow()
 	if err != nil {
 		fmt.Printf("Cannot open an x11 window\n")

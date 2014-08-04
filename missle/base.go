@@ -1,12 +1,50 @@
 package missle
 
 import (
+	"fmt"
 	"math/rand"
 )
 
 type Point struct {
 	X float32
 	Y float32
+}
+
+func (p *Point) String() string {
+	return fmt.Sprintf("{%f,%f}", p.X, p.Y)
+}
+
+func pAdd(p1 Point, p2 Point) Point {
+	return Point{p1.X + p2.X, p1.Y + p2.Y}
+}
+
+func pMultiply(p Point, t float32) Point {
+	return Point{p.X * t, p.Y * t}
+}
+
+type Curve struct {
+	Points []*Point
+}
+
+func (c *Curve) String() string {
+	var s string
+	for i := 0; i < len(c.Points); i++ {
+		s += fmt.Sprintf("%s \n", c.Points[i])
+	}
+	return s
+}
+
+func CreateBodyMovingCurve(position Point, velocity Point,
+	acceleration Point, steps int, deltaTime float32) *Curve {
+
+	curve := Curve{}
+	curve.Points = make([]*Point, 0)
+	for i := 0; i < steps; i++ {
+		position = pAdd(position, pMultiply(velocity, deltaTime))
+		velocity = pAdd(velocity, pMultiply(acceleration, deltaTime))
+		curve.Points = append(curve.Points, &position)
+	}
+	return &curve
 }
 
 type ID int64
