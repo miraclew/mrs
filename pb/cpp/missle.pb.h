@@ -39,6 +39,7 @@ class Player;
 class CAuth;
 class EAuth;
 class CMatchEnter;
+class CMatchExit;
 class EMatcInit;
 class EMatchEnd;
 class EMatchTurn;
@@ -56,6 +57,7 @@ enum Code {
   E_MATCH_INIT = 22,
   E_MATCH_TURN = 23,
   E_MATCH_END = 24,
+  C_MATCH_EXIT = 25,
   C_PLAYER_MOVE = 31,
   E_PLAYER_MOVE = 32,
   C_PLAYER_FIRE = 33,
@@ -595,6 +597,88 @@ class CMatchEnter : public ::google_public::protobuf::Message {
 
   void InitAsDefaultInstance();
   static CMatchEnter* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class CMatchExit : public ::google_public::protobuf::Message {
+ public:
+  CMatchExit();
+  virtual ~CMatchExit();
+
+  CMatchExit(const CMatchExit& from);
+
+  inline CMatchExit& operator=(const CMatchExit& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google_public::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google_public::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google_public::protobuf::Descriptor* descriptor();
+  static const CMatchExit& default_instance();
+
+  void Swap(CMatchExit* other);
+
+  // implements Message ----------------------------------------------
+
+  CMatchExit* New() const;
+  void CopyFrom(const ::google_public::protobuf::Message& from);
+  void MergeFrom(const ::google_public::protobuf::Message& from);
+  void CopyFrom(const CMatchExit& from);
+  void MergeFrom(const CMatchExit& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google_public::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google_public::protobuf::io::CodedOutputStream* output) const;
+  ::google_public::protobuf::uint8* SerializeWithCachedSizesToArray(::google_public::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google_public::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 matchId = 1;
+  inline bool has_matchid() const;
+  inline void clear_matchid();
+  static const int kMatchIdFieldNumber = 1;
+  inline ::google_public::protobuf::int64 matchid() const;
+  inline void set_matchid(::google_public::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:pb.CMatchExit)
+ private:
+  inline void set_has_matchid();
+  inline void clear_has_matchid();
+
+  ::google_public::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google_public::protobuf::int64 matchid_;
+
+  mutable int _cached_size_;
+  ::google_public::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_missle_2eproto();
+  friend void protobuf_AssignDesc_missle_2eproto();
+  friend void protobuf_ShutdownFile_missle_2eproto();
+
+  void InitAsDefaultInstance();
+  static CMatchExit* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1156,10 +1240,19 @@ class CPlayerFire : public ::google_public::protobuf::Message {
   inline ::google_public::protobuf::int64 playerid() const;
   inline void set_playerid(::google_public::protobuf::int64 value);
 
-  // required .pb.Point velocity = 3;
+  // required .pb.Point position = 3;
+  inline bool has_position() const;
+  inline void clear_position();
+  static const int kPositionFieldNumber = 3;
+  inline const ::pb::Point& position() const;
+  inline ::pb::Point* mutable_position();
+  inline ::pb::Point* release_position();
+  inline void set_allocated_position(::pb::Point* position);
+
+  // required .pb.Point velocity = 4;
   inline bool has_velocity() const;
   inline void clear_velocity();
-  static const int kVelocityFieldNumber = 3;
+  static const int kVelocityFieldNumber = 4;
   inline const ::pb::Point& velocity() const;
   inline ::pb::Point* mutable_velocity();
   inline ::pb::Point* release_velocity();
@@ -1171,6 +1264,8 @@ class CPlayerFire : public ::google_public::protobuf::Message {
   inline void clear_has_matchid();
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_position();
+  inline void clear_has_position();
   inline void set_has_velocity();
   inline void clear_has_velocity();
 
@@ -1178,10 +1273,11 @@ class CPlayerFire : public ::google_public::protobuf::Message {
 
   ::google_public::protobuf::int64 matchid_;
   ::google_public::protobuf::int64 playerid_;
+  ::pb::Point* position_;
   ::pb::Point* velocity_;
 
   mutable int _cached_size_;
-  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -1260,10 +1356,19 @@ class EPlayerFire : public ::google_public::protobuf::Message {
   inline ::google_public::protobuf::int64 playerid() const;
   inline void set_playerid(::google_public::protobuf::int64 value);
 
-  // required .pb.Point velocity = 3;
+  // required .pb.Point position = 3;
+  inline bool has_position() const;
+  inline void clear_position();
+  static const int kPositionFieldNumber = 3;
+  inline const ::pb::Point& position() const;
+  inline ::pb::Point* mutable_position();
+  inline ::pb::Point* release_position();
+  inline void set_allocated_position(::pb::Point* position);
+
+  // required .pb.Point velocity = 4;
   inline bool has_velocity() const;
   inline void clear_velocity();
-  static const int kVelocityFieldNumber = 3;
+  static const int kVelocityFieldNumber = 4;
   inline const ::pb::Point& velocity() const;
   inline ::pb::Point* mutable_velocity();
   inline ::pb::Point* release_velocity();
@@ -1275,6 +1380,8 @@ class EPlayerFire : public ::google_public::protobuf::Message {
   inline void clear_has_matchid();
   inline void set_has_playerid();
   inline void clear_has_playerid();
+  inline void set_has_position();
+  inline void clear_has_position();
   inline void set_has_velocity();
   inline void clear_has_velocity();
 
@@ -1282,10 +1389,11 @@ class EPlayerFire : public ::google_public::protobuf::Message {
 
   ::google_public::protobuf::int64 matchid_;
   ::google_public::protobuf::int64 playerid_;
+  ::pb::Point* position_;
   ::pb::Point* velocity_;
 
   mutable int _cached_size_;
-  ::google_public::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google_public::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_missle_2eproto();
   friend void protobuf_AssignDesc_missle_2eproto();
@@ -2085,6 +2193,32 @@ inline void EAuth::set_allocated_message(::std::string* message) {
 
 // -------------------------------------------------------------------
 
+// CMatchExit
+
+// required int64 matchId = 1;
+inline bool CMatchExit::has_matchid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CMatchExit::set_has_matchid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CMatchExit::clear_has_matchid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CMatchExit::clear_matchid() {
+  matchid_ = GOOGLE_LONGLONG(0);
+  clear_has_matchid();
+}
+inline ::google_public::protobuf::int64 CMatchExit::matchid() const {
+  return matchid_;
+}
+inline void CMatchExit::set_matchid(::google_public::protobuf::int64 value) {
+  set_has_matchid();
+  matchid_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // EMatcInit
 
 // required int64 matchId = 1;
@@ -2453,15 +2587,53 @@ inline void CPlayerFire::set_playerid(::google_public::protobuf::int64 value) {
   playerid_ = value;
 }
 
-// required .pb.Point velocity = 3;
-inline bool CPlayerFire::has_velocity() const {
+// required .pb.Point position = 3;
+inline bool CPlayerFire::has_position() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void CPlayerFire::set_has_velocity() {
+inline void CPlayerFire::set_has_position() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void CPlayerFire::clear_has_velocity() {
+inline void CPlayerFire::clear_has_position() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void CPlayerFire::clear_position() {
+  if (position_ != NULL) position_->::pb::Point::Clear();
+  clear_has_position();
+}
+inline const ::pb::Point& CPlayerFire::position() const {
+  return position_ != NULL ? *position_ : *default_instance_->position_;
+}
+inline ::pb::Point* CPlayerFire::mutable_position() {
+  set_has_position();
+  if (position_ == NULL) position_ = new ::pb::Point;
+  return position_;
+}
+inline ::pb::Point* CPlayerFire::release_position() {
+  clear_has_position();
+  ::pb::Point* temp = position_;
+  position_ = NULL;
+  return temp;
+}
+inline void CPlayerFire::set_allocated_position(::pb::Point* position) {
+  delete position_;
+  position_ = position;
+  if (position) {
+    set_has_position();
+  } else {
+    clear_has_position();
+  }
+}
+
+// required .pb.Point velocity = 4;
+inline bool CPlayerFire::has_velocity() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void CPlayerFire::set_has_velocity() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void CPlayerFire::clear_has_velocity() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void CPlayerFire::clear_velocity() {
   if (velocity_ != NULL) velocity_->::pb::Point::Clear();
@@ -2539,15 +2711,53 @@ inline void EPlayerFire::set_playerid(::google_public::protobuf::int64 value) {
   playerid_ = value;
 }
 
-// required .pb.Point velocity = 3;
-inline bool EPlayerFire::has_velocity() const {
+// required .pb.Point position = 3;
+inline bool EPlayerFire::has_position() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void EPlayerFire::set_has_velocity() {
+inline void EPlayerFire::set_has_position() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void EPlayerFire::clear_has_velocity() {
+inline void EPlayerFire::clear_has_position() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void EPlayerFire::clear_position() {
+  if (position_ != NULL) position_->::pb::Point::Clear();
+  clear_has_position();
+}
+inline const ::pb::Point& EPlayerFire::position() const {
+  return position_ != NULL ? *position_ : *default_instance_->position_;
+}
+inline ::pb::Point* EPlayerFire::mutable_position() {
+  set_has_position();
+  if (position_ == NULL) position_ = new ::pb::Point;
+  return position_;
+}
+inline ::pb::Point* EPlayerFire::release_position() {
+  clear_has_position();
+  ::pb::Point* temp = position_;
+  position_ = NULL;
+  return temp;
+}
+inline void EPlayerFire::set_allocated_position(::pb::Point* position) {
+  delete position_;
+  position_ = position;
+  if (position) {
+    set_has_position();
+  } else {
+    clear_has_position();
+  }
+}
+
+// required .pb.Point velocity = 4;
+inline bool EPlayerFire::has_velocity() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void EPlayerFire::set_has_velocity() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void EPlayerFire::clear_has_velocity() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void EPlayerFire::clear_velocity() {
   if (velocity_ != NULL) velocity_->::pb::Point::Clear();

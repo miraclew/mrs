@@ -23,6 +23,8 @@ enum Code {
     E_MATCH_INIT = 22;
     E_MATCH_TURN = 23;
     E_MATCH_END = 24;
+    C_MATCH_EXIT = 25;
+
     C_PLAYER_MOVE = 31;
     E_PLAYER_MOVE = 32;
     C_PLAYER_FIRE = 33;
@@ -44,6 +46,10 @@ message EAuth {
 }
 
 message CMatchEnter {
+}
+
+message CMatchExit {
+    required int64 matchId = 1;
 }
 
 message EMatcInit {
@@ -76,13 +82,15 @@ message EPlayerMove {
 message CPlayerFire {
     required int64 matchId = 1;
     required int64 playerId = 2;
-    required Point velocity = 3;
+    required Point position = 3;
+    required Point velocity = 4;
 }
 
 message EPlayerFire {
     required int64 matchId = 1;
     required int64 playerId = 2;
-    required Point velocity = 3;
+    required Point position = 3;
+    required Point velocity = 4;
 }
 
 message CPlayerHit {

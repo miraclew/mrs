@@ -97,12 +97,12 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 	clientId := p.nextClientId
 	p.nextClientId++
 	defer func() {
+		log.Print("Client disconnected")
 		err := conn.Close()
 		if err != nil {
 			// s.errCh <- err
 			log.Printf("Client close error: %s", err.Error())
 		}
-		log.Print("Client disconnected")
 		if p.Handler != nil {
 			p.Handler.OnDisconnected(clientId)
 		}
@@ -117,4 +117,5 @@ func (p *Manager) handleTcpClient(conn net.Conn) {
 
 	log.Printf("New Client: %d", client.id)
 	client.Listen()
+	log.Println("sssss...")
 }

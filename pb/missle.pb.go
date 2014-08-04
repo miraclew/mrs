@@ -14,6 +14,7 @@ It has these top-level messages:
 	CAuth
 	EAuth
 	CMatchEnter
+	CMatchExit
 	EMatcInit
 	EMatchEnd
 	EMatchTurn
@@ -42,6 +43,7 @@ const (
 	Code_E_MATCH_INIT    Code = 22
 	Code_E_MATCH_TURN    Code = 23
 	Code_E_MATCH_END     Code = 24
+	Code_C_MATCH_EXIT    Code = 25
 	Code_C_PLAYER_MOVE   Code = 31
 	Code_E_PLAYER_MOVE   Code = 32
 	Code_C_PLAYER_FIRE   Code = 33
@@ -58,6 +60,7 @@ var Code_name = map[int32]string{
 	22: "E_MATCH_INIT",
 	23: "E_MATCH_TURN",
 	24: "E_MATCH_END",
+	25: "C_MATCH_EXIT",
 	31: "C_PLAYER_MOVE",
 	32: "E_PLAYER_MOVE",
 	33: "C_PLAYER_FIRE",
@@ -73,6 +76,7 @@ var Code_value = map[string]int32{
 	"E_MATCH_INIT":    22,
 	"E_MATCH_TURN":    23,
 	"E_MATCH_END":     24,
+	"C_MATCH_EXIT":    25,
 	"C_PLAYER_MOVE":   31,
 	"E_PLAYER_MOVE":   32,
 	"C_PLAYER_FIRE":   33,
@@ -243,6 +247,22 @@ func (m *CMatchEnter) Reset()         { *m = CMatchEnter{} }
 func (m *CMatchEnter) String() string { return proto.CompactTextString(m) }
 func (*CMatchEnter) ProtoMessage()    {}
 
+type CMatchExit struct {
+	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *CMatchExit) Reset()         { *m = CMatchExit{} }
+func (m *CMatchExit) String() string { return proto.CompactTextString(m) }
+func (*CMatchExit) ProtoMessage()    {}
+
+func (m *CMatchExit) GetMatchId() int64 {
+	if m != nil && m.MatchId != nil {
+		return *m.MatchId
+	}
+	return 0
+}
+
 type EMatcInit struct {
 	MatchId          *int64    `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	Players          []*Player `protobuf:"bytes,2,rep,name=players" json:"players,omitempty"`
@@ -382,7 +402,8 @@ func (m *EPlayerMove) GetPosition() *Point {
 type CPlayerFire struct {
 	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
-	Velocity         *Point `protobuf:"bytes,3,req,name=velocity" json:"velocity,omitempty"`
+	Position         *Point `protobuf:"bytes,3,req,name=position" json:"position,omitempty"`
+	Velocity         *Point `protobuf:"bytes,4,req,name=velocity" json:"velocity,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
@@ -404,6 +425,13 @@ func (m *CPlayerFire) GetPlayerId() int64 {
 	return 0
 }
 
+func (m *CPlayerFire) GetPosition() *Point {
+	if m != nil {
+		return m.Position
+	}
+	return nil
+}
+
 func (m *CPlayerFire) GetVelocity() *Point {
 	if m != nil {
 		return m.Velocity
@@ -414,7 +442,8 @@ func (m *CPlayerFire) GetVelocity() *Point {
 type EPlayerFire struct {
 	MatchId          *int64 `protobuf:"varint,1,req,name=matchId" json:"matchId,omitempty"`
 	PlayerId         *int64 `protobuf:"varint,2,req,name=playerId" json:"playerId,omitempty"`
-	Velocity         *Point `protobuf:"bytes,3,req,name=velocity" json:"velocity,omitempty"`
+	Position         *Point `protobuf:"bytes,3,req,name=position" json:"position,omitempty"`
+	Velocity         *Point `protobuf:"bytes,4,req,name=velocity" json:"velocity,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
@@ -434,6 +463,13 @@ func (m *EPlayerFire) GetPlayerId() int64 {
 		return *m.PlayerId
 	}
 	return 0
+}
+
+func (m *EPlayerFire) GetPosition() *Point {
+	if m != nil {
+		return m.Position
+	}
+	return nil
 }
 
 func (m *EPlayerFire) GetVelocity() *Point {

@@ -5,51 +5,65 @@ import (
 	"testing"
 )
 
-func TestA(t *testing.T) {
-	t.Skip("...")
-	// var x float32
-	// x = 1.0 * 2
-	// y := x * 2
-	// fmt.Printf("%f, %f", x, y)
-	points := MakeKeyPoints(16)
-	for _, p := range points {
-		fmt.Printf("%f, %f\n", p.X, p.Y)
+func TestWaitQueue(t *testing.T) {
+	q := &WaitQueue{}
+	q.Push(1)
+	q.Push(2)
+
+	fmt.Println(q)
+	q.Delete(2)
+	if q.Len() != 1 {
+		t.Fail()
 	}
+	fmt.Println(q)
 }
 
-func TestB(t *testing.T) {
-	t.Skip("...")
-	var pusher Pusher
-	pusher = &PusherMock{}
-	match, _ := NewMatch([]int64{1, 2}, pusher)
-	match.Begin()
+// func TestA(t *testing.T) {
+// 	t.Skip("...")
+// 	// var x float32
+// 	// x = 1.0 * 2
+// 	// y := x * 2
+// 	// fmt.Printf("%f, %f", x, y)
+// 	points := MakeKeyPoints(16)
+// 	for _, p := range points {
+// 		fmt.Printf("%f, %f\n", p.X, p.Y)
+// 	}
+// }
 
-	if match.State != STATE_PLAYING {
-		t.Error("STATE error")
-	}
+// func TestB(t *testing.T) {
+// 	t.Skip("...")
+// 	var pusher Pusher
+// 	pusher = &PusherMock{}
+// 	match, _ := NewMatch([]int64{1, 2}, pusher)
+// 	match.Begin()
 
-	match.PlayerMove(1, Point{0.44, 0.34})
-	match.PlayerFire(2, Point{0.5, 0.6}, Point{0.1, 0.2})
-	// match.PlayerAttack(1, -10)
-	// match.PlayerAttack(2, +10)
+// 	if match.State != STATE_PLAYING {
+// 		t.Error("STATE error")
+// 	}
 
-	// match.PlayerAttack(1, -90)
-}
+// 	match.PlayerMove(1, Point{0.44, 0.34})
+// 	match.PlayerFire(2, Point{0.5, 0.6}, Point{0.1, 0.2})
+// 	// match.PlayerAttack(1, -10)
+// 	// match.PlayerAttack(2, +10)
 
-func TestC(t *testing.T) {
-	t.Skip("...")
-	var pusher Pusher
-	pusher = &PusherMock{}
+// 	// match.PlayerAttack(1, -90)
+// }
 
-	game := GetGame()
-	game.Pusher = pusher
-	game.PlayerEnter(1)
-	game.PlayerEnter(2)
-	game.PlayerEnter(3)
-	game.PlayerEnter(4)
-}
+// func TestC(t *testing.T) {
+// 	t.Skip("...")
+// 	var pusher Pusher
+// 	pusher = &PusherMock{}
 
-func TestD(t *testing.T) {
-	uid := GetUidByUserName("miraclew")
-	fmt.Println(uid)
-}
+// 	game := GetGame()
+// 	game.Pusher = pusher
+// 	game.PlayerEnter(1)
+// 	game.PlayerEnter(2)
+// 	game.PlayerEnter(3)
+// 	game.PlayerEnter(4)
+// }
+
+// func TestD(t *testing.T) {
+// 	t.Skip("...")
+// 	uid := GetUidByUserName("miraclew")
+// 	fmt.Println(uid)
+// }
