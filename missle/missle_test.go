@@ -10,7 +10,7 @@ func TestWaitQueue(t *testing.T) {
 	q.Push(1)
 	q.Push(2)
 
-	t.Fail() 
+	t.Fail()   
 	
 
 	fmt.Println(q)
