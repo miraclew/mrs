@@ -10,6 +10,9 @@ func TestWaitQueue(t *testing.T) {
 	q.Push(1)
 	q.Push(2)
 
+	t.Fail() 
+	
+
 	fmt.Println(q)
 	q.Delete(2)
 	if q.Len() != 1 {
